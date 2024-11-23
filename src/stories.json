@@ -1,7 +1,7 @@
 {
   "passages": [
     {
-      "text": "By using our service you basically acknowledge that everything you do is being spied on.\n[[Start Game ->Passage 2]]\n[[Choice 2 ->Passage 3]]\n[[Choice 3 ->Passage 4]]",
+      "text": "User Licensed Agreement, by using our services you acknowledge that everything you do is spied on.\n[[Start Game ->Passage 2]]\n[[Choice 2 ->Passage 3]]\n[[Choice 3 ->Passage 4]]",
       "links": [
         {
           "name": "Choice 1 ",
