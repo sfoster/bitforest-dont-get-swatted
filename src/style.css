@@ -1,6 +1,10 @@
-html, body { margin: 0; padding: 0; }
+html,
 body {
-  background-image: linear-gradient(0deg, #004e92 0%, #000428 80%);
+  margin: 0;
+  padding: 0;
+}
+body {
+  /* background-image: linear-gradient(0deg, #004e92 0%, #000428 80%); */
   height: 100vh;
   display: flex;
   display: flex;
