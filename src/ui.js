@@ -1,12 +1,38 @@
+function createDiv(id, className) {
+  let elem = document.createElement("div");
+  if (className) {
+    elem.className = className;
+  }
+  if (id) {
+    elem.id = id;
+  }
+  return elem;
+}
+
+class LetterBox extends HTMLElement {
+  connectedCallback() {
+    for (let edge of ["top", "right", "bottom", "left", "center"]) {
+      this[edge] = this.appendChild(createDiv("", edge));
+    }
+  }
+}
+customElements.define('letter-box', LetterBox);
+
 class WordPicker extends HTMLElement {
   scrollSpeed = 0.5;
+  wordCount = 0;
 
   connectedCallback() {
-    let line = this.lineElem = document.createElement("div");
-    line.id = "wordsLine";
+    let line = this.lineElem = createDiv("wordsLine");
     this.appendChild(line);
-    this.lineElem.addEventListener("click", this);
-    this.addEventListener('click', this);
+
+    let reticule = this.reticule = document.createElement("letter-box");
+    reticule.id = "wordsLineReticule";
+    this.appendChild(reticule);
+
+    this.addEventListener("click", this);
+    // this.addEventListener('click', this);
+    this.addEventListener('keypress', this);
   }
   updateWords(words) {
     // wipe out the previous child elements
@@ -18,7 +44,7 @@ class WordPicker extends HTMLElement {
       return;
     }
     // create choice boxes
-    const wordCount = words.length;
+    const wordCount = this.wordCount = words.length;
     // We clone the last couple words so we can loop around without a visible break
     const lineElements = [...words, words[0], words[1]];
     const fragment = document.createDocumentFragment();
@@ -41,6 +67,7 @@ class WordPicker extends HTMLElement {
         x = rect.x - this.lineRect.x;
         if (i == wordCount -1) {
           endX = Math.max(lastWidth, x + rect.width);
+          // this.lineElem.children[i].style.outline = "1px solid black";
         }
         this.wordOffsets.push({x, width: rect.width});
       }
@@ -77,27 +104,43 @@ class WordPicker extends HTMLElement {
       return;
     }
     if (this.spinX >= this.endX) {
-      this.spinX = 0;
+      this.spinX = this.spinX - this.endX;
     }
     requestAnimationFrame(() => this.advanceSpin());
   }
-  handleEvent(event) {
-    switch (event.type) {
-      case 'click': {
-        let id = event.target.dataset.identifier;
-        if (!id) {
-          return;
-        }
-        this.selected = event.target;
-        this.continueSpin = false;
-        let detail = {
-          value: event.target.textContent,
-          id,
-        };
-        this.dispatchUserChoice(detail);
+  getSelectedChild() {
+    let offsetX = 0;
+    let selectedChild = this.lineElem.firstElementChild;
+    this.wordOffsets
+    for (let i = 0; i < this.wordCount; i++) {
+      let offsetX = this.wordOffsets[i];
+      if (this.spinX <= offsetX) {
+        selectedChild = this.lineElem.children[i];
         break;
       }
     }
+    return selectedChild;
+  }
+  handleEvent(event) {
+    let selectedChild;
+    switch (event.type) {
+      case "click":
+        // fallthrough
+      case "keypress": {
+        selectedChild = this.getSelectedChild();
+        event.preventDefault();
+        break;
+      }
+    }
+    if (!selectedChild?.dataset.identifier) {
+      return;
+    }
+    this.continueSpin = false;
+    let detail = {
+      value: selectedChild.textContent,
+      id: selectedChild.dataset.identifier,
+    };
+    this.dispatchUserChoice(detail);
   }
 }
 
@@ -108,9 +151,13 @@ export class UI {
     this.currentPrompt = document.getElementById('currentPrompt');
     let picker = (this.wordPicker = document.createElement('word-picker'));
     picker.id = 'wordPicker';
+    picker.tabIndex = -1;
 
     this.currentPrompt.parentElement.appendChild(picker);
-    return new Promise((res) => requestAnimationFrame(res));
+    return new Promise((resolve) => requestAnimationFrame(res => {
+        picker.focus();
+        resolve();
+    }));
   }
   updatePrompt(text) {
     this.currentPrompt.textContent = text;

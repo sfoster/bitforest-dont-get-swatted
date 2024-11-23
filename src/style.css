@@ -6,7 +6,6 @@ body {
 body {
   height: 100vh;
   display: flex;
-  display: flex;
   justify-content: center;
   align-items: center;
   background-color: rgb(24,0,0);
@@ -66,6 +65,26 @@ main {
   visibility: hidden;
 }
 
+#wordsLineReticule {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  box-sizing: border-box;
+}
+#wordsLineReticule:is(:hover, :focus) .center {
+  outline: 1px solid cyan;
+}
+#wordsLineReticule:active .center {
+  outline: 1px solid blue;
+}
+
+#wordsLineReticule .center {
+  outline: 1px solid black;
+}
+
 #wordsLine {
   position: absolute;
   top: 0;
@@ -82,6 +101,46 @@ main {
   padding: 6px;
 }
 
+letter-box {
+  position: relative;
+}
+letter-box > * {
+  position: absolute;
+  user-select: none;
+  pointer-events: none;
+  background-color: rgba(255,255,255,0.3);
+}
+letter-box > .center {
+  pointer-events: auto;
+  width: 50%;
+  left: 25%;
+  right: 25%;
+  top: 3px;
+  bottom: 3px;
+  background-color: transparent;
+}
+letter-box > .left, letter-box > .right {
+  width: 25%;
+  height: 100%;
+}
+letter-box > .left {
+  left: 0;
+}
+letter-box > .right {
+  right: 0;
+}
+letter-box > .top, letter-box > .bottom {
+  width: 100%;
+  height: 3px;
+}
+letter-box > .top {
+  top: 0;
+}
+letter-box > .bottom {
+  bottom: 0;
+}
+
 #toolTray {
   display: none;
 }
+
