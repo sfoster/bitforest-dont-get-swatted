@@ -1,16 +1,21 @@
 class WordPicker extends HTMLElement {
   connectedCallback() {
-    console.log("connectedCallback");
-    this.addEventListener("click", this);
+    console.log('connectedCallback');
+    this.addEventListener('click', this);
   }
   updateWords(words) {
-    this.words = words;
     // wipe out the previous child elements
-    this.textContent = "";
+    this.textContent = '';
+    this.words = words;
+    if (!words) {
+      return;
+    }
+
+    // create choice boxes
     let fragment = document.createDocumentFragment();
     for (let word of words) {
-      let child = document.createElement("div");
-      child.classList.add("word");
+      let child = document.createElement('div');
+      child.classList.add('word');
       child.textContent = word.label;
       child.dataset.identifier = word.id;
       fragment.appendChild(child);
@@ -22,19 +27,22 @@ class WordPicker extends HTMLElement {
     // TODO: do something to adjust scroll speed
   }
   dispatchUserChoice(choiceDetail) {
-    let choiceEvent = new CustomEvent("user-choice", { detail: choiceDetail });
+    let choiceEvent = new CustomEvent('user-choice', { detail: choiceDetail });
     document.dispatchEvent(choiceEvent);
   }
   set selected(childElem) {
     for (let child of this.children) {
-      child.toggleAttribute("selected", child === childElem);
+      child.toggleAttribute('selected', child === childElem);
     }
   }
   handleEvent(event) {
     switch (event.type) {
-      case "click": {
+      case 'click': {
         this.selected = event.target;
-        let detail = { value: event.target.textContent, id: event.target.dataset.identifier };
+        let detail = {
+          value: event.target.textContent,
+          id: event.target.dataset.identifier,
+        };
         this.dispatchUserChoice(detail);
         break;
       }
@@ -42,16 +50,16 @@ class WordPicker extends HTMLElement {
   }
 }
 
-customElements.define("word-picker", WordPicker);
+customElements.define('word-picker', WordPicker);
 
 export class UI {
   initialize() {
-    this.currentPrompt = document.getElementById("currentPrompt");
-    let picker = this.wordPicker = document.createElement("word-picker");
-    picker.id = "wordPicker";
+    this.currentPrompt = document.getElementById('currentPrompt');
+    let picker = (this.wordPicker = document.createElement('word-picker'));
+    picker.id = 'wordPicker';
 
     this.currentPrompt.parentElement.appendChild(picker);
-    return new Promise(res => requestAnimationFrame(res));
+    return new Promise((res) => requestAnimationFrame(res));
   }
   updatePrompt(text) {
     this.currentPrompt.textContent = text;
@@ -64,12 +72,15 @@ export class UI {
         "pid": "2"
       }
       */
-    const words = links.map(ln => {
-      return {
-        label: ln.name,
-        id: ln.pid,
-      };
-    })
+    let words = null;
+    if (links) {
+      words = links.map((ln) => {
+        return {
+          label: ln.name,
+          id: ln.pid,
+        };
+      });
+    }
     this.wordPicker.updateWords(words);
   }
 }
