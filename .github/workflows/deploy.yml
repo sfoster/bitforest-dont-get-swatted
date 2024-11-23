@@ -1,0 +1,22 @@
+name: Deploy to itch.io
+on:
+  push:
+    branches:
+      - main  # or whatever branch you want to trigger deploys
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      
+      # Optional: Add your build steps here if needed
+      
+      - uses: yeslayla/butler-publish-itchio-action@v1.0.3
+        env:
+          BUTLER_CREDENTIALS: ${{ secrets.BUTLER_API_KEY }}
+          CHANNEL: web  # or whatever channel you want to push to
+          ITCH_GAME: dont-get-swatted
+          ITCH_USER: haydondo
+          PACKAGE: src    # path to your game files, '.' if in root
+          VERSION: ${{ github.sha }}
