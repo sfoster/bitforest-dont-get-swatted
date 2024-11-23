@@ -20,26 +20,48 @@ main {
 }
 
 #currentPrompt {
-  min-height: 1rem;
+  box-sizing: border-box;
+  min-height: 1.6rem;
   width: 100%;
   background-color: orange;
   outline: 1px dotted white;
+  font-size: 2em;
+  padding: 8px;
+  margin: 8px;
 }
 
 #wordPicker {
-  min-height: 1rem;
-  width: 100%;
-  background-color: yellow;
+  --scroll-duration: 5s;
+
+  box-sizing: border-box;
+  font-size: 2em;
+  min-height: 3rem;
+  background-color: rgb(255,255,0);
   outline: 1px dotted white;
+  width: 8em;
+  padding: 8px 4px;
+  position: relative;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
-#wordPicker > div {
+#wordsLine {
+  position: absolute;
+  top: 0;
+  left: 0;
+/*  will-change: transform;
+  transition-property: transform;
+  transition-duration: var(--scroll-duration);
+*/}
+
+#wordsLine > .word {
+  background-color: rgba(255,155,0,0.5);
   outline: 1px dotted white;
-  display: block;
+  display: inline-block;
   padding: 3px;
 }
 
-#wordPicker > div[selected] {
+#wordsLine > .word[selected] {
   outline: 1px solid white;
   padding: 6px;
 }
