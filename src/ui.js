@@ -11,8 +11,8 @@ class WordPicker extends HTMLElement {
     for (let word of words) {
       let child = document.createElement("div");
       child.classList.add("word");
-      child.textContent = word;
-      child.dataset.identifier = "some-uniq-id";
+      child.textContent = word.label;
+      child.dataset.identifier = word.id;
       fragment.appendChild(child);
     }
     this.appendChild(fragment);
@@ -56,7 +56,20 @@ export class UI {
   updatePrompt(text) {
     this.currentPrompt.textContent = text;
   }
-  updateWordChoices(words) {
+  updateWordChoices(links) {
+    /* each link takes the form:
+      {
+        "name": "Choice 1 ",
+        "link": "Passage 2",
+        "pid": "2"
+      }
+      */
+    const words = links.map(ln => {
+      return {
+        label: ln.name,
+        id: ln.pid,
+      };
+    })
     this.wordPicker.updateWords(words);
   }
 }

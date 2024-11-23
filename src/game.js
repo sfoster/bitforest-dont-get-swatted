@@ -17,8 +17,9 @@ export class Game {
     this.twineData = this.assets.get("stories");
     console.log("Game start, with data:", this.twineData);
     // TODO: Figure out what the first state needs to be, and tell the UI about it
-    this.ui.updatePrompt("The beginning text");
-    this.ui.updateWordChoices(["Some", "initial", "words"]);
+    let currentPassage = this.twineData.passages[0];
+    this.ui.updatePrompt(currentPassage.text.split("__")[0]);
+    this.ui.updateWordChoices(currentPassage.links);
   }
   handleEvent(event) {
     if (event.type == "user-choice") {
