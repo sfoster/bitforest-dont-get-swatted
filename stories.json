@@ -1,0 +1,167 @@
+{
+  "passages": [
+    {
+      "text": "Here is the first of the choices to make choose one of the options __:\n[[Choice 1 ->Passage 2]]\n[[Choice 2 ->Passage 3]]\n[[Choice 3 ->Passage 4]]",
+      "links": [
+        {
+          "name": "Choice 1 ",
+          "link": "Passage 2",
+          "pid": "2"
+        },
+        {
+          "name": "Choice 2 ",
+          "link": "Passage 3",
+          "pid": "3"
+        },
+        {
+          "name": "Choice 3 ",
+          "link": "Passage 4",
+          "pid": "4"
+        }
+      ],
+      "name": "Passage 1",
+      "pid": "1",
+      "position": {
+        "x": "525",
+        "y": "150"
+      }
+    },
+    {
+      "text": "Here is another choice ___ is what you choice you wanted.\n[[Choice 1 ->Passage 5]]\n[[Choice 2 ->Bad End 1]]",
+      "links": [
+        {
+          "name": "Choice 1 ",
+          "link": "Passage 5",
+          "pid": "5"
+        },
+        {
+          "name": "Choice 2 ",
+          "link": "Bad End 1",
+          "pid": "6"
+        }
+      ],
+      "name": "Passage 2",
+      "pid": "2",
+      "position": {
+        "x": "525",
+        "y": "275"
+      }
+    },
+    {
+      "text": "Choose __.\n[[Choice 1 ->Passage 5]] \n[[Choice 2 ->Good End 1]]\n[[Choice 3 ->Good End 2]]",
+      "links": [
+        {
+          "name": "Choice 1 ",
+          "link": "Passage 5",
+          "pid": "5"
+        },
+        {
+          "name": "Choice 2 ",
+          "link": "Good End 1",
+          "pid": "8"
+        },
+        {
+          "name": "Choice 3 ",
+          "link": "Good End 2",
+          "pid": "9"
+        }
+      ],
+      "name": "Passage 3",
+      "pid": "3",
+      "position": {
+        "x": "650",
+        "y": "275"
+      }
+    },
+    {
+      "text": "This is the forth passage and another choice is presented which would you like __.\n[[Choice 1 ->Passage 6]]\n[[Choice 2 ->Good End 1]]",
+      "links": [
+        {
+          "name": "Choice 1 ",
+          "link": "Passage 6",
+          "pid": "7"
+        },
+        {
+          "name": "Choice 2 ",
+          "link": "Good End 1",
+          "pid": "8"
+        }
+      ],
+      "name": "Passage 4",
+      "pid": "4",
+      "position": {
+        "x": "400",
+        "y": "275"
+      }
+    },
+    {
+      "text": "This is another passage here is another choice __.\n[[Choice 1 ->Bad End 1]]\n[[Choice 2 ->Good End 1]]",
+      "links": [
+        {
+          "name": "Choice 1 ",
+          "link": "Bad End 1",
+          "pid": "6"
+        },
+        {
+          "name": "Choice 2 ",
+          "link": "Good End 1",
+          "pid": "8"
+        }
+      ],
+      "name": "Passage 5",
+      "pid": "5",
+      "position": {
+        "x": "525",
+        "y": "400"
+      }
+    },
+    {
+      "text": "This is a bad end",
+      "name": "Bad End 1",
+      "pid": "6",
+      "position": {
+        "x": "650",
+        "y": "400"
+      }
+    },
+    {
+      "text": "Only one choice here __.\n[[Choice 1 ->Bad End 1]]",
+      "links": [
+        {
+          "name": "Choice 1 ",
+          "link": "Bad End 1",
+          "pid": "6"
+        }
+      ],
+      "name": "Passage 6",
+      "pid": "7",
+      "position": {
+        "x": "400",
+        "y": "525"
+      }
+    },
+    {
+      "text": "Good Job",
+      "name": "Good End 1",
+      "pid": "8",
+      "position": {
+        "x": "275",
+        "y": "400"
+      }
+    },
+    {
+      "text": "Another good end, good job.",
+      "name": "Good End 2",
+      "pid": "9",
+      "position": {
+        "x": "150",
+        "y": "350"
+      }
+    }
+  ],
+  "name": "Don't Get Swatted",
+  "startnode": "1",
+  "creator": "Twine",
+  "creator-version": "2.9.2",
+  "ifid": "8745694F-1A10-4637-9987-B55921071C60"
+}
