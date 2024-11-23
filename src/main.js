@@ -1,5 +1,5 @@
-import { Game } from "./game.js";
-import { UI } from "./ui.js";
+import { Game } from './game.js';
+import { UI } from './ui.js';
 
 /*
   Bootstrap everything:
@@ -9,11 +9,18 @@ import { UI } from "./ui.js";
 */
 
 async function loadJSON(filename) {
-  let result;
   let response = await fetch(filename);
   let data = await response.json();
-  console.log("loaded JSON", data);
+  console.log('loaded JSON', data);
   return data;
+}
+
+function loadImage(filename) {
+  return new Promise((resolve) => {
+    let img = new Image();
+    img.onload = resolve;
+    img.src = filename;
+  });
 }
 
 /*
@@ -23,13 +30,18 @@ async function loadJSON(filename) {
  */
 const assetsMap = new Map();
 const assetsLoaded = (async function loadAssets() {
-  assetsMap.set("stories", await loadJSON("./stories.json"));
+  assetsMap.set('stories', await loadJSON('./stories.json'));
+  assetsMap.set('images', await loadJSON('./backgrounds.json'));
 })();
 
-document.addEventListener("DOMContentLoaded", async () => {
-  await assetsLoaded;
-  let ui = window.ui = new UI();
-  let game = window.game = new Game({ ui, assetsMap });
-  // Handle control over to the Game
-  game.start();
-}, { once: true });
+document.addEventListener(
+  'DOMContentLoaded',
+  async () => {
+    await assetsLoaded;
+    let ui = (window.ui = new UI());
+    let game = (window.game = new Game({ ui, assetsMap }));
+    // Handle control over to the Game
+    game.start();
+  },
+  { once: true }
+);
