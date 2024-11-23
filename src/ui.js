@@ -84,6 +84,6 @@ export class UI {
     this.wordPicker.updateWords(words);
   }
   updateBackground(filename) {
-    document.body.style.backgroundImage = filename;
+    document.body.style.backgroundImage = 'url(' + filename + ')';
   }
 }
