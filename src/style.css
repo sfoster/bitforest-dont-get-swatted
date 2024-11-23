@@ -1,0 +1,49 @@
+html, body { margin: 0; padding: 0; }
+body {
+  background-image: linear-gradient(0deg, #004e92 0%, #000428 80%);
+  height: 100vh;
+  display: flex;
+  display: flex;
+  justify-content: center; /*centers items on the line (the x-axis by default)*/
+  align-items: center; /*centers items on the cross-axis (y by default)*/
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  min-height: 480px;
+  min-width: 600px;
+  outline: 1px dotted white;
+  display: flex;
+  justify-content: center; /*centers items on the line (the x-axis by default)*/
+  align-items: center; /*centers items on the cross-axis (y by default)*/
+}
+
+#currentPrompt {
+  min-height: 1rem;
+  width: 100%;
+  background-color: orange;
+  outline: 1px dotted white;
+}
+
+#wordPicker {
+  min-height: 1rem;
+  width: 100%;
+  background-color: yellow;
+  outline: 1px dotted white;
+}
+
+#wordPicker > div {
+  outline: 1px dotted white;
+  display: block;
+  padding: 3px;
+}
+
+#wordPicker > div[selected] {
+  outline: 1px solid white;
+  padding: 6px;
+}
+
+#toolTray {
+  display: none;
+}
