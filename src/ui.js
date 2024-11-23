@@ -13,6 +13,7 @@ class WordPicker extends HTMLElement {
     this.lineElem.textContent = "";
     this.lineRect = new DOMRect();
     this.wordOffsets = [];
+    this.classList.toggle("empty", !words?.length);
     if (!words) {
       return;
     }
@@ -83,11 +84,15 @@ class WordPicker extends HTMLElement {
   handleEvent(event) {
     switch (event.type) {
       case 'click': {
+        let id = event.target.dataset.identifier;
+        if (!id) {
+          return;
+        }
         this.selected = event.target;
         this.continueSpin = false;
         let detail = {
           value: event.target.textContent,
-          id: event.target.dataset.identifier,
+          id,
         };
         this.dispatchUserChoice(detail);
         break;
@@ -130,6 +135,11 @@ export class UI {
     this.wordPicker.updateWords(words);
   }
   updateBackground(filename) {
-    document.body.style.backgroundImage = 'url(' + filename + ')';
+    let backdrop = document.getElementById("backdrop");
+    backdrop.classList.add("transitioning");
+    backdrop.addEventListener("transitionend", () => {
+      backdrop.style.backgroundImage = 'url(' + filename + ')';
+      backdrop.classList.remove("transitioning");
+    }, { once: true });
   }
 }

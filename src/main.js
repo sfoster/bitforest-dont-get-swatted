@@ -31,7 +31,9 @@ function loadImage(filename) {
 const assetsMap = new Map();
 const assetsLoaded = (async function loadAssets() {
   assetsMap.set('stories', await loadJSON('./stories.json'));
-  assetsMap.set('images', await loadJSON('./backgrounds.json'));
+  const imageList = await loadJSON('./backgrounds.json');
+  await Promise.all(Object.values(imageList).map(filename => loadImage(filename)));
+  assetsMap.set('images', imageList);
 })();
 
 document.addEventListener(
