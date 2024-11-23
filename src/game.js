@@ -13,18 +13,25 @@ export class Game {
    */
   async start() {
     await this.ui.initialize();
-    document.addEventListener("user-choice", this);
-    this.twineData = this.assets.get("stories");
-    console.log("Game start, with data:", this.twineData);
+    document.addEventListener('user-choice', this);
+    this.twineData = this.assets.get('stories');
+    console.log('Game start, with data:', this.twineData);
     // TODO: Figure out what the first state needs to be, and tell the UI about it
-    let currentPassage = this.twineData.passages[0];
-    this.ui.updatePrompt(currentPassage.text.split("__")[0]);
-    this.ui.updateWordChoices(currentPassage.links);
+
+    this.handleChoice(1);
   }
   handleEvent(event) {
-    if (event.type == "user-choice") {
-      console.log("Got user choice:", event.detail);
+    if (event.type == 'user-choice') {
+      console.log('Got user choice:', event.detail);
+      this.handleChoice(parseInt(event.detail.id));
       // TODO: The user selected something. Use that input to change our game state
     }
+  }
+
+  // Process id starts at 1
+  handleChoice(pid) {
+    let currentPassage = this.twineData.passages[pid - 1];
+    this.ui.updatePrompt(currentPassage.text.split('[[')[0]);
+    this.ui.updateWordChoices(currentPassage.links);
   }
 }
