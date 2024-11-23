@@ -1,7 +1,7 @@
 {
   "passages": [
     {
-      "text": "Here is the first of the choices to make choose one of the options __:\n[[Choice 1 ->Passage 2]]\n[[Choice 2 ->Passage 3]]\n[[Choice 3 ->Passage 4]]",
+      "text": "By using our service you basically acknowledge that everything you do is being spied on.\n[[Start Game ->Passage 2]]\n[[Choice 2 ->Passage 3]]\n[[Choice 3 ->Passage 4]]",
       "links": [
         {
           "name": "Choice 1 ",
@@ -19,7 +19,7 @@
           "pid": "4"
         }
       ],
-      "name": "Passage 1",
+      "name": "User License Agreement",
       "pid": "1",
       "position": {
         "x": "525",

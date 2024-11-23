@@ -8,15 +8,21 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgb(24,0,0);
+  background-color: rgb(24, 0, 0);
 }
 
 #backdrop {
   position: absolute;
-  top: 0; bottom: 0; left: 0; right: 0;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
   background: transparent no-repeat center center;
   will-change: opacity, background-image;
   transition: opacity 1.2s;
+  background-size: 100% auto;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 #backdrop.transitioning {
   opacity: 0.3;
@@ -40,8 +46,8 @@ main {
   box-sizing: border-box;
   min-height: 1.6rem;
   width: 100%;
-  background-color: rgba(255,255,255,0.6);
-  box-shadow: 0 1em 0.5em 2em rgba(255,255,255,0.6);
+  background-color: rgba(255, 255, 255, 0.6);
+  box-shadow: 0 1em 0.5em 2em rgba(255, 255, 255, 0.6);
   outline: none;
   font-size: 2em;
   padding: 8px;
@@ -52,7 +58,7 @@ main {
   box-sizing: border-box;
   font-size: 2em;
   min-height: 3rem;
-  background-color: rgba(0,0,0, 0.3);
+  background-color: rgba(0, 0, 0, 0.3);
   color: white;
   outline: 1px dotted white;
   width: 8em;
@@ -108,7 +114,7 @@ letter-box > * {
   position: absolute;
   user-select: none;
   pointer-events: none;
-  background-color: rgba(255,255,255,0.3);
+  background-color: rgba(255, 255, 255, 0.3);
 }
 letter-box > .center {
   pointer-events: auto;
@@ -119,7 +125,8 @@ letter-box > .center {
   bottom: 3px;
   background-color: transparent;
 }
-letter-box > .left, letter-box > .right {
+letter-box > .left,
+letter-box > .right {
   width: 25%;
   height: 100%;
 }
@@ -129,7 +136,8 @@ letter-box > .left {
 letter-box > .right {
   right: 0;
 }
-letter-box > .top, letter-box > .bottom {
+letter-box > .top,
+letter-box > .bottom {
   width: 100%;
   height: 3px;
 }
@@ -143,4 +151,3 @@ letter-box > .bottom {
 #toolTray {
   display: none;
 }
-
