@@ -19,7 +19,7 @@ export class Game {
     console.log('Game start, with data:', this.twineData);
     // TODO: Figure out what the first state needs to be, and tell the UI about it
 
-    this.handleChoice(1);
+    this.handleChoice(8);
   }
   handleEvent(event) {
     if (event.type == 'user-choice') {

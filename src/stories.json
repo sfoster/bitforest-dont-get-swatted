@@ -1,167 +1,122 @@
 {
   "passages": [
     {
-      "text": "User Licensed Agreement, by using our services you acknowledge that everything you do is spied on.\n[[Start Game ->Passage 2]]\n[[Choice 2 ->Passage 3]]\n[[Choice 3 ->Passage 4]]",
-      "links": [
-        {
-          "name": "Choice 1 ",
-          "link": "Passage 2",
-          "pid": "2"
-        },
-        {
-          "name": "Choice 2 ",
-          "link": "Passage 3",
-          "pid": "3"
-        },
-        {
-          "name": "Choice 3 ",
-          "link": "Passage 4",
-          "pid": "4"
-        }
-      ],
-      "name": "User License Agreement",
+      "text": "As the words leave you lips you notice a laser on your chest, and hear a loud bang from your front door, a S.W.A.T. team has broken into your apartment. \n\n**YOU HAVE BEEN SWATTED**\n\nBad End 1 Rip Bozo",
+      "name": "Bad End 1",
       "pid": "1",
       "position": {
-        "x": "525",
-        "y": "150"
-      }
+        "x": "500",
+        "y": "400"
+      },
+      "tags": ["BAD-END"]
     },
     {
-      "text": "Here is another choice ___ is what you choice you wanted.\n[[Choice 1 ->Passage 5]]\n[[Choice 2 ->Bad End 1]]",
-      "links": [
-        {
-          "name": "Choice 1 ",
-          "link": "Passage 5",
-          "pid": "5"
-        },
-        {
-          "name": "Choice 2 ",
-          "link": "Bad End 1",
-          "pid": "6"
-        }
-      ],
-      "name": "Passage 2",
+      "text": "A Bad Choice ends the game they get SWATTED\nA Neutral choice frmo any path moves them to the Neutral Prompts\nA Good Choice Moves them to the next Good Prompt\n\nRules:\nPrompts can have up to 80 characters.\nAnswers can have up to 25 characters.\n\n\n16 Bad ends             1/16\n\n12 Neutral choices   2/12\n4 Neutral prompts   0/4\n\n9 Good options        0/9    \n4 Good prompts      0/4\n\nPrompt one:  COMPLETE\nB1 N2 G1\n\nNeutral prompt 1\nB1 N2 G1\n\nNeutral prompt 2\nB1 N2 G1\n\nNeutral prompt 3\nB1 N2 G1\n\nNeutral Prompt 4\nB2 N1 G1\n\n\nGood Prompt 1\nB2 N1 G1\n\nGood Prompt 2\nB2 N1 G1\n\nGood Prompt 3 \nB3 N1 G1\n\nGood Prompt 4\nB3 N1 G1",
+      "name": "Developer notes",
       "pid": "2",
       "position": {
-        "x": "525",
-        "y": "275"
+        "x": "100",
+        "y": "100"
       }
     },
     {
-      "text": "Choose __.\n[[Choice 1 ->Passage 5]] \n[[Choice 2 ->Good End 1]]\n[[Choice 3 ->Good End 2]]",
-      "links": [
-        {
-          "name": "Choice 1 ",
-          "link": "Passage 5",
-          "pid": "5"
-        },
-        {
-          "name": "Choice 2 ",
-          "link": "Good End 1",
-          "pid": "8"
-        },
-        {
-          "name": "Choice 3 ",
-          "link": "Good End 2",
-          "pid": "9"
-        }
-      ],
-      "name": "Passage 3",
+      "text": "You were a spy all along and can't risk them hearing what you need to say.\n\nGame over agent.",
+      "name": "Easter eggs",
       "pid": "3",
       "position": {
-        "x": "650",
-        "y": "275"
-      }
+        "x": "300",
+        "y": "300"
+      },
+      "tags": ["EGG"]
     },
     {
-      "text": "This is the forth passage and another choice is presented which would you like __.\n[[Choice 1 ->Passage 6]]\n[[Choice 2 ->Good End 1]]",
-      "links": [
-        {
-          "name": "Choice 1 ",
-          "link": "Passage 6",
-          "pid": "7"
-        },
-        {
-          "name": "Choice 2 ",
-          "link": "Good End 1",
-          "pid": "8"
-        }
-      ],
-      "name": "Passage 4",
+      "text": "fought a wild raccoon to get in my car",
+      "name": "Good Option 1",
       "pid": "4",
       "position": {
-        "x": "400",
-        "y": "275"
-      }
+        "x": "900",
+        "y": "400"
+      },
+      "tags": ["GOOD"]
     },
     {
-      "text": "This is another passage here is another choice __.\n[[Choice 1 ->Bad End 1]]\n[[Choice 2 ->Good End 1]]",
-      "links": [
-        {
-          "name": "Choice 1 ",
-          "link": "Bad End 1",
-          "pid": "6"
-        },
-        {
-          "name": "Choice 2 ",
-          "link": "Good End 1",
-          "pid": "8"
-        }
-      ],
-      "name": "Passage 5",
+      "text": "\"It sucked then I was late to work because ________\"",
+      "name": "Neutral Option 1",
       "pid": "5",
       "position": {
-        "x": "525",
+        "x": "700",
         "y": "400"
-      }
+      },
+      "tags": ["Neutral-Path"]
     },
     {
-      "text": "This is a bad end",
-      "name": "Bad End 1",
+      "text": "\"spilled my coffee\"",
+      "name": "Neutral option 2",
       "pid": "6",
       "position": {
         "x": "650",
-        "y": "400"
-      }
+        "y": "550"
+      },
+      "tags": ["Neutral-Path"]
     },
     {
-      "text": "Only one choice here __.\n[[Choice 1 ->Bad End 1]]",
+      "text": "\"You wouldn't believe the day I had, I _________ this morning.\"\n\n[[Bombed the skate park->Bad End 1]] \n\n[[forgot my wallet->Neutral Option 1]] \n\n[[spilled my coffee->Neutral Option 1]] \n\n[[Fought a wild racc0on to get in my car->Good Option 1]]",
       "links": [
         {
-          "name": "Choice 1 ",
+          "name": "Bombed the skate park",
           "link": "Bad End 1",
-          "pid": "6"
+          "pid": "1"
+        },
+        {
+          "name": "forgot my wallet",
+          "link": "Neutral Option 1",
+          "pid": "5"
+        },
+        {
+          "name": "spilled my coffee",
+          "link": "Neutral Option 1",
+          "pid": "5"
+        },
+        {
+          "name": "Fought a wild racc0on to get in my car",
+          "link": "Good Option 1",
+          "pid": "4"
         }
       ],
-      "name": "Passage 6",
+      "name": "Neutral start",
       "pid": "7",
       "position": {
-        "x": "400",
-        "y": "525"
-      }
+        "x": "625",
+        "y": "250"
+      },
+      "tags": ["Neutral-Path"]
     },
     {
-      "text": "Good Job",
-      "name": "Good End 1",
+      "text": "User Licensed Agreement, by using our services you acknowledge that everything you do is spied on.\n\n\n\n[[Start Call ->Neutral start]]\n\n[[Close App ->Easter eggs]]",
+      "links": [
+        {
+          "name": "Start Call ",
+          "link": "Neutral start",
+          "pid": "7"
+        },
+        {
+          "name": "Close App ",
+          "link": "Easter eggs",
+          "pid": "3"
+        }
+      ],
+      "name": "Terms and Services",
       "pid": "8",
       "position": {
-        "x": "275",
-        "y": "400"
-      }
-    },
-    {
-      "text": "Another good end, good job.",
-      "name": "Good End 2",
-      "pid": "9",
-      "position": {
-        "x": "150",
-        "y": "350"
-      }
+        "x": "400",
+        "y": "150"
+      },
+      "tags": ["Menu-page"]
     }
   ],
   "name": "Don't Get Swatted",
-  "startnode": "1",
+  "startnode": "8",
   "creator": "Twine",
   "creator-version": "2.9.2",
-  "ifid": "8745694F-1A10-4637-9987-B55921071C60"
+  "ifid": "419EBCA5-F813-4D49-AFBA-68CCC88E587D"
 }
