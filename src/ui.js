@@ -40,14 +40,15 @@ class WordPicker extends HTMLElement {
 
     let reticule = this.reticule = document.getElementById("wordsLineReticule");
 
-    this.addEventListener("click", this);
-    this.addEventListener('keypress', this);
+    document.addEventListener("click", this);
+    document.addEventListener('keypress', this);
   }
   updateWords(words) {
     // wipe out the previous child elements
     this.lineElem.textContent = "";
     this.lineRect = new DOMRect();
     this.wordOffsets = [];
+    this.wordCount = 0;
     this.classList.toggle("empty", !words?.length);
     if (!words) {
       return;
@@ -76,8 +77,8 @@ class WordPicker extends HTMLElement {
         x = rect.x - this.lineRect.x;
         if (i == wordCount -1) {
           endX = Math.max(lastWidth, x + rect.width);
-          // this.lineElem.children[i].style.outline = "1px solid black";
         }
+        // this.lineElem.children[i].style.outline = "1px solid black";
         this.wordOffsets.push({x, width: rect.width});
       }
       this.startSpin(0, endX);
@@ -120,10 +121,9 @@ class WordPicker extends HTMLElement {
   getSelectedChild() {
     let offsetX = 0;
     let selectedChild = this.lineElem.firstElementChild;
-    this.wordOffsets
     for (let i = 0; i < this.wordCount; i++) {
-      let offsetX = this.wordOffsets[i];
-      if (this.spinX <= offsetX) {
+      let offsetX = this.wordOffsets[i].x;
+      if (this.spinX > offsetX && this.spinX < offsetX + this.wordOffsets[i].width) {
         selectedChild = this.lineElem.children[i];
         break;
       }
