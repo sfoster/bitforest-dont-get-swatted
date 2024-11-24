@@ -17,7 +17,6 @@ body {
 }
 
 #backdrop {
-  position: center;
   width: 100%;
   aspect-ratio: 16/9;
   background: transparent no-repeat center center;
@@ -50,21 +49,24 @@ main {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 2.2em;
+  font-size: 3vw;
   color: white;
 }
 
 #wordPicker {
-  bottom: 0;
+  position: absolute;
+  right: 0;
+  bottom: 6.5%;
+  height: 19%;
+  width: 58%;
+
   box-sizing: border-box;
   font-size: 2em;
   min-height: 3rem;
   background-color: rgba(0, 0, 0, 0.3);
   color: white;
   outline: 1px dotted white;
-  width: 8em;
   padding: 8px 4px;
-  position: relative;
   white-space: nowrap;
   overflow: hidden;
 }
@@ -95,7 +97,7 @@ main {
 #wordsLine {
   position: absolute;
   top: 0;
-  left: 0;
+  right: 0;
 }
 
 #wordsLine > .word {
