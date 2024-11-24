@@ -8,13 +8,22 @@
   <script src="./main.js" type="module"></script>
 </head>
 <body>
-  <div id="backdrop"></div>
-  <main id="stage">
-    <div id="currentPrompt"></div>
+  <main id="stage" class="grid-layer-stack">
+    <div id="pageBackdrop" class="backdrop layer"></div>
+    <section class="layer">
+      <div class="prompt-outer">
+        <div id="currentPrompt" class="prompt-inner">User Licensed Agreement, by using our services you acknowledge that everything you do is spyed on.</div>
+      </div>
+      <div id="selection" class="selection-outer layer-stack">
+        <div id="selectionBackdrop" class="backdrop layer"></div>
+
+        <section id="wordsLineReticule" class="letter-box layer">
+          <div class="left"></div>
+          <img src="./images/CursorBLue.png" class="cursor">
+          <div class="right"></div>
+        </section>
+      </div>
+    </section>
   </main>
-  
-  <footer id="toolTray">
-    <button class="toolTrayItem"><span>Start</span></button>
-  </footer>
 </body>
 </html>

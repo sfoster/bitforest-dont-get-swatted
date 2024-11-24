@@ -11,7 +11,7 @@ function createDiv(id, className) {
 
 class LetterBox extends HTMLElement {
   connectedCallback() {
-    for (let edge of ["top", "right", "bottom", "left", "center"]) {
+    for (let edge of ["right", "left", "cursor"]) {
       this[edge] = this.appendChild(createDiv("", edge));
     }
   }
@@ -22,16 +22,25 @@ class WordPicker extends HTMLElement {
   scrollSpeed = 0.5;
   wordCount = 0;
 
+/*
+<div id="wordsLine" style="transform: translateX(-120.2px);">
+  <div class="word" data-identifier="20">Some sentence</div>
+  <div class="word" data-identifier="9">Another set of words after it.</div>
+  <div class="word" data-identifier="20">More words I think</div>
+  <div class="word" data-identifier="21">Second to last choice</div>
+  <div class="word" data-identifier="22">The final choice</div>
+</div>
+
+
+*/
+
   connectedCallback() {
     let line = this.lineElem = createDiv("wordsLine");
     this.appendChild(line);
 
-    let reticule = this.reticule = document.createElement("letter-box");
-    reticule.id = "wordsLineReticule";
-    this.appendChild(reticule);
+    let reticule = this.reticule = document.getElementById("wordsLineReticule");
 
     this.addEventListener("click", this);
-    // this.addEventListener('click', this);
     this.addEventListener('keypress', this);
   }
   updateWords(words) {
@@ -150,10 +159,17 @@ export class UI {
   initialize() {
     this.currentPrompt = document.getElementById('currentPrompt');
     let picker = (this.wordPicker = document.createElement('word-picker'));
+
     picker.id = 'wordPicker';
+    picker.classList.add("selection-inner");
+    picker.classList.add("layer");
+
     picker.tabIndex = -1;
 
-    this.currentPrompt.parentElement.appendChild(picker);
+    const selectionElement = document.getElementById("selection");
+    const reticuleElement = document.getElementById("wordsLineReticule");
+
+    selectionElement.insertBefore(picker, reticuleElement);
     return new Promise((resolve) => requestAnimationFrame(res => {
         picker.focus();
         resolve();
@@ -182,7 +198,7 @@ export class UI {
     this.wordPicker.updateWords(words);
   }
   updateBackground(filename) {
-    let backdrop = document.getElementById("backdrop");
+    let backdrop = document.getElementById("pageBackdrop");
     backdrop.classList.add("transitioning");
     backdrop.addEventListener("transitionend", () => {
       backdrop.style.backgroundImage = 'url(' + filename + ')';

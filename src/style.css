@@ -16,59 +16,101 @@ body {
   height: 100vh;
 }
 
-#backdrop {
-  width: 100%;
-  aspect-ratio: 16/9;
-  background: transparent no-repeat center center;
-  will-change: opacity, background-image;
-  transition: opacity 1.2s;
-  background-size: 100% auto;
-  background-position: center;
-  background-repeat: no-repeat;
-}
-#backdrop.transitioning {
-  opacity: 0.3;
-  transition: opacity 0.2s;
-}
-
 main {
   width: 100%;
   aspect-ratio: 16/9;
   position: absolute;
 }
 
-#currentPrompt {
+.grid-layer-stack {
+  display: grid;
+  position: relative;
+}
+.grid-layer-stack > .layer {
+  grid-column: 1 / -1;  /* Spans from the first to the last column line */
+  grid-row: 1 / -1;     /* Spans from the first to the last row line */
+  z-index: 0;
+  min-height: 0;
+}
+.grid-layer-stack > .layer[hidden] {
+  visibility: collapse;
+}
+
+.backdrop {
+  width: 100%;
+  background-size: 100% auto;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+#pageBackdrop {
+  will-change: opacity, background-image;
+  transition: opacity 1.2s;
+}
+#pageBackdrop.transitioning {
+  opacity: 0.3;
+  transition: opacity 0.2s;
+}
+
+.prompt-outer {
   position: absolute;
   box-sizing: border-box;
   top: 6.5%;
   right: 2.2%;
-  height: 44.5%;
+  height: 45.5%;
   width: 52%;
   padding: 2%;
-  outline: none;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 3vw;
+
+  background-image: linear-gradient(to bottom, #ef82d2, #603f88);
+  border: solid 6px #cfbf62;
+  border-radius: 10px;
+}
+.prompt-inner {
   color: white;
 }
 
-#wordPicker {
+.layer-stack {
+  position: relative;
+}
+.layer-stack > .layer {
+  position: absolute;
+  top: 0; bottom: 0; right: 0; left: 0;
+  z-index: 0;
+}
+.layer-stack > .layer[hidden] {
+  visibility: collapse;
+}
+
+#selection.selection-outer {
   position: absolute;
   right: 0;
-  bottom: 6.5%;
-  height: 19%;
+  bottom: 0;
+  height: 30%;
   width: 58%;
+}
+.selection-inner {
+}
 
+#selectionBackdrop {
+  top: 8%;
+  bottom: 8%;
+  background: url('./images/gold_rolo_complete.png') no-repeat;
+  background-size: cover;
+}
+
+#wordPicker {
   box-sizing: border-box;
   font-size: 2em;
   min-height: 3rem;
-  background-color: rgba(0, 0, 0, 0.3);
   color: white;
-  outline: 1px dotted white;
-  padding: 8px 4px;
+  padding: 0 4px;
   white-space: nowrap;
   overflow: hidden;
+  top: 33%;
 }
 #wordPicker.empty {
   visibility: hidden;
@@ -76,26 +118,34 @@ main {
 
 #wordsLineReticule {
   position: absolute;
-  width: 100%;
-  height: 100%;
-  z-index: 1;
-  top: 0;
-  left: 0;
-  box-sizing: border-box;
-}
-#wordsLineReticule:is(:hover, :focus) .center {
-  outline: 1px solid cyan;
-}
-#wordsLineReticule:active .center {
-  outline: 1px solid blue;
 }
 
-#wordsLineReticule .center {
-  outline: 1px solid black;
+#wordsLineReticule > * {
+  user-select: none;
+  pointer-events: none;
+  position: absolute;
+  top: 0; bottom: 0;
+  width: 33.33%;
+}
+#wordsLineReticule > .cursor {
+  pointer-events: auto;
+  background-size: cover;
+  aspect-ratio: 2/1;
+  width: 61%;
+  left: 26%;
+  top: -3%;
+  bottom: 0;
+  position: absolute;
+}
+#wordsLineReticule > .left {
+  left: 0;
+}
+#wordsLineReticule > .right {
+  right: 0;
 }
 
 #wordsLine {
-  position: absolute;
+  position: relative;
   top: 0;
   right: 0;
 }
@@ -110,47 +160,3 @@ main {
   padding: 6px;
 }
 
-letter-box {
-  position: relative;
-}
-letter-box > * {
-  position: absolute;
-  user-select: none;
-  pointer-events: none;
-  background-color: rgba(255, 255, 255, 0.3);
-}
-letter-box > .center {
-  pointer-events: auto;
-  width: 50%;
-  left: 25%;
-  right: 25%;
-  top: 3px;
-  bottom: 3px;
-  background-color: transparent;
-}
-letter-box > .left,
-letter-box > .right {
-  width: 25%;
-  height: 100%;
-}
-letter-box > .left {
-  left: 0;
-}
-letter-box > .right {
-  right: 0;
-}
-letter-box > .top,
-letter-box > .bottom {
-  width: 100%;
-  height: 3px;
-}
-letter-box > .top {
-  top: 0;
-}
-letter-box > .bottom {
-  bottom: 0;
-}
-
-#toolTray {
-  display: none;
-}
