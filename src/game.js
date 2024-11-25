@@ -16,7 +16,7 @@ export class Game {
     await this.ui.initialize();
     document.addEventListener('user-choice', this);
     this.twineData = this.assets.get('stories');
-    this.imageNames = this.assets.get('images');
+    this.backgroundNames = this.assets.get('backgrounds');
     console.log('Game start, with data:', this.twineData);
     // TODO: Figure out what the first state needs to be, and tell the UI about it
 
@@ -37,9 +37,9 @@ export class Game {
     // Get outcome tag
     let outcome = this.countOutcome(currentPassage.tags);
     if (outcome == null) {
-      this.ui.updateBackground(this.imageNames['default']);
+      this.ui.updateBackground(this.backgroundNames.get('default'));
     } else {
-      this.ui.updateBackground(this.imageNames[outcome]);
+      this.ui.updateBackground(this.backgroundNames.get(outcome));
     }
     console.log('Outcome: ' + outcome);
 
