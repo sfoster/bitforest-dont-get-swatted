@@ -1,3 +1,9 @@
 {
-  "default": "images/main_background.png"
+  "default": "images/main_background.png",
+  "GOOD": "images/apt_end.png",
+  "BAD-END": "images/bad_end_1.png",
+  "EGG": "images/bad_end_2.png",
+  "Neutral-Path": "images/apt_end.png",
+  "Neutral-End": "images/apt_end.png",
+  "Good-End": "images/camp_end.png"
 }

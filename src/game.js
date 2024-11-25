@@ -33,34 +33,40 @@ export class Game {
   handleChoice(pid) {
     // Process id starts at 1, convert to 0 indexing
     let currentPassage = this.twineData.passages[pid - 1];
+
+    // Get outcome tag
+    let outcome = this.countOutcome(currentPassage.tags);
+    if (outcome == null) {
+      this.ui.updateBackground(this.imageNames['default']);
+    } else {
+      this.ui.updateBackground(this.imageNames[outcome]);
+    }
+    console.log('Outcome: ' + outcome);
+
     this.ui.updatePrompt(currentPassage.text.split('[[')[0]);
     this.ui.updateWordChoices(currentPassage.links);
-    // Use default image name if none is spcecified
-    if (typeof this.imageNames[pid] == 'undefined') {
-      this.imageNames[pid] = this.imageNames['default'];
-    }
-    this.ui.updateBackground(this.imageNames[pid]);
-    let outcome = this.countOutcome(currentPassage.tags);
-    console.log('Outcome: ' + outcome);
   }
 
   countOutcome(tags) {
     if (tags.includes('BAD-END')) {
       this.outcomes.bad += 1;
       return 'BAD-END';
-    } else if (tags.includes('GOOD')) {
-      this.outcomes.good += 1;
-      return 'GOOD';
     } else if (tags.includes('Neutral-Path')) {
       this.outcomes.neutral += 1;
       return 'Neutral-Path';
     } else if (tags.includes('Good-End')) {
       this.outcomes.goodEnd += 1;
-      return 'GOOD-END';
+      return 'Good-End';
     } else if (tags.includes('Neutral-End')) {
       this.outcomes.neutralEnd += 1;
-      return 'NEUTRAL END';
+      return 'Neutral-End';
+    } else if (tags.includes('GOOD')) {
+      this.outcomes.good += 1;
+      return 'GOOD';
+    } else if (tags.includes('EGG')) {
+      return 'EGG';
     }
+
     return null;
   }
 }
