@@ -3,8 +3,9 @@ import { UI } from './ui.js';
 
 /*
   Bootstrap everything:
-  - Make the top-level class instances
+    Load the assets
   - Configure environment and data sources
+  - Instantiate the top-level class instances
   - Kick things off
 */
 
@@ -37,24 +38,6 @@ const assetsMap = window.assetsMap = new Map([
   ["animations", animationsMap]
 ]);
 
-function loadManifest(name, url) {
-  return loadJSON(url).then(data => {
-    manifestsMap.set(name, data);
-  });
-}
-
-function loadBackgroundImage(name, url) {
-  return loadImage(url).then(() => {
-    backgroundsMap.set(name, data);
-  });
-}
-
-function loadAnimationImage(name, url) {
-  return loadImage(url).then(() => {
-    animationsMap.set(name, data);
-  });
-}
-
 function loadAsset(url, type, name, collection) {
   const collectionMap = collection ? assetsMap.get(collection) : assetsMap;
   switch (type) {
@@ -68,14 +51,17 @@ function loadAsset(url, type, name, collection) {
       });
   }
 }
+
 const assetsLoaded = (async function loadAssets() {
   // Load all the JSON manifests
+  console.log("Loading the manifests");
   await Promise.all([
     loadAsset("./backgrounds.json", "json", "backgrounds", "manifests"),
     loadAsset("./animations.json", "json", "animations", "manifests"),
   ]);
 
   // Load the stories data
+  console.log("Loading the twine data");
   await loadAsset("./stories.json", "json", "stories");
 
   // Load all the background images
@@ -87,15 +73,17 @@ const assetsLoaded = (async function loadAssets() {
   for (let [name, url] of Object.entries(assetsMap.get("manifests").get("animations"))) {
     loadedPromises.push(loadAsset(url, "image", name, "animations"));
   }
-  await loadedPromises;
+  console.log("Loading the images");
+  await Promise.all(loadedPromises);
 })();
 
 document.addEventListener(
   'DOMContentLoaded',
   async () => {
+    console.log("start DOMContentLoaded, waiting for assetsLoaded");
     await assetsLoaded;
 
-    let ui = (window.ui = new UI());
+    let ui = (window.ui = new UI(assetsMap));
     let game = (window.game = new Game({
       ui,
       assetsMap
