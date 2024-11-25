@@ -35,6 +35,10 @@ export class Game {
     let currentPassage = this.twineData.passages[pid - 1];
     this.ui.updatePrompt(currentPassage.text.split('[[')[0]);
     this.ui.updateWordChoices(currentPassage.links);
+    // Use default image name if none is spcecified
+    if (typeof this.imageNames[pid] == 'undefined') {
+      this.imageNames[pid] = this.imageNames['default'];
+    }
     this.ui.updateBackground(this.imageNames[pid]);
     let outcome = this.countOutcome(currentPassage.tags);
     console.log('Outcome: ' + outcome);
