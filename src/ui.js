@@ -1,5 +1,5 @@
 function createDiv(id, className) {
-  let elem = document.createElement("div");
+  let elem = document.createElement('div');
   if (className) {
     elem.className = className;
   }
@@ -11,18 +11,18 @@ function createDiv(id, className) {
 
 class LetterBox extends HTMLElement {
   connectedCallback() {
-    for (let edge of ["right", "left", "cursor"]) {
-      this[edge] = this.appendChild(createDiv("", edge));
+    for (let edge of ['right', 'left', 'cursor']) {
+      this[edge] = this.appendChild(createDiv('', edge));
     }
   }
 }
 customElements.define('letter-box', LetterBox);
 
 class WordPicker extends HTMLElement {
-  scrollSpeed = 0.5;
+  scrollSpeed = 1.5;
   wordCount = 0;
 
-/*
+  /*
 <div id="wordsLine" style="transform: translateX(-120.2px);">
   <div class="word" data-identifier="20">Some sentence</div>
   <div class="word" data-identifier="9">Another set of words after it.</div>
@@ -35,26 +35,27 @@ class WordPicker extends HTMLElement {
 */
 
   connectedCallback() {
-    let line = this.lineElem = createDiv("wordsLine");
+    let line = (this.lineElem = createDiv('wordsLine'));
     this.appendChild(line);
 
-    let reticule = this.reticule = document.getElementById("wordsLineReticule");
-    this.cursorElem = this.reticule.querySelector(".cursor");
-    document.addEventListener("click", this);
+    let reticule = (this.reticule =
+      document.getElementById('wordsLineReticule'));
+    this.cursorElem = this.reticule.querySelector('.cursor');
+    document.addEventListener('click', this);
     document.addEventListener('keypress', this);
   }
   updateWords(words) {
     // wipe out the previous child elements
-    this.lineElem.textContent = "";
+    this.lineElem.textContent = '';
     this.lineRect = new DOMRect();
     this.wordOffsets = [];
     this.wordCount = 0;
-    this.classList.toggle("empty", !words?.length);
+    this.classList.toggle('empty', !words?.length);
     if (!words) {
       return;
     }
     // create choice boxes
-    const wordCount = this.wordCount = words.length;
+    const wordCount = (this.wordCount = words.length);
     // We clone the last couple words so we can loop around without a visible break
     const lineElements = [...words, words[0], words[1]];
     const fragment = document.createDocumentFragment();
@@ -69,24 +70,33 @@ class WordPicker extends HTMLElement {
 
     requestAnimationFrame(() => {
       this.lineRect = this.lineElem.getBoundingClientRect();
-      let selectionX = document.getElementById("selection").getBoundingClientRect().x
+      let selectionX = document
+        .getElementById('selection')
+        .getBoundingClientRect().x;
       let cursorRect = this.cursorElem.getBoundingClientRect();
-      this.cursorRectOffsetX = cursorRect.x - selectionX + cursorRect.width/2;
+      this.cursorRectOffsetX = cursorRect.x - selectionX + cursorRect.width / 2;
 
       let lastWidth = 0;
-      let rect, x = 0, endX = 0;
+      let rect,
+        x = 0,
+        endX = 0;
       this.wordOffsets = [];
       for (let i = 0; i < wordCount; i++) {
         rect = this.lineElem.children[i].getBoundingClientRect();
         x = rect.x - this.lineRect.x;
-        if (i == wordCount -1) {
+        if (i == wordCount - 1) {
           endX = Math.max(lastWidth, x + rect.width);
         }
         // this.lineElem.children[i].style.outline = "1px solid black";
-        this.wordOffsets.push({x, width: rect.width});
+        this.wordOffsets.push({ x, width: rect.width });
       }
       this.startSpin(0, endX);
-      console.log("updateWords, ", this.wordOffsets, this.spinX, this.wordCount);
+      console.log(
+        'updateWords, ',
+        this.wordOffsets,
+        this.spinX,
+        this.wordCount
+      );
     });
   }
   adjustScrollSpeed(newSpeed) {
@@ -129,7 +139,10 @@ class WordPicker extends HTMLElement {
     let currentCenterX = this.spinX + this.cursorRectOffsetX;
     for (let i = 0; i < this.wordCount; i++) {
       let offsetX = this.wordOffsets[i].x;
-      if (currentCenterX > offsetX && currentCenterX < offsetX + this.wordOffsets[i].width) {
+      if (
+        currentCenterX > offsetX &&
+        currentCenterX < offsetX + this.wordOffsets[i].width
+      ) {
         selectedChild = this.lineElem.children[i];
         break;
       }
@@ -139,9 +152,9 @@ class WordPicker extends HTMLElement {
   handleEvent(event) {
     let selectedChild;
     switch (event.type) {
-      case "click":
-        // fallthrough
-      case "keypress": {
+      case 'click':
+      // fallthrough
+      case 'keypress': {
         selectedChild = this.getSelectedChild();
         event.preventDefault();
         break;
@@ -167,19 +180,21 @@ export class UI {
     let picker = (this.wordPicker = document.createElement('word-picker'));
 
     picker.id = 'wordPicker';
-    picker.classList.add("selection-inner");
-    picker.classList.add("layer");
+    picker.classList.add('selection-inner');
+    picker.classList.add('layer');
 
     picker.tabIndex = -1;
 
-    const selectionElement = document.getElementById("selection");
-    const reticuleElement = document.getElementById("wordsLineReticule");
+    const selectionElement = document.getElementById('selection');
+    const reticuleElement = document.getElementById('wordsLineReticule');
 
     selectionElement.insertBefore(picker, reticuleElement);
-    return new Promise((resolve) => requestAnimationFrame(res => {
+    return new Promise((resolve) =>
+      requestAnimationFrame((res) => {
         picker.focus();
         resolve();
-    }));
+      })
+    );
   }
   updatePrompt(text) {
     this.currentPrompt.textContent = text;
@@ -204,11 +219,15 @@ export class UI {
     this.wordPicker.updateWords(words);
   }
   updateBackground(filename) {
-    let backdrop = document.getElementById("pageBackdrop");
-    backdrop.classList.add("transitioning");
-    backdrop.addEventListener("transitionend", () => {
-      backdrop.style.backgroundImage = 'url(' + filename + ')';
-      backdrop.classList.remove("transitioning");
-    }, { once: true });
+    let backdrop = document.getElementById('pageBackdrop');
+    backdrop.classList.add('transitioning');
+    backdrop.addEventListener(
+      'transitionend',
+      () => {
+        backdrop.style.backgroundImage = 'url(' + filename + ')';
+        backdrop.classList.remove('transitioning');
+      },
+      { once: true }
+    );
   }
 }
