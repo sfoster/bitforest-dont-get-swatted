@@ -20,7 +20,7 @@ export class Game {
     console.log('Game start, with data:', this.twineData);
     // TODO: Figure out what the first state needs to be, and tell the UI about it
 
-    this.handleChoice(21);
+    this.handleChoice(this.twineData.startnode);
   }
   handleEvent(event) {
     if (event.type == 'user-choice') {
@@ -50,10 +50,10 @@ export class Game {
     } else if (tags.includes('Neutral-Path')) {
       this.outcomes.neutral += 1;
       return 'Neutral-Path';
-    } else if (tags.includes('GOOD-END')) {
+    } else if (tags.includes('Good-End')) {
       this.outcomes.goodEnd += 1;
       return 'GOOD-END';
-    } else if (tags.includes('NEUTRAL-END')) {
+    } else if (tags.includes('Neutral-End')) {
       this.outcomes.neutralEnd += 1;
       return 'NEUTRAL END';
     }
