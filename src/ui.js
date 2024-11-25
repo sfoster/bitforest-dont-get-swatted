@@ -39,7 +39,7 @@ class WordPicker extends HTMLElement {
     this.appendChild(line);
 
     let reticule = this.reticule = document.getElementById("wordsLineReticule");
-
+    this.cursorElem = this.reticule.querySelector(".cursor");
     document.addEventListener("click", this);
     document.addEventListener('keypress', this);
   }
@@ -69,6 +69,10 @@ class WordPicker extends HTMLElement {
 
     requestAnimationFrame(() => {
       this.lineRect = this.lineElem.getBoundingClientRect();
+      let selectionX = document.getElementById("selection").getBoundingClientRect().x
+      let cursorRect = this.cursorElem.getBoundingClientRect();
+      this.cursorRectOffsetX = cursorRect.x - selectionX + cursorRect.width/2;
+
       let lastWidth = 0;
       let rect, x = 0, endX = 0;
       this.wordOffsets = [];
@@ -82,6 +86,7 @@ class WordPicker extends HTMLElement {
         this.wordOffsets.push({x, width: rect.width});
       }
       this.startSpin(0, endX);
+      console.log("updateWords, ", this.wordOffsets, this.spinX, this.wordCount);
     });
   }
   adjustScrollSpeed(newSpeed) {
@@ -121,9 +126,10 @@ class WordPicker extends HTMLElement {
   getSelectedChild() {
     let offsetX = 0;
     let selectedChild = this.lineElem.firstElementChild;
+    let currentCenterX = this.spinX + this.cursorRectOffsetX;
     for (let i = 0; i < this.wordCount; i++) {
       let offsetX = this.wordOffsets[i].x;
-      if (this.spinX > offsetX && this.spinX < offsetX + this.wordOffsets[i].width) {
+      if (currentCenterX > offsetX && currentCenterX < offsetX + this.wordOffsets[i].width) {
         selectedChild = this.lineElem.children[i];
         break;
       }
