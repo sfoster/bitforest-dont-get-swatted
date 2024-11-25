@@ -11,7 +11,7 @@ function createDiv(id, className) {
 
 class LetterBox extends HTMLElement {
   connectedCallback() {
-    for (let edge of ["top", "right", "bottom", "left", "center"]) {
+    for (let edge of ["right", "left", "cursor"]) {
       this[edge] = this.appendChild(createDiv("", edge));
     }
   }
@@ -22,23 +22,33 @@ class WordPicker extends HTMLElement {
   scrollSpeed = 0.5;
   wordCount = 0;
 
+/*
+<div id="wordsLine" style="transform: translateX(-120.2px);">
+  <div class="word" data-identifier="20">Some sentence</div>
+  <div class="word" data-identifier="9">Another set of words after it.</div>
+  <div class="word" data-identifier="20">More words I think</div>
+  <div class="word" data-identifier="21">Second to last choice</div>
+  <div class="word" data-identifier="22">The final choice</div>
+</div>
+
+
+*/
+
   connectedCallback() {
     let line = this.lineElem = createDiv("wordsLine");
     this.appendChild(line);
 
-    let reticule = this.reticule = document.createElement("letter-box");
-    reticule.id = "wordsLineReticule";
-    this.appendChild(reticule);
-
-    this.addEventListener("click", this);
-    // this.addEventListener('click', this);
-    this.addEventListener('keypress', this);
+    let reticule = this.reticule = document.getElementById("wordsLineReticule");
+    this.cursorElem = this.reticule.querySelector(".cursor");
+    document.addEventListener("click", this);
+    document.addEventListener('keypress', this);
   }
   updateWords(words) {
     // wipe out the previous child elements
     this.lineElem.textContent = "";
     this.lineRect = new DOMRect();
     this.wordOffsets = [];
+    this.wordCount = 0;
     this.classList.toggle("empty", !words?.length);
     if (!words) {
       return;
@@ -59,6 +69,10 @@ class WordPicker extends HTMLElement {
 
     requestAnimationFrame(() => {
       this.lineRect = this.lineElem.getBoundingClientRect();
+      let selectionX = document.getElementById("selection").getBoundingClientRect().x
+      let cursorRect = this.cursorElem.getBoundingClientRect();
+      this.cursorRectOffsetX = cursorRect.x - selectionX + cursorRect.width/2;
+
       let lastWidth = 0;
       let rect, x = 0, endX = 0;
       this.wordOffsets = [];
@@ -67,11 +81,12 @@ class WordPicker extends HTMLElement {
         x = rect.x - this.lineRect.x;
         if (i == wordCount -1) {
           endX = Math.max(lastWidth, x + rect.width);
-          // this.lineElem.children[i].style.outline = "1px solid black";
         }
+        // this.lineElem.children[i].style.outline = "1px solid black";
         this.wordOffsets.push({x, width: rect.width});
       }
       this.startSpin(0, endX);
+      console.log("updateWords, ", this.wordOffsets, this.spinX, this.wordCount);
     });
   }
   adjustScrollSpeed(newSpeed) {
@@ -111,10 +126,10 @@ class WordPicker extends HTMLElement {
   getSelectedChild() {
     let offsetX = 0;
     let selectedChild = this.lineElem.firstElementChild;
-    this.wordOffsets
+    let currentCenterX = this.spinX + this.cursorRectOffsetX;
     for (let i = 0; i < this.wordCount; i++) {
-      let offsetX = this.wordOffsets[i];
-      if (this.spinX <= offsetX) {
+      let offsetX = this.wordOffsets[i].x;
+      if (currentCenterX > offsetX && currentCenterX < offsetX + this.wordOffsets[i].width) {
         selectedChild = this.lineElem.children[i];
         break;
       }
@@ -150,10 +165,17 @@ export class UI {
   initialize() {
     this.currentPrompt = document.getElementById('currentPrompt');
     let picker = (this.wordPicker = document.createElement('word-picker'));
+
     picker.id = 'wordPicker';
+    picker.classList.add("selection-inner");
+    picker.classList.add("layer");
+
     picker.tabIndex = -1;
 
-    this.currentPrompt.parentElement.appendChild(picker);
+    const selectionElement = document.getElementById("selection");
+    const reticuleElement = document.getElementById("wordsLineReticule");
+
+    selectionElement.insertBefore(picker, reticuleElement);
     return new Promise((resolve) => requestAnimationFrame(res => {
         picker.focus();
         resolve();
@@ -182,7 +204,7 @@ export class UI {
     this.wordPicker.updateWords(words);
   }
   updateBackground(filename) {
-    let backdrop = document.getElementById("backdrop");
+    let backdrop = document.getElementById("pageBackdrop");
     backdrop.classList.add("transitioning");
     backdrop.addEventListener("transitionend", () => {
       backdrop.style.backgroundImage = 'url(' + filename + ')';
