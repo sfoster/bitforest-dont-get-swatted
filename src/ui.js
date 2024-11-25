@@ -19,7 +19,7 @@ class LetterBox extends HTMLElement {
 customElements.define('letter-box', LetterBox);
 
 class WordPicker extends HTMLElement {
-  scrollSpeed = 1.5;
+  scrollSpeed = 5;
   wordCount = 0;
 
   /*
