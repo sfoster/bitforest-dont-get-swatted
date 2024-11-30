@@ -22,6 +22,27 @@ main {
   position: absolute;
 }
 
+button.play {
+  background: rgba(255,255,255,0.1) none;
+  background-size: contain;
+  margin: 0.4em 0;
+  font-size: 3vw;
+  color: white;
+  white-space: nowrap;
+  display: inline-block;
+  padding: 1vh 0.75em 1vh 0.75em;
+  border: 4px solid white;
+  border-radius: 8px;
+}
+button.play.with-audio {
+  background: url("./images/audio.svg") no-repeat;
+}
+.buttons {
+  display: flex;
+  align-items: center;
+  gap: 1em;
+}
+
 image-animation {
   overflow: hidden;
   position: relative;
@@ -34,6 +55,23 @@ image-animation > img {
   height: 100%;
   transform: translateX(0px);
 }
+
+.scene:not(.hidden) {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 1.4s ease-in; /* Customize the duration and timing function as needed */
+}
+
+.scene.hidden {
+  opacity: 0;
+  visibility: hidden;
+  transition: visibility 0s linear 0.5s, opacity 0.5s linear; /* Delay the visibility change until after the opacity transition */
+}
+
+#splash {
+  outline: 4px dotted magenta;
+}
+
 #mouth {
   position: absolute;
   top: 17%;

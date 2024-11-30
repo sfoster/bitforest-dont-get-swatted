@@ -10,7 +10,17 @@
 <body>
   <main id="stage" class="grid-layer-stack">
     <div id="pageBackdrop" class="backdrop layer"></div>
-    <section class="layer">
+    <section class="layer scene hidden" id="splash">
+      <div class="prompt-outer">
+        <div class="prompt-inner">
+          <h2>Splash screen</h2>
+          <footer class="buttons">
+            <button class="play">Begin</button>
+          </footer>
+        </div>
+      </div>
+    </section>
+    <section class="layer scene hidden" id="prompts">
       <div class="prompt-outer">
         <div id="currentPrompt" class="prompt-inner">User Licensed Agreement, by using our services you acknowledge that everything you do is spyed on.</div>
       </div>

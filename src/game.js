@@ -1,20 +1,52 @@
 /*
   The main game logic
-  - Owns the game loop
-  - Handles state changes
+    Owns the game scenes and switches between them
 */
 export class Game {
   constructor({ ui, assetsMap }) {
     this.assets = assetsMap;
     this.ui = ui;
-    this.outcomes = {};
+    this.currentScene = null;
+
+    const splashScene = new SplashScene(this);
+    const choicesScene = new ChoicesScene(this);
+
+    this.scenesMap = new Map();
+    this.scenesMap.set(splashScene.id, splashScene);
+    this.scenesMap.set(choicesScene.id, choicesScene);
   }
-  /*
-   * Kick off the game loop
-   */
+
   async start() {
     await this.ui.initialize();
+    // start at the first scene we registered
+    await this.switchScene(Array.from(this.scenesMap.keys())[0]);
+  }
+
+  async switchScene(id) {
+    const scene = this.scenesMap.get(id);
+    if (this.currentScene === scene) {
+      return;
+    }
+    if (this.currentScene) {
+      await this.currentScene.exit();
+    }
+    this.currentScene = scene;
+    await this.currentScene.enter();
+  }
+}
+
+class ChoicesScene {
+  id = "prompts";
+  constructor(game) {
+    this.ui = game.ui;
+    this.assets = game.assets;
+  }
+
+  async enter() {
+    console.log(`entering ${this.id} scene`);
+    await this.ui.enterScene(this.id);
     document.addEventListener('user-choice', this);
+    this.outcomes = {};
     this.twineData = this.assets.get('stories');
     this.backgroundNames = this.assets.get('backgrounds');
     console.log('Game start, with data:', this.twineData);
@@ -22,6 +54,16 @@ export class Game {
 
     this.handleChoice(this.twineData.startnode);
   }
+
+  async exit() {
+    console.log(`exiting ${this.id} scene`);
+    document.removeEventListener('user-choice', this);
+    // TODO:
+    // stop all the loops and timers
+    this.ui.animateMouth();
+    await this.ui.fadeOut("prompts");
+  }
+
   handleEvent(event) {
     if (event.type == 'user-choice') {
       console.log('Got user choice:', event.detail);
@@ -72,5 +114,38 @@ export class Game {
     }
 
     return null;
+  }
+}
+
+class SplashScene {
+  id = "splash";
+
+  constructor(game) {
+    this.game = game;
+    this.ui = game.ui;
+    this.assets = game.assets;
+  }
+
+  handleEvent(event) {
+    if (event.type == 'user-choice') {
+      // Advance to next scene
+      console.log('Got user choice:', event.detail);
+      this.game.switchScene("prompts");
+    }
+  }
+
+  async enter() {
+    console.log(`entering ${this.id} scene`);
+    const backgrounds = this.assets.get("backgrounds");
+    this.ui.updateBackground(backgrounds.get('default'));
+
+    await this.ui.enterScene(this.id);
+    document.addEventListener('user-choice', this);
+  }
+
+  async exit() {
+    console.log(`exiting ${this.id} scene`);
+    document.removeEventListener('user-choice', this);
+    await this.ui.exitScene("splash");
   }
 }

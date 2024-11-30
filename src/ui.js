@@ -109,8 +109,15 @@ class WordPicker extends HTMLElement {
     let reticule = (this.reticule =
       document.getElementById('wordsLineReticule'));
     this.cursorElem = this.reticule.querySelector('.cursor');
+    this.start();
+  }
+  start() {
     document.addEventListener('click', this);
     document.addEventListener('keypress', this);
+  }
+  stop() {
+    document.removeEventListener('click', this);
+    document.removeEventListener('keypress', this);
   }
   updateWords(words) {
     // wipe out the previous child elements
@@ -244,6 +251,31 @@ class WordPicker extends HTMLElement {
 }
 customElements.define('word-picker', WordPicker);
 
+const splashUI = new (class {
+  start() {
+    document.addEventListener('click', this);
+    document.addEventListener('keypress', this);
+  }
+  stop() {
+    document.removeEventListener('click', this);
+    document.removeEventListener('keypress', this);
+  }
+  handleEvent(event) {
+    if (!event.target.matches("#splash button")) {
+      return;
+    }
+    event.preventDefault();
+    let detail = {
+      id: event.target.id,
+    };
+    this.dispatchUserChoice(detail);
+  }
+  dispatchUserChoice(choiceDetail) {
+    let choiceEvent = new CustomEvent('user-choice', { detail: choiceDetail });
+    document.dispatchEvent(choiceEvent);
+  }
+})();
+
 export class UI {
   constructor(assetsMap) {
     this.assets = assetsMap;
@@ -319,5 +351,45 @@ export class UI {
     let animationSrc = this.assets.get("animations").get(animationName);
     console.log("Animating with:", animationSrc);
     this.mouthAnimation.start(animationSrc, 1000/8, 4);
+  }
+  exitScene(id) {
+    const elem = document.getElementById(id);
+    switch (id) {
+      case "splash":
+        this.wordPicker.stop();
+        break;
+      case "prompts":
+        break;
+    }
+    if (!elem.classList.contains("hidden")) {
+      return new Promise(resolve => {
+        elem.addEventListener("transitionend", event => {
+          resolve();
+        }, { once: true });
+        elem.classList.add("hidden");
+      });
+    }
+    return Promise.resolve();
+  }
+  enterScene(id) {
+    const elem = document.getElementById(id);
+    switch (id) {
+      case "splash":
+        document.querySelector("#splash button").focus();
+        splashUI.start();
+        break;
+      case "prompts":
+        this.wordPicker.start();
+        break;
+    }
+    if (elem.classList.contains("hidden")) {
+      return new Promise(resolve => {
+        elem.addEventListener("transitionend", event => {
+          resolve();
+        }, { once: true });
+        elem.classList.remove("hidden");
+      });
+    }
+    return Promise.resolve();
   }
 }
