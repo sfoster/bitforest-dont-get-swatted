@@ -22,6 +22,29 @@ main {
   position: absolute;
 }
 
+image-animation {
+  overflow: hidden;
+  position: relative;
+  display: block
+}
+image-animation > img {
+  position: absolute;
+  top: 0; left: 0;
+  /* force-scale the image to fit its container */
+  height: 100%;
+  transform: translateX(0px);
+}
+#mouth {
+  position: absolute;
+  top: 17%;
+  left: 14%;
+  height: 46%;
+  aspect-ratio: 1.1/1;
+}
+#mouth:not(.animating) {
+  visibility: hidden;
+}
+
 .grid-layer-stack {
   display: grid;
   position: relative;
