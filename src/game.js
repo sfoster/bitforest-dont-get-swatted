@@ -22,7 +22,7 @@ export class Game {
     await this.switchScene(Array.from(this.scenesMap.keys())[0]);
   }
 
-  async switchScene(id) {
+  async switchScene(id, params = {}) {
     const scene = this.scenesMap.get(id);
     if (this.currentScene === scene) {
       return;
@@ -31,7 +31,7 @@ export class Game {
       await this.currentScene.exit();
     }
     this.currentScene = scene;
-    await this.currentScene.enter();
+    await this.currentScene.enter(params);
   }
 }
 
@@ -42,7 +42,7 @@ class ChoicesScene {
     this.assets = game.assets;
   }
 
-  async enter() {
+  async enter({ startType }) {
     console.log(`entering ${this.id} scene`);
     await this.ui.enterScene(this.id);
     document.addEventListener('user-choice', this);
@@ -52,7 +52,10 @@ class ChoicesScene {
     console.log('Game start, with data:', this.twineData);
     // TODO: Figure out what the first state needs to be, and tell the UI about it
 
-    this.handleChoice(this.twineData.startnode);
+    let startPid = startType == "alt" ?
+      this.twineData.altstartnode :
+      this.twineData.startnode;
+     this.handleChoice(startPid);
   }
 
   async exit() {
@@ -129,8 +132,8 @@ class SplashScene {
   handleEvent(event) {
     if (event.type == 'user-choice') {
       // Advance to next scene
-      console.log('Got user choice:', event.detail);
-      this.game.switchScene("prompts");
+      console.log('Got user choice:', );
+      this.game.switchScene("prompts", { ...event.detail });
     }
   }
 

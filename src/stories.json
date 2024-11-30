@@ -586,7 +586,8 @@
     }
   ],
   "name": "Don't Get Swatted",
-  "startnode": "26",
+  "startnode": "25",
+  "altstartnode": "24",
   "creator": "Twine",
   "creator-version": "2.9.2",
   "ifid": "419EBCA5-F813-4D49-AFBA-68CCC88E587D"

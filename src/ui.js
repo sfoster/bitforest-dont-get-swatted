@@ -266,16 +266,19 @@ const splashUI = new (class {
         break;
       case "splash-close":
         // TODO: play with the easter-egg initial prompt
+        event.preventDefault();
+        this.dispatchUserChoice({
+          startType: "alt",
+        });
         break;
       case "audioToggle":
         // TODO: enable audio
         break;
       default:
         event.preventDefault();
-        let detail = {
-          id: event.target.id,
-        };
-        this.dispatchUserChoice(detail);
+        this.dispatchUserChoice({
+          startType: "default",
+        });
         break;
     }
   }
