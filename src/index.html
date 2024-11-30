@@ -11,13 +11,19 @@
   <main id="stage" class="grid-layer-stack">
     <div id="pageBackdrop" class="backdrop layer"></div>
     <section class="layer scene hidden" id="splash">
-      <div class="prompt-outer">
-        <div class="prompt-inner">
-          <h2>Splash screen</h2>
-          <footer class="buttons">
-            <button class="play">Begin</button>
-          </footer>
-        </div>
+      <div id="splash-screen">
+        <header class="buttons">
+          <div id="splash-maximize" class="invisible-btn"></div>
+          <div id="splash-close" class="invisible-btn"></div>
+        </header>
+        <section id="eula-container">
+          <h2>User License Agreement</h2>
+          <p>By using our services you acknowledge that everything you do is spied on.</p>
+        </section>
+        <footer class="buttons">
+          <input type="checkbox" id="audioToggle">
+          <button id="beginButton" class="play">Begin</button>
+        </footer>
       </div>
     </section>
     <section class="layer scene hidden" id="prompts">

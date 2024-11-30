@@ -22,6 +22,9 @@ main {
   position: absolute;
 }
 
+h2 {
+  margin-block: 0 0.5em;
+}
 button.play {
   background: rgba(255,255,255,0.1) none;
   background-size: contain;
@@ -34,13 +37,16 @@ button.play {
   border: 4px solid white;
   border-radius: 8px;
 }
-button.play.with-audio {
-  background: url("./images/audio.svg") no-repeat;
-}
+
 .buttons {
   display: flex;
   align-items: center;
   gap: 1em;
+}
+.invisible-btn {
+  opacity: 0.01;
+  overflow: hidden;
+  cursor: pointer;
 }
 
 image-animation {
@@ -68,20 +74,67 @@ image-animation > img {
   transition: visibility 0s linear 0.5s, opacity 0.5s linear; /* Delay the visibility change until after the opacity transition */
 }
 
+/*
+ * Splash/EULA scene
+ */
 #splash {
-  outline: 4px dotted magenta;
+  display: flex;
+  width: 90%;
+  justify-content: center;
+}
+#splash-screen {
+  aspect-ratio: 1 / 1;
+  border-radius: 14px;
+  background: linear-gradient(#db207a, #9547af);
+  display: flex;
+  flex-direction: column;
+}
+#eula-container {
+  padding: 1em;
+  font-size: 3vw;
+  overflow-y: visible;
+  flex: auto;
+  font-size: 3vw;
+  color: white;
+}
+#splash header {
+  height: 5%;
+  background-image: url("images/window_controls.png");
+  background-repeat: no-repeat;
+  background-position: top 0px right 14px;
+  background-size: contain;
+  padding-inline: 14px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 0;
+}
+#splash footer.buttons {
+  border-top: 1px solid white;
+  height: 16%;
+  box-sizing: border-box;
+  display: flex;
+  padding-inline: 24px;
+  justify-content: space-evenly;
+}
+#splash-maximize {
+  width: 6.5%;
+  aspect-ratio: 1/1;
+}
+#splash-close {
+  width: 6.5%;
+  aspect-ratio: 1/1;
+}
+#audioToggle {
+  appearance: none;
+  margin: 0;
+  width: 10%;
+  aspect-ratio: 1/1;
+  background: url("./images/audio-muted.svg") no-repeat;
+}
+#audioToggle:checked {
+  background: url("./images/audio.svg") no-repeat;
 }
 
-#mouth {
-  position: absolute;
-  top: 17%;
-  left: 14%;
-  height: 46%;
-  aspect-ratio: 1.1/1;
-}
-#mouth:not(.animating) {
-  visibility: hidden;
-}
 
 .grid-layer-stack {
   display: grid;
@@ -147,6 +200,20 @@ image-animation > img {
 }
 .layer-stack > .layer[hidden] {
   visibility: collapse;
+}
+
+/*
+ * Main promps scene
+ */
+#mouth {
+  position: absolute;
+  top: 17%;
+  left: 14%;
+  height: 46%;
+  aspect-ratio: 1.1/1;
+}
+#mouth:not(.animating) {
+  visibility: hidden;
 }
 
 #selection.selection-outer {

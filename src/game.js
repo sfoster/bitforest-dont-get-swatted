@@ -137,7 +137,7 @@ class SplashScene {
   async enter() {
     console.log(`entering ${this.id} scene`);
     const backgrounds = this.assets.get("backgrounds");
-    this.ui.updateBackground(backgrounds.get('default'));
+    this.ui.updateBackground("");
 
     await this.ui.enterScene(this.id);
     document.addEventListener('user-choice', this);

@@ -109,7 +109,6 @@ class WordPicker extends HTMLElement {
     let reticule = (this.reticule =
       document.getElementById('wordsLineReticule'));
     this.cursorElem = this.reticule.querySelector('.cursor');
-    this.start();
   }
   start() {
     document.addEventListener('click', this);
@@ -257,18 +256,28 @@ const splashUI = new (class {
     document.addEventListener('keypress', this);
   }
   stop() {
-    document.removeEventListener('click', this);
+    //document.removeEventListener('click', this);
     document.removeEventListener('keypress', this);
   }
   handleEvent(event) {
-    if (!event.target.matches("#splash button")) {
-      return;
+    switch (event.target.id) {
+      case "splash-maximize":
+        // TODO: maximize the #stage element
+        break;
+      case "splash-close":
+        // TODO: play with the easter-egg initial prompt
+        break;
+      case "audioToggle":
+        // TODO: enable audio
+        break;
+      default:
+        event.preventDefault();
+        let detail = {
+          id: event.target.id,
+        };
+        this.dispatchUserChoice(detail);
+        break;
     }
-    event.preventDefault();
-    let detail = {
-      id: event.target.id,
-    };
-    this.dispatchUserChoice(detail);
   }
   dispatchUserChoice(choiceDetail) {
     let choiceEvent = new CustomEvent('user-choice', { detail: choiceDetail });
@@ -333,12 +342,13 @@ export class UI {
   updateBackground(filename) {
     console.log("updateBackground with:", filename);
     let backdrop = document.getElementById('pageBackdrop');
+    let backgroundValue = filename ? `url('${filename}')` : "none";
     backdrop.classList.add('transitioning');
     return new Promise(resolve => {
       backdrop.addEventListener(
         'transitionend',
         () => {
-          backdrop.style.backgroundImage = 'url(' + filename + ')';
+          backdrop.style.backgroundImage = backgroundValue;
           backdrop.classList.remove('transitioning');
           resolve();
         },
@@ -359,6 +369,7 @@ export class UI {
         this.wordPicker.stop();
         break;
       case "prompts":
+        this.wordPicker.start();
         break;
     }
     if (!elem.classList.contains("hidden")) {
