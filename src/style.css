@@ -286,7 +286,7 @@ image-animation > img {
 #wordsLine > .word {
   display: inline-block;
   padding: 1% 5%;
-  font-size: 5vw;
+  font-size: 4vw;
 }
 
 #wordsLine > .word[selected] {

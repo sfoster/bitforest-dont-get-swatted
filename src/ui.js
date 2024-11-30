@@ -99,7 +99,7 @@ class ImageAnimation extends HTMLElement {
 customElements.define('image-animation', ImageAnimation);
 
 class WordPicker extends HTMLElement {
-  scrollSpeed = 1.5;
+  scrollSpeed = 5;
   wordCount = 0;
 
   connectedCallback() {
