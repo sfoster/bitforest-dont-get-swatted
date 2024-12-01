@@ -2,11 +2,14 @@ html,
 body {
   margin: 0;
   padding: 0;
+  font-weight: 400;
+  font-style: normal;
 }
 
 html {
   display: flex;
   justify-content: center;
+  --ui-font: "Special Elite", system-ui;
 }
 body {
   display: flex;
@@ -18,7 +21,9 @@ body {
   max-height: 100vh;
   overflow: hidden;
 }
-
+p, section, header, footer, button {
+  font-family: var(--ui-font);
+}
 main {
   width: 100%;
   aspect-ratio: 16/9;
