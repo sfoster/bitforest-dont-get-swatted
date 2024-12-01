@@ -370,4 +370,8 @@ export class UI {
     // start animation
     this.mouthAnimation.start(animationSrc, 1000 / 8, frames);
   }
+
+  stopAnimations() {
+    this.mouthAnimation.stop();
+  }
 }
