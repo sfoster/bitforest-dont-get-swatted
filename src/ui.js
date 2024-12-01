@@ -274,6 +274,17 @@ const splashUI = new (class extends _SceneUI {
   handleEvent(event) {
     switch (event.target.id) {
       case 'splash-maximize':
+        const gameContainer = document.getElementById('game-drop'); // Replace with your game's container element ID
+
+        if (gameContainer.requestFullscreen) {
+          gameContainer.requestFullscreen();
+        } else if (gameContainer.webkitRequestFullscreen) {
+          // Safari
+          gameContainer.webkitRequestFullscreen();
+        } else if (gameContainer.msRequestFullscreen) {
+          // IE11
+          gameContainer.msRequestFullscreen();
+        }
         // TODO: maximize the #stage element
         break;
       case 'splash-close':
