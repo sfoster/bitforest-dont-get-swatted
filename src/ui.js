@@ -128,7 +128,7 @@ class _SceneUI {
     document.addEventListener('keypress', this);
   }
   stop() {
-    //document.removeEventListener('click', this);
+    document.removeEventListener('click', this);
     document.removeEventListener('keypress', this);
   }
   dispatchUserChoice(detail) {
@@ -484,10 +484,11 @@ export class UI {
    * @param {string} frames number of frames in the animation
    */
   animateMouth(animationName) {
-    console.log("animateMouth with:", animationName);
+    console.log('animateMouth with:', animationName);
     if (animationName && promptsUI.mouthAnimation) {
       // get animation data
-      let animData = this.assets.get("animations").get(animationName);
+      let animData = this.assets.get('animations').get(animationName);
+
       return promptsUI.animateMouth(animData);
     }
     return promptsUI.mouthAnimation?.stop();

@@ -67,7 +67,6 @@ class ChoicesScene extends(_Scene) {
       startType == 'alt'
         ? this.twineData.altstartnode
         : this.twineData.startnode;
-    this.handleChoice(startPid);
 
     let promiseEntered = this.ui.enterScene(this.id);
     this.handleChoice(startPid);
@@ -93,9 +92,23 @@ class ChoicesScene extends(_Scene) {
     let currentPassage = this.twineData.passages[pid - 1];
 
     // Get outcome tag
-    let outcome = this.countOutcome(currentPassage.tags);
+    let outcome = this.countOutcome(currentPassage.tags) || {};
+
+    // handle endings first and early-return
+    if (outcome.type == 'END') {
+      let passageText = currentPassage.text.split('[[')[0];
+      // game.switchScene("gameover", { outcome: "BAD-END", ending: "Oh no it ended badly!"})
+      return this.game.switchScene(
+        "gameover",
+        {
+          outcome: outcome.tag,
+          ending: passageText,
+        }
+      );
+    }
+
     // handle null outcome (which only happens if tag not captured correctly)
-    if (outcome == null) {
+    if (!outcome.type) {
       this.ui
         .updateBackground(this.backgroundNames.get('default'))
         .then(() => {});
@@ -125,11 +138,8 @@ class ChoicesScene extends(_Scene) {
           this.ui.showSweat(false);
         }
       }
-      // handle menu and endings
       else {
-        this.ui.stopAnimations();
       }
-      // handle ending
     }
     // update prompt and wording
     this.ui.updatePrompt(currentPassage.text.split('[[')[0]);
