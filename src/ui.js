@@ -122,6 +122,21 @@ class ImageAnimation extends HTMLElement {
 }
 customElements.define('image-animation', ImageAnimation);
 
+class _SceneUI {
+  start() {
+    document.addEventListener('click', this);
+    document.addEventListener('keypress', this);
+  }
+  stop() {
+    //document.removeEventListener('click', this);
+    document.removeEventListener('keypress', this);
+  }
+  dispatchUserChoice(detail) {
+    let choiceEvent = new CustomEvent('user-choice', { detail });
+    document.dispatchEvent(choiceEvent);
+  }
+}
+
 class WordPicker extends HTMLElement {
   scrollSpeed = 5;
   wordCount = 0;
@@ -133,14 +148,6 @@ class WordPicker extends HTMLElement {
     let reticule = (this.reticule =
       document.getElementById('wordsLineReticule'));
     this.cursorElem = this.reticule.querySelector('.cursor');
-  }
-  start() {
-    document.addEventListener('click', this);
-    document.addEventListener('keypress', this);
-  }
-  stop() {
-    document.removeEventListener('click', this);
-    document.removeEventListener('keypress', this);
   }
   updateWords(words) {
     // wipe out the previous child elements
@@ -250,38 +257,13 @@ class WordPicker extends HTMLElement {
     }
     return selectedChild;
   }
-  handleEvent(event) {
-    let selectedChild;
-    switch (event.type) {
-      case 'click':
-      // fallthrough
-      case 'keypress': {
-        selectedChild = this.getSelectedChild();
-        event.preventDefault();
-        break;
-      }
-    }
-    if (!selectedChild?.dataset.identifier) {
-      return;
-    }
-    this.continueSpin = false;
-    let detail = {
-      value: selectedChild.textContent,
-      id: selectedChild.dataset.identifier,
-    };
-    this.dispatchUserChoice(detail);
-  }
 }
 customElements.define('word-picker', WordPicker);
 
-const splashUI = new (class {
-  start() {
-    document.addEventListener('click', this);
-    document.addEventListener('keypress', this);
-  }
-  stop() {
-    //document.removeEventListener('click', this);
-    document.removeEventListener('keypress', this);
+const splashUI = new (class extends(_SceneUI) {
+  async start() {
+    await super.start();
+    document.querySelector("#splash button").focus();
   }
   handleEvent(event) {
     switch (event.target.id) {
@@ -306,15 +288,34 @@ const splashUI = new (class {
         break;
     }
   }
-  dispatchUserChoice(choiceDetail) {
-    let choiceEvent = new CustomEvent('user-choice', { detail: choiceDetail });
-    document.dispatchEvent(choiceEvent);
+})();
+
+const gameoverUI = new (class extends(_SceneUI) {
+  handleEvent(event) {
+    switch (event.target.id) {
+      default:
+        event.preventDefault();
+        this.dispatchUserChoice({
+          startType: "default",
+        });
+        break;
+    }
   }
 })();
 
-export class UI {
-  constructor(assetsMap) {
-    this.assets = assetsMap;
+const promptsUI = new (class extends(_SceneUI) {
+  async start() {
+    if (!(this.currentPrompt && this.wordPicker)) {
+      this.initialize();
+    }
+    // this.wordPicker.start()
+    await super.start();
+    return new Promise((resolve) =>
+      requestAnimationFrame((res) => {
+        this.wordPicker.focus();
+        resolve();
+      })
+    );
   }
 
   /**
@@ -346,14 +347,29 @@ export class UI {
 
     const selectionElement = document.getElementById('selection');
     const reticuleElement = document.getElementById('wordsLineReticule');
-
     selectionElement.insertBefore(picker, reticuleElement);
-    return new Promise((resolve) =>
-      requestAnimationFrame((res) => {
-        picker.focus();
-        resolve();
-      })
-    );
+  }
+
+  handleEvent(event) {
+    let selectedChild;
+    switch (event.type) {
+      case 'click':
+      // fallthrough
+      case 'keypress': {
+        selectedChild = this.wordPicker.getSelectedChild();
+        event.preventDefault();
+        break;
+      }
+    }
+    if (!selectedChild?.dataset.identifier) {
+      return;
+    }
+    this.wordPicker.continueSpin = false;
+    let detail = {
+      value: selectedChild.textContent,
+      id: selectedChild.dataset.identifier,
+    };
+    this.dispatchUserChoice(detail);
   }
 
   /**
@@ -391,6 +407,28 @@ export class UI {
   }
 
   /**
+   * Plays a mouth animation
+   */
+  animateMouth(animData) {
+    console.log("Animating with:", animData);
+    this.mouthAnimation.startAnimationFromData(animData);
+  }
+})();
+
+export class UI {
+  constructor(assetsMap) {
+    this.assets = assetsMap;
+  }
+  initialize() {
+
+  }
+  updatePrompt(text) {
+    return promptsUI.updatePrompt(text);
+  }
+  updateWordChoices(links) {
+    return promptsUI.updateWordChoices(links);
+  }
+  /**
    * Updates the UI background with file specified
    * @param {string} filename filename of the background image
    */
@@ -418,12 +456,13 @@ export class UI {
    * @param {string} frames number of frames in the animation
    */
   animateMouth(animationName) {
-    console.log('animateMouth with:', animationName);
-
-    // get animation data
-    let animData = this.assets.get('animations').get(animationName);
-
-    this.mouthAnimation.startAnimationFromData(animData);
+    console.log("animateMouth with:", animationName);
+    if (animationName && promptsUI.mouthAnimation) {
+      // get animation data
+      let animData = this.assets.get("animations").get(animationName);
+      return promptsUI.animateMouth(animData);
+    }
+    return promptsUI.mouthAnimation?.stop();
   }
 
   stopAnimations() {
@@ -441,14 +480,17 @@ export class UI {
       this.sweatAnimation.style.display = 'none';
     }
   }
-  exitScene(id) {
+  async exitScene(id) {
     const elem = document.getElementById(id);
     switch (id) {
       case "splash":
-        this.wordPicker.stop();
+        await splashUI.stop();
         break;
       case "prompts":
-        this.wordPicker.start();
+        await promptsUI.stop();
+        break;
+      case "gameover":
+        await gameoverUI.stop();
         break;
     }
     if (!elem.classList.contains("hidden")) {
@@ -461,15 +503,17 @@ export class UI {
     }
     return Promise.resolve();
   }
-  enterScene(id) {
+  async enterScene(id) {
     const elem = document.getElementById(id);
     switch (id) {
       case "splash":
-        document.querySelector("#splash button").focus();
-        splashUI.start();
+        await splashUI.start();
         break;
       case "prompts":
-        this.wordPicker.start();
+        await promptsUI.start();
+        break;
+      case "gameover":
+        await  gameoverUI.start();
         break;
     }
     if (elem.classList.contains("hidden")) {

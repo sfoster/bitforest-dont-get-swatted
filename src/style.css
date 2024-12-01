@@ -136,6 +136,39 @@ image-animation > img {
 }
 
 
+/*
+ * Game over scene
+ */
+#gameover {
+  display: flex;
+  width: 90%;
+  justify-content: center;
+}
+#gameover-screen {
+  aspect-ratio: 1 / 1;
+  border-radius: 14px;
+  background: linear-gradient(#db207a, #9547af);
+  display: flex;
+  flex-direction: column;
+}
+#conclusion-container {
+  padding: 1em;
+  font-size: 3vw;
+  overflow-y: visible;
+  flex: auto;
+  font-size: 3vw;
+  color: white;
+}
+
+#gameover footer.buttons {
+  border-top: 1px solid white;
+  height: 16%;
+  box-sizing: border-box;
+  display: flex;
+  padding-inline: 24px;
+  justify-content: space-evenly;
+}
+
 .grid-layer-stack {
   display: grid;
   position: relative;

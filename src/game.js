@@ -2,6 +2,7 @@
   The main game logic
     Owns the game scenes and switches between them
 */
+
 export class Game {
   constructor({ ui, assetsMap }) {
     this.assets = assetsMap;
@@ -35,12 +36,23 @@ export class Game {
   }
 }
 
-class ChoicesScene {
-  id = 'prompts';
+
+class _Scene {
   constructor(game) {
+    this.game = game;
     this.ui = game.ui;
     this.assets = game.assets;
   }
+  async enter(param) {
+    console.assert(false, 'Not implemented');
+  }
+  async exit(param) {
+    console.assert(false, 'Not implemented');
+  }
+}
+
+class ChoicesScene extends(_Scene) {
+  id = 'prompts';
 
   async enter({ startType }) {
     console.log(`entering ${this.id} scene`);
@@ -55,7 +67,9 @@ class ChoicesScene {
         : this.twineData.startnode;
     this.handleChoice(startPid);
 
-    await this.ui.enterScene(this.id);
+    let promiseEntered = this.ui.enterScene(this.id);
+    this.handleChoice(startPid);
+    await promiseEntered;
     document.addEventListener('user-choice', this);
   }
 
@@ -65,7 +79,7 @@ class ChoicesScene {
     // TODO:
     // stop all the loops and timers
     this.ui.animateMouth();
-    await this.ui.fadeOut('prompts');
+    await this.ui.exitScene('prompts');
   }
 
   handleEvent(event) {
@@ -155,14 +169,35 @@ class ChoicesScene {
   }
 }
 
-class SplashScene {
+class SplashScene extends(_Scene) {
   id = 'splash';
 
-  constructor(game) {
-    this.game = game;
-    this.ui = game.ui;
-    this.assets = game.assets;
+  handleEvent(event) {
+    if (event.type == 'user-choice') {
+      // Advance to next scene
+      console.log('Got user choice:', );
+      this.game.switchScene('prompts', { ...event.detail });
+    }
   }
+
+  async enter() {
+    console.log(`entering ${this.id} scene`);
+    const backgrounds = this.assets.get('backgrounds');
+    this.ui.updateBackground('');
+
+    await this.ui.enterScene(this.id);
+    document.addEventListener('user-choice', this);
+  }
+
+  async exit() {
+    console.log(`exiting ${this.id} scene`);
+    document.removeEventListener('user-choice', this);
+    await this.ui.exitScene('splash');
+  }
+}
+
+class GameOverScene extends(_Scene) {
+  id = 'gameover';
 
   handleEvent(event) {
     if (event.type == 'user-choice') {
