@@ -38,7 +38,6 @@ export class Game {
   }
 }
 
-
 class _Scene {
   constructor(game) {
     this.game = game;
@@ -53,7 +52,7 @@ class _Scene {
   }
 }
 
-class ChoicesScene extends(_Scene) {
+class ChoicesScene extends _Scene {
   id = 'prompts';
 
   async enter({ startType }) {
@@ -98,13 +97,10 @@ class ChoicesScene extends(_Scene) {
     if (outcome.type == 'END') {
       let passageText = currentPassage.text.split('[[')[0];
       // game.switchScene("gameover", { outcome: "BAD-END", ending: "Oh no it ended badly!"})
-      return this.game.switchScene(
-        "gameover",
-        {
-          outcome: outcome.tag,
-          ending: passageText,
-        }
-      );
+      return this.game.switchScene('gameover', {
+        outcome: outcome.tag,
+        ending: passageText,
+      });
     }
 
     // handle null outcome (which only happens if tag not captured correctly)
@@ -137,8 +133,7 @@ class ChoicesScene extends(_Scene) {
           this.ui.animateMouth(`default`);
           this.ui.showSweat(false);
         }
-      }
-      else {
+      } else {
       }
     }
     // update prompt and wording
@@ -155,15 +150,15 @@ class ChoicesScene extends(_Scene) {
     if (tags.includes('BAD-END')) {
       this.outcomes.bad += 1;
       return { tag: 'BAD-END', type: 'END' };
-    } else if (tags.includes('Neutral-Path')) {
-      this.outcomes.neutral += 1;
-      return { tag: 'Neutral-Path', type: 'PATH' };
     } else if (tags.includes('Good-End')) {
       this.outcomes.goodEnd += 1;
       return { tag: 'Good-End', type: 'END' };
     } else if (tags.includes('Neutral-End')) {
       this.outcomes.neutralEnd += 1;
       return { tag: 'Neutral-End', type: 'END' };
+    } else if (tags.includes('Neutral-Path')) {
+      this.outcomes.neutral += 1;
+      return { tag: 'Neutral-Path', type: 'PATH' };
     } else if (tags.includes('GOOD')) {
       this.outcomes.good += 1;
       return { tag: 'GOOD', type: 'PATH' };
@@ -178,13 +173,13 @@ class ChoicesScene extends(_Scene) {
   }
 }
 
-class SplashScene extends(_Scene) {
+class SplashScene extends _Scene {
   id = 'splash';
 
   handleEvent(event) {
     if (event.type == 'user-choice') {
       // Advance to next scene
-      console.log('Got user choice:', );
+      console.log('Got user choice:');
       this.game.switchScene('prompts', { ...event.detail });
     }
   }
@@ -205,20 +200,20 @@ class SplashScene extends(_Scene) {
   }
 }
 
-class GameOverScene extends(_Scene) {
+class GameOverScene extends _Scene {
   id = 'gameover';
 
   handleEvent(event) {
     if (event.type == 'user-choice') {
       // Advance to next scene
-      console.log('Got user choice:', );
+      console.log('Got user choice:');
       const nextAction = event.detail.action;
       let startType;
-      if (nextAction == "restart") {
+      if (nextAction == 'restart') {
         // TODO: do we want a new startType here? To ensure we randomize the entry point
         // and don't repeat the same path through the passages
-        startType = "default";
-        this.game.switchScene("prompts", { startType });
+        startType = 'default';
+        this.game.switchScene('prompts', { startType });
       }
     }
   }
@@ -227,7 +222,7 @@ class GameOverScene extends(_Scene) {
     console.log(`entering ${this.id} scene`);
     this.backgroundNames = this.assets.get('backgrounds');
 
-    const {outcome, ending} = params;
+    const { outcome, ending } = params;
     const promiseEntered = this.ui.enterScene(this.id);
     this.ui.updateBackground(this.backgroundNames.get(outcome));
     this.ui.updateEnding(ending);
@@ -238,6 +233,6 @@ class GameOverScene extends(_Scene) {
   async exit() {
     console.log(`exiting ${this.id} scene`);
     document.removeEventListener('user-choice', this);
-    await this.ui.exitScene("gameover");
+    await this.ui.exitScene('gameover');
   }
 }
