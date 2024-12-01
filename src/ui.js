@@ -83,7 +83,7 @@ class ImageAnimation extends HTMLElement {
       }px)`;
       this.frameIndex += 1;
       this.lastFrameTime = Date.now();
-      if (this.frameIndex >= this.frameCount - 1) {
+      if (this.frameIndex >= this.frameCount) {
         this.frameIndex = 0;
         this.loopCount++;
       }
