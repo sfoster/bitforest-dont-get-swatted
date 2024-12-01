@@ -133,8 +133,14 @@ class WordPicker extends HTMLElement {
     let reticule = (this.reticule =
       document.getElementById('wordsLineReticule'));
     this.cursorElem = this.reticule.querySelector('.cursor');
+  }
+  start() {
     document.addEventListener('click', this);
     document.addEventListener('keypress', this);
+  }
+  stop() {
+    document.removeEventListener('click', this);
+    document.removeEventListener('keypress', this);
   }
   updateWords(words) {
     // wipe out the previous child elements
@@ -268,6 +274,44 @@ class WordPicker extends HTMLElement {
 }
 customElements.define('word-picker', WordPicker);
 
+const splashUI = new (class {
+  start() {
+    document.addEventListener('click', this);
+    document.addEventListener('keypress', this);
+  }
+  stop() {
+    //document.removeEventListener('click', this);
+    document.removeEventListener('keypress', this);
+  }
+  handleEvent(event) {
+    switch (event.target.id) {
+      case "splash-maximize":
+        // TODO: maximize the #stage element
+        break;
+      case "splash-close":
+        // TODO: play with the easter-egg initial prompt
+        event.preventDefault();
+        this.dispatchUserChoice({
+          startType: "alt",
+        });
+        break;
+      case "audioToggle":
+        // TODO: enable audio
+        break;
+      default:
+        event.preventDefault();
+        this.dispatchUserChoice({
+          startType: "default",
+        });
+        break;
+    }
+  }
+  dispatchUserChoice(choiceDetail) {
+    let choiceEvent = new CustomEvent('user-choice', { detail: choiceDetail });
+    document.dispatchEvent(choiceEvent);
+  }
+})();
+
 export class UI {
   constructor(assetsMap) {
     this.assets = assetsMap;
@@ -353,12 +397,13 @@ export class UI {
   updateBackground(filename) {
     console.log('updateBackground with:', filename);
     let backdrop = document.getElementById('pageBackdrop');
+    let backgroundValue = filename ? `url('${filename}')` : "none";
     backdrop.classList.add('transitioning');
     return new Promise((resolve) => {
       backdrop.addEventListener(
         'transitionend',
         () => {
-          backdrop.style.backgroundImage = 'url(' + filename + ')';
+          backdrop.style.backgroundImage = backgroundValue;
           backdrop.classList.remove('transitioning');
           resolve();
         },
@@ -395,5 +440,46 @@ export class UI {
       this.sweatAnimation.stop();
       this.sweatAnimation.style.display = 'none';
     }
+  }
+  exitScene(id) {
+    const elem = document.getElementById(id);
+    switch (id) {
+      case "splash":
+        this.wordPicker.stop();
+        break;
+      case "prompts":
+        this.wordPicker.start();
+        break;
+    }
+    if (!elem.classList.contains("hidden")) {
+      return new Promise(resolve => {
+        elem.addEventListener("transitionend", event => {
+          resolve();
+        }, { once: true });
+        elem.classList.add("hidden");
+      });
+    }
+    return Promise.resolve();
+  }
+  enterScene(id) {
+    const elem = document.getElementById(id);
+    switch (id) {
+      case "splash":
+        document.querySelector("#splash button").focus();
+        splashUI.start();
+        break;
+      case "prompts":
+        this.wordPicker.start();
+        break;
+    }
+    if (elem.classList.contains("hidden")) {
+      return new Promise(resolve => {
+        elem.addEventListener("transitionend", event => {
+          resolve();
+        }, { once: true });
+        elem.classList.remove("hidden");
+      });
+    }
+    return Promise.resolve();
   }
 }
