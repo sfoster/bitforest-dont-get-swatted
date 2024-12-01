@@ -274,7 +274,7 @@ const splashUI = new (class extends _SceneUI {
   handleEvent(event) {
     switch (event.target.id) {
       case 'splash-maximize':
-        const gameContainer = document.getElementById('game-drop'); // Replace with your game's container element ID
+        const gameContainer = document.getElementById('game-body'); // Replace with your game's container element ID
 
         if (gameContainer.requestFullscreen) {
           gameContainer.requestFullscreen();
