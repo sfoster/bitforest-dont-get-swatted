@@ -57,12 +57,13 @@ export class Game {
               'mouthAnimation'
             ]
           );
-          this.sweat = this.assets.get('manifests').get('animationDirectory')[
+          let sweat = this.assets.get('manifests').get('animationDirectory')[
             pid
           ]['sweat'];
-          this.ui.showSweat();
+          this.ui.showSweat(sweat);
         } else {
           this.ui.animateMouth(`default`);
+          this.ui.showSweat(false);
         }
       }
       // handle menu and endings

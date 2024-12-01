@@ -387,9 +387,13 @@ export class UI {
 
   showSweat(show = true) {
     if (show) {
+      this.sweatAnimation.style.display = 'block';
       this.sweatAnimation.startAnimationFromData(
         this.assets.get('animations').get('sweat')
       );
+    } else {
+      this.sweatAnimation.stop();
+      this.sweatAnimation.style.display = 'none';
     }
   }
 }
