@@ -287,6 +287,8 @@ const splashUI = new (class extends _SceneUI {
         window.ui.isAutoplayUnblocked = true;
         window.ui.toggleAudio(event.target.checked);
         break;
+      case 'itch-link':
+        break;
       default:
         event.preventDefault();
         this.dispatchUserChoice({
