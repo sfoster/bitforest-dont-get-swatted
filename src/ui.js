@@ -348,13 +348,26 @@ export class UI {
    * @param {string} animationName name of the animation file
    * @param {string} frames number of frames in the animation
    */
-  animateMouth(animationName, frames = 4) {
+  animateMouth(animationName) {
     console.log('animateMouth with:', animationName);
-    let animationSrc = this.assets
-      .get('animations')
-      .get(animationName)
-      .get('url');
+
+    // get animation data
+    let animData = this.assets.get('animations').get(animationName);
+    // Get image source
+    let animationSrc = animData.get('url');
     console.log('Animating with:', animationSrc);
+
+    // add styles to animation
+    this.mouthAnimation.style.top = animData.get('styles')['top'];
+    this.mouthAnimation.style.left = animData.get('styles')['left'];
+    this.mouthAnimation.style.height = animData.get('styles')['height'];
+    this.mouthAnimation.style.aspectRatio =
+      animData.get('styles')['aspect-ratio'];
+
+    // get frames
+    let frames = animData.get('frames');
+
+    // start animation
     this.mouthAnimation.start(animationSrc, 1000 / 8, frames);
   }
 }
