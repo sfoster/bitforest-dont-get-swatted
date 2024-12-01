@@ -59,7 +59,14 @@ const assetsLoaded = (async function loadAssets() {
   await Promise.all([
     loadAsset('./backgrounds.json', 'json', 'backgrounds', manifestsMap),
     loadAsset('./animations.json', 'json', 'animations', manifestsMap),
+    loadAsset(
+      './passage-animations.json',
+      'json',
+      'animationDirectory',
+      manifestsMap
+    ),
   ]);
+  console.log('Manifests: ', manifestsMap);
 
   // Load the stories data
   console.log('Loading the twine data');

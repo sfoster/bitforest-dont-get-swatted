@@ -44,22 +44,30 @@ export class Game {
       this.ui.updateBackground(this.backgroundNames.get(outcome.tag));
       // handle normal paths
       if (outcome.type != 'END' && outcome.type != 'MENU') {
-        console.log('Outcome Type: ' + outcome.type);
-        this.ui.animateMouth(`default`);
+        console.log(this.assets.get('manifests').get('animationDirectory'));
+        // select correct mouth animation from manifest
+        if (
+          this.assets
+            .get('manifests')
+            .get('animationDirectory')
+            .hasOwnProperty(pid + 1)
+        ) {
+          this.ui.animateMouth(
+            this.assets.get('manifests').get('animationDirectory')[pid + 1]
+          );
+        } else {
+          this.ui.animateMouth(`default`);
+        }
       }
       // handle menu and endings
       else {
         this.ui.stopAnimations();
       }
       // handle ending
-      if (outcome.type != 'END') {
-        this.ui.updateWordChoices(currentPassage.links);
-      }
     }
-    console.log('Outcome: ' + outcome);
-
     // update prompt and wording
     this.ui.updatePrompt(currentPassage.text.split('[[')[0]);
+    this.ui.updateWordChoices(currentPassage.links);
   }
 
   /**
