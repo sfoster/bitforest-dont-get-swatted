@@ -326,7 +326,7 @@ const gameoverUI = new (class extends _SceneUI {
   }
 })();
 
-const promptsUI = new (class extends _SceneUI {
+const promptsUI = window.promptsUI = new (class extends _SceneUI {
   async start() {
     if (!(this.currentPrompt && this.wordPicker)) {
       this.initialize();

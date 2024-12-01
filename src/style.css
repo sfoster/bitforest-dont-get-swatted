@@ -378,10 +378,10 @@ image-animation > img {
   font-size: 2em;
   min-height: 3rem;
   color: white;
-  padding: 0 4px;
+  padding: 0 4px 3.5% 4px;
   white-space: nowrap;
   overflow: hidden;
-  top: 33%;
+  top: 15%;
 }
 #wordPicker.empty {
   visibility: hidden;
@@ -423,14 +423,19 @@ image-animation > img {
   position: relative;
   top: 0;
   right: 0;
+  height: 100%;
 }
 
 #wordsLine > .word {
   display: inline-block;
-  padding: 1% 5%;
+  padding: 6.5% 5% 0 5%;
   font-size: 4vw;
+  border: 3px solid #573a7b;
+  border-radius: 4px;
+  margin-inline: 2px;
+  height: 100%;
+  box-sizing: border-box;
 }
-
 #wordsLine > .word[selected] {
   outline: 1px solid white;
   padding: 6px;
