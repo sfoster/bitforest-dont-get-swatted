@@ -11,7 +11,7 @@ function createDiv(id, className) {
 
 class ImageAnimation extends HTMLElement {
   get image() {
-    return this.isConnected ? this.querySelector("img") : null;
+    return this.isConnected ? this.querySelector('img') : null;
   }
   get src() {
     return this._imgSrc;
@@ -30,7 +30,9 @@ class ImageAnimation extends HTMLElement {
   }
   get loadedPromise() {
     if (!(this.isConnected && this.imageElement)) {
-      throw new Error("Can't load the image until the host element is connected");
+      throw new Error(
+        "Can't load the image until the host element is connected"
+      );
     }
     if (this._loadedPromise) {
       return this._loadedPromise;
@@ -44,23 +46,25 @@ class ImageAnimation extends HTMLElement {
     return (this._loadedPromise = promise);
   }
   _insertImage() {
-    this.textContent = "";
+    this.textContent = '';
     this.imageElement = new Image();
     this.appendChild(this.imageElement);
   }
-  async start(src, fps, frameCount, maxLoopCount=Infinity) {
+  async start(src, fps, frameCount, maxLoopCount = Infinity) {
     this.setImageSource(src);
-    this.fps ??= fps;
-    this.frameCount ??= frameCount;
+    this.fps = fps;
+    this.frameCount = frameCount;
     this.maxLoopCount = maxLoopCount;
 
     const img = this.imageElement;
     this.frameIndex = 0;
     await this.loadedPromise;
-    await new Promise(resolve => requestAnimationFrame(resolve));
-    this.classList.add("animating");
+    await new Promise((resolve) => requestAnimationFrame(resolve));
+    this.classList.add('animating');
     this.frameSize = img.getBoundingClientRect().width / this.frameCount;
-    console.log(`animating image loaded, frameSize: ${this.frameSize}, src:${this.src}`);
+    console.log(
+      `animating image loaded, frameSize: ${this.frameSize}, src:${this.src}`
+    );
     this.animating = true;
     this.lastFrameTime = Date.now();
     this.loopCount = 0;
@@ -74,15 +78,17 @@ class ImageAnimation extends HTMLElement {
     const img = this.imageElement;
     const now = Date.now();
     if (now - this.lastFrameTime >= this.fps) {
-      img.style.transform = `translateX(${-this.frameIndex * this.frameSize}px)`;
+      img.style.transform = `translateX(${
+        -this.frameIndex * this.frameSize
+      }px)`;
       this.frameIndex += 1;
       this.lastFrameTime = Date.now();
-      if (this.frameIndex >= this.frameCount -1) {
+      if (this.frameIndex >= this.frameCount) {
         this.frameIndex = 0;
         this.loopCount++;
       }
       if (this.loopCount > this.maxLoopCount) {
-        this.animating = false
+        this.animating = false;
       }
     }
     this._rafID = requestAnimationFrame(() => this.advance());
@@ -91,9 +97,27 @@ class ImageAnimation extends HTMLElement {
     if (this._rafID) {
       cancelAnimationFrame(this._rafID);
     }
-    this.classList.remove("animating");
+    this.classList.remove('animating');
     this.animating = false;
     this.frameIndex = 0;
+  }
+
+  startAnimationFromData(animData) {
+    // Get image source
+    let animationSrc = animData.get('url');
+    console.log('Animating with:', animationSrc);
+
+    // add styles to animation
+    this.style.top = animData.get('styles')['top'];
+    this.style.left = animData.get('styles')['left'];
+    this.style.height = animData.get('styles')['height'];
+    this.style.aspectRatio = animData.get('styles')['aspect-ratio'];
+
+    // get frames
+    let frames = animData.get('frames');
+
+    // start animation
+    this.start(animationSrc, 1000 / 8, frames);
   }
 }
 customElements.define('image-animation', ImageAnimation);
@@ -292,20 +316,33 @@ export class UI {
   constructor(assetsMap) {
     this.assets = assetsMap;
   }
+
+  /**
+   * Initializes the UI
+   * @returns {Promise}
+   */
   initialize() {
     this.currentPrompt = document.getElementById('currentPrompt');
-    const promptContainer = document.querySelector("#stage .prompt-outer")
+    const promptContainer = document.querySelector('#stage .prompt-outer');
     const picker = (this.wordPicker = document.createElement('word-picker'));
 
+    // Create word picker
     picker.id = 'wordPicker';
     picker.classList.add('selection-inner');
     picker.classList.add('layer');
     picker.tabIndex = -1;
 
-    let mouthAnim = this.mouthAnimation = document.createElement("image-animation");
-    mouthAnim.id = "mouth";
+    // Create mouth animation
+    let mouthAnim = (this.mouthAnimation =
+      document.createElement('image-animation'));
+    mouthAnim.id = 'mouth';
     promptContainer.parentElement.insertBefore(mouthAnim, promptContainer);
-    // TODO: insert it somewhere
+
+    // Create sweat animation
+    let sweatAnim = (this.sweatAnimation =
+      document.createElement('image-animation'));
+    sweatAnim.id = 'sweat';
+    promptContainer.parentElement.insertBefore(sweatAnim, promptContainer);
 
     const selectionElement = document.getElementById('selection');
     const reticuleElement = document.getElementById('wordsLineReticule');
@@ -318,12 +355,22 @@ export class UI {
       })
     );
   }
+
+  /**
+   * Updates the UI prompt with the given text
+   * @param {string} text text to update the UI prompt with
+   */
   updatePrompt(text) {
-    console.log("updatePrompt with:", text);
+    console.log('updatePrompt with:', text);
     this.currentPrompt.textContent = text;
   }
+
+  /**
+   * Updates the UI word choices with the given links
+   * @param {Array} links array of word choice links and labels
+   */
   updateWordChoices(links) {
-    console.log("updateWordChoices with:", links);
+    console.log('updateWordChoices with:', links);
     /* each link takes the form:
       {
         "name": "Choice 1 ",
@@ -342,12 +389,17 @@ export class UI {
     }
     this.wordPicker.updateWords(words);
   }
+
+  /**
+   * Updates the UI background with file specified
+   * @param {string} filename filename of the background image
+   */
   updateBackground(filename) {
-    console.log("updateBackground with:", filename);
+    console.log('updateBackground with:', filename);
     let backdrop = document.getElementById('pageBackdrop');
     let backgroundValue = filename ? `url('${filename}')` : "none";
     backdrop.classList.add('transitioning');
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       backdrop.addEventListener(
         'transitionend',
         () => {
@@ -359,11 +411,35 @@ export class UI {
       );
     });
   }
+
+  /**
+   * Plays a mouth animation
+   * @param {string} animationName name of the animation file
+   * @param {string} frames number of frames in the animation
+   */
   animateMouth(animationName) {
-    console.log("animateMouth with:", animationName);
-    let animationSrc = this.assets.get("animations").get(animationName);
-    console.log("Animating with:", animationSrc);
-    this.mouthAnimation.start(animationSrc, 1000/8, 4);
+    console.log('animateMouth with:', animationName);
+
+    // get animation data
+    let animData = this.assets.get('animations').get(animationName);
+
+    this.mouthAnimation.startAnimationFromData(animData);
+  }
+
+  stopAnimations() {
+    this.mouthAnimation.stop();
+  }
+
+  showSweat(show = true) {
+    if (show) {
+      this.sweatAnimation.style.display = 'block';
+      this.sweatAnimation.startAnimationFromData(
+        this.assets.get('animations').get('sweat')
+      );
+    } else {
+      this.sweatAnimation.stop();
+      this.sweatAnimation.style.display = 'none';
+    }
   }
   exitScene(id) {
     const elem = document.getElementById(id);

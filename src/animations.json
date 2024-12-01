@@ -1,6 +1,62 @@
 {
-  "mouth-0": "images/mouthAnimation0.png",
-  "mouth-1": "images/mouthAnimation1.png",
-  "mouth-2": "images/mouthAnimation2.png",
-  "mouth-3": "images/mouthAnimation3.png"
+  "mouth-0": {
+    "url": "images/mouthAnimation0.png",
+    "frames": 3,
+    "styles": {
+      "top": "33%",
+      "left": "20%",
+      "height": "26%",
+      "aspect-ratio": "1.1/1"
+    }
+  },
+  "mouth-1": {
+    "url": "images/mouthAnimation1.png",
+    "frames": 4,
+    "styles": {
+      "top": "17%",
+      "left": "14%",
+      "height": "43%",
+      "aspect-ratio": "1.1/1"
+    }
+  },
+  "mouth-2": {
+    "url": "images/mouthAnimation2.png",
+    "frames": 4,
+    "styles": {
+      "top": "18%",
+      "left": "15%",
+      "height": "41%",
+      "aspect-ratio": "1.1/1"
+    }
+  },
+  "mouth-3": {
+    "url": "images/mouthAnimation3.png",
+    "frames": 4,
+    "styles": {
+      "top": "18%",
+      "left": "14%",
+      "height": "41%",
+      "aspect-ratio": "1.1/1"
+    }
+  },
+  "sweat": {
+    "url": "images/mouthAnimation0 copy.png",
+    "frames": 1,
+    "styles": {
+      "top": "24%",
+      "left": "15%",
+      "height": "26%",
+      "aspect-ratio": "1.1/1"
+    }
+  },
+  "default": {
+    "url": "images/mouthAnimation0.png",
+    "frames": 3,
+    "styles": {
+      "top": "33%",
+      "left": "20%",
+      "height": "26%",
+      "aspect-ratio": "1.1/1"
+    }
+  }
 }

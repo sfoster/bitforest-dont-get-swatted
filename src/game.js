@@ -1,4 +1,4 @@
-/*
+/**
   The main game logic
     Owns the game scenes and switches between them
 */
@@ -36,7 +36,7 @@ export class Game {
 }
 
 class ChoicesScene {
-  id = "prompts";
+  id = 'prompts';
   constructor(game) {
     this.ui = game.ui;
     this.assets = game.assets;
@@ -48,12 +48,12 @@ class ChoicesScene {
     this.twineData = this.assets.get('stories');
     this.backgroundNames = this.assets.get('backgrounds');
     console.log('Game start, with data:', this.twineData);
-    // TODO: Figure out what the first state needs to be, and tell the UI about it
 
-    let startPid = startType == "alt" ?
-      this.twineData.altstartnode :
-      this.twineData.startnode;
-     this.handleChoice(startPid);
+    let startPid =
+      startType == 'alt'
+        ? this.twineData.altstartnode
+        : this.twineData.startnode;
+    this.handleChoice(startPid);
 
     await this.ui.enterScene(this.id);
     document.addEventListener('user-choice', this);
@@ -65,14 +65,13 @@ class ChoicesScene {
     // TODO:
     // stop all the loops and timers
     this.ui.animateMouth();
-    await this.ui.fadeOut("prompts");
+    await this.ui.fadeOut('prompts');
   }
 
   handleEvent(event) {
     if (event.type == 'user-choice') {
       console.log('Got user choice:', event.detail);
       this.handleChoice(parseInt(event.detail.id));
-      // TODO: The user selected something. Use that input to change our game state
     }
   }
 
@@ -82,39 +81,74 @@ class ChoicesScene {
 
     // Get outcome tag
     let outcome = this.countOutcome(currentPassage.tags);
+    // handle null outcome (which only happens if tag not captured correctly)
     if (outcome == null) {
-      this.ui.updateBackground(this.backgroundNames.get('default')).then(() => {
-        // Play one of the mouth animations (0-4, see animations.json)
-        this.ui.animateMouth(`mouth-${Math.floor(Math.random() * 4)}`);
-      });
+      this.ui
+        .updateBackground(this.backgroundNames.get('default'))
+        .then(() => {});
     } else {
-      this.ui.updateBackground(this.backgroundNames.get(outcome));
-      this.ui.animateMouth();
+      this.ui.updateBackground(this.backgroundNames.get(outcome.tag));
+      // handle normal paths
+      if (outcome.type != 'END' && outcome.type != 'MENU') {
+        console.log(this.assets.get('manifests').get('animationDirectory'));
+        // select correct mouth animation from manifest
+        if (
+          this.assets
+            .get('manifests')
+            .get('animationDirectory')
+            .hasOwnProperty(pid)
+        ) {
+          this.ui.animateMouth(
+            this.assets.get('manifests').get('animationDirectory')[pid][
+              'mouthAnimation'
+            ]
+          );
+          let sweat = this.assets.get('manifests').get('animationDirectory')[
+            pid
+          ]['sweat'];
+          this.ui.showSweat(sweat);
+        } else {
+          this.ui.animateMouth(`default`);
+          this.ui.showSweat(false);
+        }
+      }
+      // handle menu and endings
+      else {
+        this.ui.stopAnimations();
+      }
+      // handle ending
     }
-    console.log('Outcome: ' + outcome);
-
+    // update prompt and wording
     this.ui.updatePrompt(currentPassage.text.split('[[')[0]);
     this.ui.updateWordChoices(currentPassage.links);
   }
 
+  /**
+   * Finds and counts the outcome of a passage based on it's tags
+   * @param {Array} tags a list of tags for the passage
+   * @returns {Object{tag: string, type: string} | null} the matching outcome
+   */
   countOutcome(tags) {
     if (tags.includes('BAD-END')) {
       this.outcomes.bad += 1;
-      return 'BAD-END';
+      return { tag: 'BAD-END', type: 'END' };
     } else if (tags.includes('Neutral-Path')) {
       this.outcomes.neutral += 1;
-      return 'Neutral-Path';
+      return { tag: 'Neutral-Path', type: 'PATH' };
     } else if (tags.includes('Good-End')) {
       this.outcomes.goodEnd += 1;
-      return 'Good-End';
+      return { tag: 'Good-End', type: 'END' };
     } else if (tags.includes('Neutral-End')) {
       this.outcomes.neutralEnd += 1;
-      return 'Neutral-End';
+      return { tag: 'Neutral-End', type: 'END' };
     } else if (tags.includes('GOOD')) {
       this.outcomes.good += 1;
-      return 'GOOD';
+      return { tag: 'GOOD', type: 'PATH' };
     } else if (tags.includes('EGG')) {
-      return 'EGG';
+      this.outcomes.egg += 1;
+      return { tag: 'EGG', type: 'END' };
+    } else if (tags.includes('Menu-page')) {
+      return { tag: 'Menu-page', type: 'MENU' };
     }
 
     return null;
@@ -122,7 +156,7 @@ class ChoicesScene {
 }
 
 class SplashScene {
-  id = "splash";
+  id = 'splash';
 
   constructor(game) {
     this.game = game;
@@ -133,15 +167,15 @@ class SplashScene {
   handleEvent(event) {
     if (event.type == 'user-choice') {
       // Advance to next scene
-      console.log('Got user choice:', );
-      this.game.switchScene("prompts", { ...event.detail });
+      console.log('Got user choice:');
+      this.game.switchScene('prompts', { ...event.detail });
     }
   }
 
   async enter() {
     console.log(`entering ${this.id} scene`);
-    const backgrounds = this.assets.get("backgrounds");
-    this.ui.updateBackground("");
+    const backgrounds = this.assets.get('backgrounds');
+    this.ui.updateBackground('');
 
     await this.ui.enterScene(this.id);
     document.addEventListener('user-choice', this);
@@ -150,6 +184,6 @@ class SplashScene {
   async exit() {
     console.log(`exiting ${this.id} scene`);
     document.removeEventListener('user-choice', this);
-    await this.ui.exitScene("splash");
+    await this.ui.exitScene('splash');
   }
 }
