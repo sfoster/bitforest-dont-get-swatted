@@ -31,22 +31,23 @@ function loadImage(filename) {
 const backgroundsMap = new Map();
 const animationsMap = new Map();
 const manifestsMap = new Map();
-const assetsMap = window.assetsMap = new Map([
-  ["manifests", manifestsMap],
-  ["stories", null],
-  ["backgrounds", backgroundsMap],
-  ["animations", animationsMap]
-]);
+const storiesMap = new Map();
+const assetsMap = (window.assetsMap = new Map([
+  ['manifests', manifestsMap],
+  ['stories', storiesMap],
+  ['backgrounds', backgroundsMap],
+  ['animations', animationsMap],
+]));
 
 function loadAsset(url, type, name, collection) {
-  const collectionMap = collection ? assetsMap.get(collection) : assetsMap;
+  const collectionMap = collection ? collection : assetsMap;
   switch (type) {
-    case "json":
-      return loadJSON(url).then(data => {
+    case 'json':
+      return loadJSON(url).then((data) => {
         collectionMap.set(name, data);
       });
-    case "image":
-      return loadImage(url).then(data => {
+    case 'image':
+      return loadImage(url).then((data) => {
         collectionMap.set(name, data);
       });
   }
@@ -54,39 +55,57 @@ function loadAsset(url, type, name, collection) {
 
 const assetsLoaded = (async function loadAssets() {
   // Load all the JSON manifests
-  console.log("Loading the manifests");
+  console.log('Loading the manifests');
   await Promise.all([
-    loadAsset("./backgrounds.json", "json", "backgrounds", "manifests"),
-    loadAsset("./animations.json", "json", "animations", "manifests"),
+    loadAsset('./backgrounds.json', 'json', 'backgrounds', manifestsMap),
+    loadAsset('./animations.json', 'json', 'animations', manifestsMap),
   ]);
 
   // Load the stories data
-  console.log("Loading the twine data");
-  await loadAsset("./stories.json", "json", "stories");
+  console.log('Loading the twine data');
+  await loadAsset('./stories.json', 'json', 'stories');
 
   // Load all the background images
   const loadedPromises = [];
-  for (let [name, url] of Object.entries(assetsMap.get("manifests").get("backgrounds"))) {
-    loadedPromises.push(loadAsset(url, "image", name, "backgrounds"));
+  for (let [name, url] of Object.entries(
+    assetsMap.get('manifests').get('backgrounds')
+  )) {
+    loadedPromises.push(loadAsset(url, 'image', name, backgroundsMap));
   }
   // Load all the animation images
-  for (let [name, url] of Object.entries(assetsMap.get("manifests").get("animations"))) {
-    loadedPromises.push(loadAsset(url, "image", name, "animations"));
+  for (let [name, animData] of Object.entries(
+    assetsMap.get('manifests').get('animations')
+  )) {
+    console.log('animData: ', animData.frames);
+    animationsMap.set(
+      name,
+      new Map([
+        ['frames', animData.frames],
+        ['styles', animData['styles']],
+        ['url', null],
+      ])
+    );
+
+    loadedPromises.push(
+      loadAsset(animData.url, 'image', 'url', animationsMap.get(name))
+    );
   }
-  console.log("Loading the images");
+  console.log('Loading the images');
   await Promise.all(loadedPromises);
+  console.log('Assets loaded');
+  console.log(assetsMap);
 })();
 
 document.addEventListener(
   'DOMContentLoaded',
   async () => {
-    console.log("start DOMContentLoaded, waiting for assetsLoaded");
+    console.log('start DOMContentLoaded, waiting for assetsLoaded');
     await assetsLoaded;
 
     let ui = (window.ui = new UI(assetsMap));
     let game = (window.game = new Game({
       ui,
-      assetsMap
+      assetsMap,
     }));
     // Handle control over to the Game
     game.start();

@@ -1,4 +1,4 @@
-/*
+/**
   The main game logic
   - Owns the game loop
   - Handles state changes
@@ -9,7 +9,7 @@ export class Game {
     this.ui = ui;
     this.outcomes = {};
   }
-  /*
+  /**
    * Kick off the game loop
    */
   async start() {
@@ -18,15 +18,14 @@ export class Game {
     this.twineData = this.assets.get('stories');
     this.backgroundNames = this.assets.get('backgrounds');
     console.log('Game start, with data:', this.twineData);
-    // TODO: Figure out what the first state needs to be, and tell the UI about it
 
+    // Handle the first passage
     this.handleChoice(this.twineData.startnode);
   }
   handleEvent(event) {
     if (event.type == 'user-choice') {
       console.log('Got user choice:', event.detail);
       this.handleChoice(parseInt(event.detail.id));
-      // TODO: The user selected something. Use that input to change our game state
     }
   }
 
@@ -44,7 +43,7 @@ export class Game {
       });
     } else {
       this.ui.updateBackground(this.backgroundNames.get(outcome));
-      this.ui.animateMouth();
+      this.ui.animateMouth(`mouth-2`, 4);
     }
     console.log('Outcome: ' + outcome);
 
@@ -52,6 +51,11 @@ export class Game {
     this.ui.updateWordChoices(currentPassage.links);
   }
 
+  /**
+   * Finds and counts the outcome of a passage based on it's tags
+   * @param {Array} tags a list of tags for the passage
+   * @returns {string | null} the matching outcome
+   */
   countOutcome(tags) {
     if (tags.includes('BAD-END')) {
       this.outcomes.bad += 1;

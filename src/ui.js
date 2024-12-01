@@ -254,21 +254,27 @@ export class UI {
   constructor(assetsMap) {
     this.assets = assetsMap;
   }
+
+  /**
+   * Initializes the UI
+   * @returns {Promise}
+   */
   initialize() {
     this.currentPrompt = document.getElementById('currentPrompt');
     const promptContainer = document.querySelector('#stage .prompt-outer');
     const picker = (this.wordPicker = document.createElement('word-picker'));
 
+    // Create word picker
     picker.id = 'wordPicker';
     picker.classList.add('selection-inner');
     picker.classList.add('layer');
     picker.tabIndex = -1;
 
+    // Create mouth animation
     let mouthAnim = (this.mouthAnimation =
       document.createElement('image-animation'));
     mouthAnim.id = 'mouth';
     promptContainer.parentElement.insertBefore(mouthAnim, promptContainer);
-    // TODO: insert it somewhere
 
     const selectionElement = document.getElementById('selection');
     const reticuleElement = document.getElementById('wordsLineReticule');
@@ -281,10 +287,20 @@ export class UI {
       })
     );
   }
+
+  /**
+   * Updates the UI prompt with the given text
+   * @param {string} text text to update the UI prompt with
+   */
   updatePrompt(text) {
     console.log('updatePrompt with:', text);
     this.currentPrompt.textContent = text;
   }
+
+  /**
+   * Updates the UI word choices with the given links
+   * @param {Array} links array of word choice links and labels
+   */
   updateWordChoices(links) {
     console.log('updateWordChoices with:', links);
     /* each link takes the form:
@@ -305,6 +321,11 @@ export class UI {
     }
     this.wordPicker.updateWords(words);
   }
+
+  /**
+   * Updates the UI background with file specified
+   * @param {string} filename filename of the background image
+   */
   updateBackground(filename) {
     console.log('updateBackground with:', filename);
     let backdrop = document.getElementById('pageBackdrop');
@@ -321,6 +342,7 @@ export class UI {
       );
     });
   }
+
   /**
    * Plays a mouth animation
    * @param {string} animationName name of the animation file
@@ -328,7 +350,10 @@ export class UI {
    */
   animateMouth(animationName, frames = 4) {
     console.log('animateMouth with:', animationName);
-    let animationSrc = this.assets.get('animations').get(animationName);
+    let animationSrc = this.assets
+      .get('animations')
+      .get(animationName)
+      .get('url');
     console.log('Animating with:', animationSrc);
     this.mouthAnimation.start(animationSrc, 1000 / 8, frames);
   }
