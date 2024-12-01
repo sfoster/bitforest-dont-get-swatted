@@ -317,7 +317,6 @@ const promptsUI = new (class extends(_SceneUI) {
     if (!(this.currentPrompt && this.wordPicker)) {
       this.initialize();
     }
-    // this.wordPicker.start()
     await super.start();
     return new Promise((resolve) =>
       requestAnimationFrame((res) => {
@@ -533,25 +532,32 @@ export class UI {
   }
   async enterScene(id) {
     const elem = document.getElementById(id);
+    elem.classList.add("transitioning");
+    let uiScene;
+    console.log(`UI.enterScene: ${id}`);
     switch (id) {
       case "splash":
-        await splashUI.start();
+        uiScene = splashUI;
         break;
       case "prompts":
-        await promptsUI.start();
+        uiScene = promptsUI;
         break;
       case "gameover":
-        await  gameoverUI.start();
+        uiScene = gameoverUI;
         break;
+      default:
+        throw new Error(`Unknown scene: ${id}`);
     }
+    await uiScene.start();
+
     if (elem.classList.contains("hidden")) {
-      return new Promise(resolve => {
+      await new Promise(resolve => {
         elem.addEventListener("transitionend", event => {
           resolve();
         }, { once: true });
         elem.classList.remove("hidden");
       });
     }
-    return Promise.resolve();
+    elem.classList.remove("transitioning");
   }
 }

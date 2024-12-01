@@ -68,8 +68,8 @@ class ChoicesScene extends _Scene {
         : this.twineData.startnode;
 
     let promiseEntered = this.ui.enterScene(this.id);
-    this.handleChoice(startPid);
     await promiseEntered;
+    this.handleChoice(startPid);
     document.addEventListener('user-choice', this);
   }
 

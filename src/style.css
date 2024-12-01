@@ -66,15 +66,17 @@ image-animation > img {
 .scene:not(.hidden) {
   opacity: 1;
   visibility: visible;
-  transition: opacity 1.4s ease-in; /* Customize the duration and timing function as needed */
+  transition: opacity 0.6s ease-in; /* Customize the duration and timing function as needed */
 }
 
 .scene.hidden {
   opacity: 0;
   visibility: hidden;
-  transition: visibility 0s linear 0.5s, opacity 0.5s linear; /* Delay the visibility change until after the opacity transition */
+  transition: visibility 0s linear 0.3s, opacity 0.3s linear; /* Delay the visibility change until after the opacity transition */
 }
-
+.scene.transitioning {
+  opacity: 0.6;
+}
 /*
  * Splash/EULA scene
  */
