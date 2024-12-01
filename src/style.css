@@ -82,16 +82,23 @@ image-animation > img {
  */
 #splash {
   display: flex;
-  width: 90%;
+  width: 100%;
   justify-content: center;
+  align-items: center;
+  background: linear-gradient(#db207a, #9547af);
 }
 #splash-screen {
   aspect-ratio: 1 / 1;
-  border-radius: 14px;
-  background: linear-gradient(#db207a, #9547af);
+  height: 80%;
+  border-radius: 5px;
+  background: rgb(184, 184, 184);
   display: flex;
   flex-direction: column;
 }
+#splash-screen * {
+  color: black;
+}
+
 #eula-container {
   padding: 1em;
   font-size: 3vw;
@@ -112,12 +119,15 @@ image-animation > img {
   gap: 0;
 }
 #splash footer.buttons {
-  border-top: 1px solid white;
+  border-top: 1px solid rgb(0, 0, 0);
   height: 16%;
   box-sizing: border-box;
   display: flex;
   padding-inline: 24px;
   justify-content: space-evenly;
+}
+#splash button {
+  border-color: black;
 }
 #splash-maximize {
   width: 6.5%;
@@ -133,6 +143,7 @@ image-animation > img {
   width: 10%;
   aspect-ratio: 1/1;
   background: url('./images/audio-muted.svg') no-repeat;
+  filter: invert(1);
 }
 #audioToggle:checked {
   background: url('./images/audio.svg') no-repeat;
