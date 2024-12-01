@@ -100,6 +100,7 @@ class ChoicesScene extends _Scene {
       return this.game.switchScene('gameover', {
         outcome: outcome.tag,
         ending: passageText,
+        passageName: this.twineData.passages[pid - 1].name,
       });
     }
 
@@ -230,11 +231,8 @@ class GameOverScene extends _Scene {
     console.log(`entering ${this.id} scene`);
     this.backgroundNames = this.assets.get('backgrounds');
 
-    const { outcome, ending } = params;
+    const { outcome, ending, passageName } = params;
     const promiseEntered = this.ui.enterScene(this.id);
-
-    // set background
-    let passageName = this.twineData.passages[pid - 1].name;
 
     if (this.backgroundNames.has(passageName)) {
       this.ui.updateBackground(this.backgroundNames.get(passageName));
