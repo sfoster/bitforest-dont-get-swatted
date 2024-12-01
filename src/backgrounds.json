@@ -1,4 +1,5 @@
 {
+  "Neutral start": "images/main_background.png",
   "default": "images/main_background.png",
   "GOOD": "images/main_background.png",
   "BAD-END": "images/bad_end_1.png",

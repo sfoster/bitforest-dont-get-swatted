@@ -109,12 +109,19 @@ class ChoicesScene extends _Scene {
         .updateBackground(this.backgroundNames.get('default'))
         .then(() => {});
     } else {
-      this.ui.updateBackground(this.backgroundNames.get(outcome.tag));
+      // set background
+      let passageName = this.twineData.passages[pid - 1].name;
+
+      if (this.backgroundNames.has(passageName)) {
+        this.ui.updateBackground(this.backgroundNames.get(passageName));
+      } else if (this.backgroundNames.has(outcome)) {
+        this.ui.updateBackground(this.backgroundNames.get(outcome));
+      } else {
+        this.ui.updateBackground(this.backgroundNames.get('default'));
+      }
       // handle normal paths
       if (outcome.type != 'END' && outcome.type != 'MENU') {
         // find passage name at pid
-        let passageName = this.twineData.passages[pid - 1].name;
-
         // select correct mouth animation from manifest
         if (
           this.assets
@@ -225,7 +232,18 @@ class GameOverScene extends _Scene {
 
     const { outcome, ending } = params;
     const promiseEntered = this.ui.enterScene(this.id);
-    this.ui.updateBackground(this.backgroundNames.get(outcome));
+
+    // set background
+    let passageName = this.twineData.passages[pid - 1].name;
+
+    if (this.backgroundNames.has(passageName)) {
+      this.ui.updateBackground(this.backgroundNames.get(passageName));
+    } else if (this.backgroundNames.has(outcome)) {
+      this.ui.updateBackground(this.backgroundNames.get(outcome));
+    } else {
+      this.ui.updateBackground(this.backgroundNames.get('default'));
+    }
+
     this.ui.updateEnding(ending);
     await promiseEntered;
     document.addEventListener('user-choice', this);
