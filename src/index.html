@@ -1,56 +1,75 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1">
-  <meta charset="utf-8">
-  <title>Don't Get Swatted!</title>
-  <link rel="StyleSheet" href="./style.css"/>
-  <script src="./vendor/howler.js" defer></script>
-  <script src="./main.js" type="module"></script>
-</head>
-<body>
-  <main id="stage" class="grid-layer-stack">
-    <div id="pageBackdrop" class="backdrop layer"></div>
-    <section class="layer scene hidden" id="splash">
-      <div id="splash-screen">
-        <header class="buttons">
-          <div id="splash-maximize" class="invisible-btn"></div>
-          <div id="splash-close" class="invisible-btn"></div>
-        </header>
-        <section id="eula-container">
-          <h2>User License Agreement</h2>
-          <p>By using our services you acknowledge that everything you do is spied on.</p>
-        </section>
-        <footer class="buttons">
-          <input type="checkbox" id="audioToggle">
-          <button id="beginButton" class="play">Begin</button>
-        </footer>
-      </div>
-    </section>
-    <section class="layer scene hidden" id="prompts">
-      <div class="prompt-outer">
-        <div id="currentPrompt" class="prompt-inner"></div>
-      </div>
-      <div id="selection" class="selection-outer layer-stack">
-        <div id="selectionBackdrop" class="backdrop layer"></div>
-
-        <section id="wordsLineReticule" class="letter-box layer">
-          <div class="left"></div>
-          <img src="./images/CursorBLue.png" class="cursor">
-          <div class="right"></div>
-        </section>
-      </div>
-    </section>
-    <section class="layer scene hidden" id="gameover">
-      <div id="gameover-screen">
-        <div class="prompt-outer">
-          <div id="conclusion-container" class="prompt-inner"></div>
+  <head>
+    <meta
+      name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1"
+    />
+    <meta charset="utf-8" />
+    <title>Don't Get Swatted!</title>
+    <link rel="StyleSheet" href="./style.css" />
+    <script src="./vendor/howler.js" defer></script>
+    <script src="./main.js" type="module"></script>
+  </head>
+  <body>
+    <main id="stage" class="grid-layer-stack">
+      <div id="pageBackdrop" class="backdrop layer"></div>
+      <section class="layer scene hidden" id="splash">
+        <div id="splash-screen">
+          <header class="buttons">
+            <div id="splash-maximize" class="invisible-btn"></div>
+            <div id="splash-close" class="invisible-btn"></div>
+          </header>
+          <section id="eula-container">
+            <h2>User License Agreement</h2>
+            <p>
+              By using our services you acknowledge that everything you do is
+              spied on.
+            </p>
+            <h3 id="credits">Credits</h3>
+            <p id="credits">
+              <a href="https://cook1ez.itch.io/" target="_blank">Cook1ez</a> —
+              <span class="role">Story</span><br />
+              <a href="https://wappaish.itch.io/" target="_blank">Wappaish</a> —
+              <span class="role">Art</span><br />
+              <a href="https://samfosteriam.itch.io/" target="_blank"
+                >samfosteriam</a
+              >
+              — <span class="role">Development</span><br />
+              <a href="https://haydondo.itch.io/" target="_blank">haydondo</a> —
+              <span class="role">Development</span><br />
+            </p>
+          </section>
+          <footer class="buttons">
+            <input type="checkbox" id="audioToggle" />
+            <button id="beginButton" class="play">I Accept</button>
+          </footer>
         </div>
-        <footer class="buttons">
-          <button id="restartButton" class="play">Play again</button>
-        </footer>
-      </div>
-    </section>
-  </main>
-</body>
+      </section>
+      <section class="layer scene hidden" id="prompts">
+        <div class="prompt-outer">
+          <div id="currentPrompt" class="prompt-inner"></div>
+        </div>
+        <div id="selection" class="selection-outer layer-stack">
+          <div id="selectionBackdrop" class="backdrop layer"></div>
+
+          <section id="wordsLineReticule" class="letter-box layer">
+            <div class="left"></div>
+            <img src="./images/CursorBLue.png" class="cursor" />
+            <div class="right"></div>
+          </section>
+        </div>
+      </section>
+      <section class="layer scene hidden" id="gameover">
+        <div id="gameover-screen">
+          <div class="prompt-outer">
+            <div id="conclusion-container" class="prompt-inner"></div>
+          </div>
+          <footer class="buttons">
+            <button id="restartButton" class="play">Play again</button>
+          </footer>
+        </div>
+      </section>
+    </main>
+  </body>
 </html>
