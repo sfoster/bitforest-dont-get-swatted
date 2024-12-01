@@ -9,7 +9,7 @@ body {
 html {
   display: flex;
   justify-content: center;
-  --ui-font: "Special Elite", system-ui;
+  --ui-font: 'Special Elite', system-ui;
 }
 body {
   display: flex;
@@ -21,7 +21,11 @@ body {
   max-height: 100vh;
   overflow: hidden;
 }
-p, section, header, footer, button {
+p,
+section,
+header,
+footer,
+button {
   font-family: var(--ui-font);
 }
 main {
@@ -430,7 +434,7 @@ image-animation > img {
   display: inline-block;
   padding: 6.5% 5% 0 5%;
   font-size: 4vw;
-  border: 3px solid #573a7b;
+  border: 0.7vw solid #573a7b;
   border-radius: 4px;
   margin-inline: 2px;
   height: 100%;
