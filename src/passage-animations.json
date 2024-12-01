@@ -1,5 +1,13 @@
 {
   "default": "default",
-  "28": { "mouthAnimation": "mouth-happy", "sweat": false },
-  "26": { "mouthAnimation": "mouth-distressed", "sweat": true }
+  "Neutral prompt 1": { "mouthAnimation": "mouth-distressed", "sweat": true },
+  "Neutral prompt 4 Final": {
+    "mouthAnimation": "mouth-distressed",
+    "sweat": true
+  },
+  "Good Prompt 3": { "mouthAnimation": "mouth-distressed", "sweat": true },
+  "Good Prompt 4 Final": {
+    "mouthAnimation": "mouth-flirty",
+    "sweat": true
+  }
 }

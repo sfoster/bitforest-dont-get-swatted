@@ -266,53 +266,53 @@ class WordPicker extends HTMLElement {
 }
 customElements.define('word-picker', WordPicker);
 
-const splashUI = new (class extends(_SceneUI) {
+const splashUI = new (class extends _SceneUI {
   async start() {
     await super.start();
-    document.querySelector("#splash button").focus();
+    document.querySelector('#splash button').focus();
   }
   handleEvent(event) {
     switch (event.target.id) {
-      case "splash-maximize":
+      case 'splash-maximize':
         // TODO: maximize the #stage element
         break;
-      case "splash-close":
+      case 'splash-close':
         // TODO: play with the easter-egg initial prompt
         event.preventDefault();
         this.dispatchUserChoice({
-          startType: "alt",
+          startType: 'alt',
         });
         break;
-      case "audioToggle":
+      case 'audioToggle':
         // TODO: enable audio
         break;
       default:
         event.preventDefault();
         this.dispatchUserChoice({
-          startType: "default",
+          startType: 'default',
         });
         break;
     }
   }
 })();
 
-const gameoverUI = new (class extends(_SceneUI) {
+const gameoverUI = new (class extends _SceneUI {
   handleEvent(event) {
     switch (event.target.id) {
       default:
         event.preventDefault();
         this.dispatchUserChoice({
-          action: "restart",
+          action: 'restart',
         });
         break;
     }
   }
   updateEnding(text) {
-    document.getElementById("conclusion-container").textContent = text;
+    document.getElementById('conclusion-container').textContent = text;
   }
 })();
 
-const promptsUI = new (class extends(_SceneUI) {
+const promptsUI = new (class extends _SceneUI {
   async start() {
     if (!(this.currentPrompt && this.wordPicker)) {
       this.initialize();
@@ -425,7 +425,6 @@ const promptsUI = new (class extends(_SceneUI) {
    * Plays a mouth animation
    */
   animateMouth(animData) {
-    console.log("Animating with:", animData);
     this.mouthAnimation.startAnimationFromData(animData);
   }
 
@@ -460,7 +459,7 @@ export class UI {
   updateBackground(filename) {
     console.log('updateBackground with:', filename);
     let backdrop = document.getElementById('pageBackdrop');
-    let backgroundValue = filename ? `url('${filename}')` : "none";
+    let backgroundValue = filename ? `url('${filename}')` : 'none';
     backdrop.classList.add('transitioning');
     return new Promise((resolve) => {
       backdrop.addEventListener(
@@ -510,39 +509,43 @@ export class UI {
   async exitScene(id) {
     const elem = document.getElementById(id);
     switch (id) {
-      case "splash":
+      case 'splash':
         await splashUI.stop();
         break;
-      case "prompts":
+      case 'prompts':
         await promptsUI.stop();
         break;
-      case "gameover":
+      case 'gameover':
         await gameoverUI.stop();
         break;
     }
-    if (!elem.classList.contains("hidden")) {
-      return new Promise(resolve => {
-        elem.addEventListener("transitionend", event => {
-          resolve();
-        }, { once: true });
-        elem.classList.add("hidden");
+    if (!elem.classList.contains('hidden')) {
+      return new Promise((resolve) => {
+        elem.addEventListener(
+          'transitionend',
+          (event) => {
+            resolve();
+          },
+          { once: true }
+        );
+        elem.classList.add('hidden');
       });
     }
     return Promise.resolve();
   }
   async enterScene(id) {
     const elem = document.getElementById(id);
-    elem.classList.add("transitioning");
+    elem.classList.add('transitioning');
     let uiScene;
     console.log(`UI.enterScene: ${id}`);
     switch (id) {
-      case "splash":
+      case 'splash':
         uiScene = splashUI;
         break;
-      case "prompts":
+      case 'prompts':
         uiScene = promptsUI;
         break;
-      case "gameover":
+      case 'gameover':
         uiScene = gameoverUI;
         break;
       default:
@@ -550,14 +553,18 @@ export class UI {
     }
     await uiScene.start();
 
-    if (elem.classList.contains("hidden")) {
-      await new Promise(resolve => {
-        elem.addEventListener("transitionend", event => {
-          resolve();
-        }, { once: true });
-        elem.classList.remove("hidden");
+    if (elem.classList.contains('hidden')) {
+      await new Promise((resolve) => {
+        elem.addEventListener(
+          'transitionend',
+          (event) => {
+            resolve();
+          },
+          { once: true }
+        );
+        elem.classList.remove('hidden');
       });
     }
-    elem.classList.remove("transitioning");
+    elem.classList.remove('transitioning');
   }
 }

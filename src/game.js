@@ -112,28 +112,29 @@ class ChoicesScene extends _Scene {
       this.ui.updateBackground(this.backgroundNames.get(outcome.tag));
       // handle normal paths
       if (outcome.type != 'END' && outcome.type != 'MENU') {
-        console.log(this.assets.get('manifests').get('animationDirectory'));
+        // find passage name at pid
+        let passageName = this.twineData.passages[pid - 1].name;
+
         // select correct mouth animation from manifest
         if (
           this.assets
             .get('manifests')
             .get('animationDirectory')
-            .hasOwnProperty(pid)
+            .hasOwnProperty(passageName)
         ) {
           this.ui.animateMouth(
-            this.assets.get('manifests').get('animationDirectory')[pid][
+            this.assets.get('manifests').get('animationDirectory')[passageName][
               'mouthAnimation'
             ]
           );
           let sweat = this.assets.get('manifests').get('animationDirectory')[
-            pid
+            passageName
           ]['sweat'];
           this.ui.showSweat(sweat);
         } else {
           this.ui.animateMouth(`default`);
           this.ui.showSweat(false);
         }
-      } else {
       }
     }
     // update prompt and wording

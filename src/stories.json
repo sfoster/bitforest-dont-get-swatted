@@ -1,19 +1,36 @@
 {
   "passages": [
     {
-      "text": "I DUNNO MAYBE THERES A NUKE HERE?\n\n\n[[Loop to start? ->Terms and Serives]]",
+      "text": "The goverment wins this fight.\nYou've been being listened in on this whole time.\n YOU GET SWATTED \nA bunch of S.W.A.T members break down your doors.\n\n[[Loop to start? ->Terms and Serives]]",
       "links": [
         {
           "name": "Loop to start? ",
           "link": "Terms and Serives",
-          "pid": "29"
+          "pid": "31"
+        }
+      ],
+      "name": " BIG BAD END 4",
+      "pid": "1",
+      "position": {
+        "x": "425",
+        "y": "1125"
+      },
+      "tags": ["BAD-END"]
+    },
+    {
+      "text": "Enjoy making bombs. That's it, that's the end, good luck.\n\n\n[[Loop to start? ->Terms and Serives]]",
+      "links": [
+        {
+          "name": "Loop to start? ",
+          "link": "Terms and Serives",
+          "pid": "31"
         }
       ],
       "name": "BAD ENDING 8 CATASTROPHIC",
-      "pid": "1",
+      "pid": "2",
       "position": {
-        "x": "1050",
-        "y": "1075"
+        "x": "1100",
+        "y": "1100"
       },
       "tags": ["BAD-END"]
     },
@@ -23,11 +40,11 @@
         {
           "name": "Loop to start? ",
           "link": "Terms and Serives",
-          "pid": "29"
+          "pid": "31"
         }
       ],
       "name": "BIG BAD END 4",
-      "pid": "2",
+      "pid": "3",
       "position": {
         "x": "500",
         "y": "925"
@@ -40,11 +57,11 @@
         {
           "name": "Loop to start? ",
           "link": "Terms and Serives",
-          "pid": "29"
+          "pid": "31"
         }
       ],
       "name": "Bad End 1",
-      "pid": "3",
+      "pid": "4",
       "position": {
         "x": "500",
         "y": "400"
@@ -52,18 +69,18 @@
       "tags": ["BAD-END"]
     },
     {
-      "text": "You Died\n\n[[Loop to start? ->Terms and Serives]]",
+      "text": "Why did you buy napalm? You accidentally ignite it and die, game over.\n\n[[Loop to start? ->Terms and Serives]]",
       "links": [
         {
           "name": "Loop to start? ",
           "link": "Terms and Serives",
-          "pid": "29"
+          "pid": "31"
         }
       ],
       "name": "Bad End 2",
-      "pid": "4",
+      "pid": "5",
       "position": {
-        "x": "500",
+        "x": "475",
         "y": "525"
       },
       "tags": ["BAD-END"]
@@ -74,14 +91,31 @@
         {
           "name": "Loop to start? ",
           "link": "Terms and Serives",
-          "pid": "29"
+          "pid": "31"
         }
       ],
       "name": "Bad End 4",
-      "pid": "5",
+      "pid": "6",
       "position": {
         "x": "500",
         "y": "775"
+      },
+      "tags": ["BAD-END"]
+    },
+    {
+      "text": "You shouldn't have taken your guns to the club.\nThe police have caught up to you, you are surrounded.\nMake better life choices pal.\n\n[[Loop to start? ->Terms and Serives]]",
+      "links": [
+        {
+          "name": "Loop to start? ",
+          "link": "Terms and Serives",
+          "pid": "31"
+        }
+      ],
+      "name": "Bad End 9",
+      "pid": "7",
+      "position": {
+        "x": "375",
+        "y": "650"
       },
       "tags": ["BAD-END"]
     },
@@ -91,11 +125,11 @@
         {
           "name": "Loop to start? ",
           "link": "Terms and Serives",
-          "pid": "29"
+          "pid": "31"
         }
       ],
       "name": "Bad End Landlords",
-      "pid": "6",
+      "pid": "8",
       "position": {
         "x": "600",
         "y": "1025"
@@ -103,16 +137,16 @@
       "tags": ["BAD-END"]
     },
     {
-      "text": "FAIL HORRIBLY\n\n\n[[Loop to start? ->Terms and Serives]]",
+      "text": "WHY WOULD YOU SAY THAT ONLINE ANYWHERE???\n\n GET SWATTED \n\n\n[[Loop to start? ->Terms and Serives]]",
       "links": [
         {
           "name": "Loop to start? ",
           "link": "Terms and Serives",
-          "pid": "29"
+          "pid": "31"
         }
       ],
       "name": "Bad Ending 6",
-      "pid": "7",
+      "pid": "9",
       "position": {
         "x": "900",
         "y": "900"
@@ -120,16 +154,16 @@
       "tags": ["BAD-END"]
     },
     {
-      "text": "REALLY BAD END LIKE BAD\n\n\n[[Loop to start? ->Terms and Serives]]",
+      "text": "You live out your days as a cat boy content creator, this could be considered a good ending.\n\n\n[[Loop to start? ->Terms and Serives]]",
       "links": [
         {
           "name": "Loop to start? ",
           "link": "Terms and Serives",
-          "pid": "29"
+          "pid": "31"
         }
       ],
       "name": "Bad Ending 7",
-      "pid": "8",
+      "pid": "10",
       "position": {
         "x": "1100",
         "y": "750"
@@ -142,11 +176,11 @@
         {
           "name": "Loop to start? ",
           "link": "Terms and Serives",
-          "pid": "29"
+          "pid": "31"
         }
       ],
       "name": "Bad end 3",
-      "pid": "9",
+      "pid": "11",
       "position": {
         "x": "500",
         "y": "650"
@@ -159,11 +193,11 @@
         {
           "name": "Loop to start? ",
           "link": "Terms and Serives",
-          "pid": "29"
+          "pid": "31"
         }
       ],
       "name": "Bad end funny alt lvl4",
-      "pid": "10",
+      "pid": "12",
       "position": {
         "x": "375",
         "y": "775"
@@ -171,16 +205,16 @@
       "tags": ["BAD-END"]
     },
     {
-      "text": "This is it, the revolution begins with you. You said all the right things and made all the right moves.\n\nGG Pro gamer skills\n\n[[Loop to start? ->Terms and Serives]]",
+      "text": "This is it, the revolution begins with you. You said all the right things and made all the right moves.\n\nGG Pro gamer skills\n\nEnjoy your community living in the woods.\n\n[[Loop to start? ->Terms and Serives]]",
       "links": [
         {
           "name": "Loop to start? ",
           "link": "Terms and Serives",
-          "pid": "29"
+          "pid": "31"
         }
       ],
       "name": "Best Ending",
-      "pid": "11",
+      "pid": "13",
       "position": {
         "x": "1025",
         "y": "900"
@@ -190,7 +224,7 @@
     {
       "text": "A Bad Choice ends the game they get SWATTED\nA Neutral choice from any path moves them to the Neutral Prompts\nA Good Choice Moves them to the next Good Prompt\n\nRules:\nPrompts can have up to 80 characters.\nAnswers can have up to 25 characters.\n\n\nBad ends            4 /16\nEaster Egg Ends      2/3\n\nNeutral choices   2/12\nNeutral prompts   4/4\nNeutral ends          2/4\n\nGood options        0/9    \nGood prompts      3/4\nGood Ends             1/4\n\nPrompt one:  COMPLETE\nB1 N2 G1\n\nNeutral prompt 1\nB1 N2 G1\n\nNeutral prompt 2\nB1 N2 G1\n\nNeutral prompt 3\nB1 N2 G1\n\nNeutral Prompt 4\nB2 N1 G1\n\n\nGood Prompt 1\nB2 N1 G1\n\nGood Prompt 2\nB2 N1 G1\n\nGood Prompt 3 \nB3 N1 G1\n\nGood Prompt 4\nB3 N1 G1",
       "name": "Developer notes",
-      "pid": "12",
+      "pid": "14",
       "position": {
         "x": "100",
         "y": "100"
@@ -202,11 +236,11 @@
         {
           "name": "Loop to start? ",
           "link": "Terms and Serives",
-          "pid": "29"
+          "pid": "31"
         }
       ],
       "name": "Easter egg End 1 Declined Call",
-      "pid": "13",
+      "pid": "15",
       "position": {
         "x": "300",
         "y": "300"
@@ -219,11 +253,11 @@
         {
           "name": "Loop to start? ",
           "link": "Terms and Serives",
-          "pid": "29"
+          "pid": "31"
         }
       ],
       "name": "Easter eggs end 2 Arsenic",
-      "pid": "14",
+      "pid": "16",
       "position": {
         "x": "1200",
         "y": "525"
@@ -236,26 +270,26 @@
         {
           "name": "bad life choices lead you here ",
           "link": "Bad end 3",
-          "pid": "9"
+          "pid": "11"
         },
         {
           "name": "Learn to do better ",
           "link": "Neutral Prompt 2",
-          "pid": "24"
+          "pid": "26"
         },
         {
           "name": "stummy ache ;-; ",
           "link": "Egg Hunt 2 Arsnic",
-          "pid": "16"
+          "pid": "18"
         },
         {
           "name": "Look a good choice for once in you life ",
           "link": "Good Prompt 3",
-          "pid": "18"
+          "pid": "20"
         }
       ],
       "name": "Egg Hunt 1 Arsnic",
-      "pid": "15",
+      "pid": "17",
       "position": {
         "x": "1100",
         "y": "400"
@@ -268,26 +302,26 @@
         {
           "name": "Six pounds of cocaine ",
           "link": "Bad end funny alt lvl4",
-          "pid": "10"
+          "pid": "12"
         },
         {
           "name": "arsnic ",
           "link": "Easter eggs end 2 Arsenic",
-          "pid": "14"
+          "pid": "16"
         },
         {
           "name": "my old sticker collection ",
           "link": "Neutral prompt 4 Final",
-          "pid": "27"
+          "pid": "29"
         },
         {
           "name": "the rent check I lost ",
           "link": "Good Prompt 4 Final",
-          "pid": "19"
+          "pid": "21"
         }
       ],
       "name": "Egg Hunt 2 Arsnic",
-      "pid": "16",
+      "pid": "18",
       "position": {
         "x": "1200",
         "y": "400"
@@ -300,26 +334,26 @@
         {
           "name": "napalm",
           "link": "Bad End 2",
-          "pid": "4"
+          "pid": "5"
         },
         {
           "name": "a new bandana ",
           "link": "Neutral Prompt 2",
-          "pid": "24"
+          "pid": "26"
         },
         {
           "name": "silly straws ",
           "link": "Egg Hunt 1 Arsnic",
-          "pid": "15"
+          "pid": "17"
         },
         {
           "name": "a multi-tool with a knife ",
           "link": "Good prompt 2",
-          "pid": "21"
+          "pid": "23"
         }
       ],
       "name": "Good Prompt 1",
-      "pid": "17",
+      "pid": "19",
       "position": {
         "x": "900",
         "y": "400"
@@ -327,31 +361,31 @@
       "tags": ["GOOD"]
     },
     {
-      "text": "\"I can't wait to leave, my neighbors started a fire outside the apartment, I still see it from my window, I need to _____ after this.\"\n\n[[terrorize my insurance ->Bad End 4]]\n\n[[Have you considred dissasocsiating? You seem like you are. ->Neutral Prompt 3]]\n\n[[You can read right? ->Neutral Prompt 3]] \n\n[[Don't need a hand to hold ->Good Prompt 4 Final]]",
+      "text": "\"I can't wait to leave, my neighbors started a fire outside the apartment, I still see it from my window, I need to _____ after this.\"\n\n[[terrorize my insurance ->BIG BAD END 4]] \n\n[[really party ->Bad end funny alt lvl4]] \n\n[[fight the goverment -> BIG BAD END 4]] \n\n[[move to the woods ->Good Prompt 4 Final]]",
       "links": [
         {
           "name": "terrorize my insurance ",
-          "link": "Bad End 4",
-          "pid": "5"
+          "link": "BIG BAD END 4",
+          "pid": "3"
         },
         {
-          "name": "Have you considred dissasocsiating? You seem like you are. ",
-          "link": "Neutral Prompt 3",
-          "pid": "25"
+          "name": "really party ",
+          "link": "Bad end funny alt lvl4",
+          "pid": "12"
         },
         {
-          "name": "You can read right? ",
-          "link": "Neutral Prompt 3",
-          "pid": "25"
+          "name": "fight the goverment ",
+          "link": " BIG BAD END 4",
+          "pid": "1"
         },
         {
-          "name": "Don't need a hand to hold ",
+          "name": "move to the woods ",
           "link": "Good Prompt 4 Final",
-          "pid": "19"
+          "pid": "21"
         }
       ],
       "name": "Good Prompt 3",
-      "pid": "18",
+      "pid": "20",
       "position": {
         "x": "900",
         "y": "650"
@@ -359,36 +393,36 @@
       "tags": ["GOOD"]
     },
     {
-      "text": "I dunno but this one is gonna be hard. 3 bad ends, one neutral, and one good, This leads to TRUE GOOD ENDING\n\n[[Bad things here->Bad Ending 6]]\n\n[[Some how and even worse option->Bad Ending 7]]\n\n[[WORST ENDING IN GAME ->BAD ENDING 8 CATASTROPHIC]]\n\n[[Final Neutral option ->Good turned Neutral Ending]]\n\n[[Best answer here ->Best Ending]]",
+      "text": "\"I've been considering starting _____\"\n\n[[the revolution->Bad Ending 6]]\n\n[[an Only Furries->Bad Ending 7]]\n\n[[a bomb making factory ->BAD ENDING 8 CATASTROPHIC]]\n\n[[community garden ->Good turned Neutral Ending]]\n\n[[homestead in the woods ->Best Ending]]",
       "links": [
         {
-          "name": "Bad things here",
+          "name": "the revolution",
           "link": "Bad Ending 6",
-          "pid": "7"
+          "pid": "9"
         },
         {
-          "name": "Some how and even worse option",
+          "name": "an Only Furries",
           "link": "Bad Ending 7",
-          "pid": "8"
+          "pid": "10"
         },
         {
-          "name": "WORST ENDING IN GAME ",
+          "name": "a bomb making factory ",
           "link": "BAD ENDING 8 CATASTROPHIC",
-          "pid": "1"
+          "pid": "2"
         },
         {
-          "name": "Final Neutral option ",
+          "name": "community garden ",
           "link": "Good turned Neutral Ending",
-          "pid": "22"
+          "pid": "24"
         },
         {
-          "name": "Best answer here ",
+          "name": "homestead in the woods ",
           "link": "Best Ending",
-          "pid": "11"
+          "pid": "13"
         }
       ],
       "name": "Good Prompt 4 Final",
-      "pid": "19",
+      "pid": "21",
       "position": {
         "x": "900",
         "y": "775"
@@ -401,11 +435,11 @@
         {
           "name": "Loop to start? ",
           "link": "Terms and Serives",
-          "pid": "29"
+          "pid": "31"
         }
       ],
       "name": "Good ending 1",
-      "pid": "20",
+      "pid": "22",
       "position": {
         "x": "800",
         "y": "1025"
@@ -418,26 +452,26 @@
         {
           "name": "killer weekend ",
           "link": "Bad end 3",
-          "pid": "9"
+          "pid": "11"
         },
         {
           "name": "hiking trip ",
           "link": "Neutral Prompt 3",
-          "pid": "25"
+          "pid": "27"
         },
         {
           "name": "scouts test ",
           "link": "Neutral Prompt 3",
-          "pid": "25"
+          "pid": "27"
         },
         {
           "name": "hunting trip ",
           "link": "Good Prompt 3",
-          "pid": "18"
+          "pid": "20"
         }
       ],
       "name": "Good prompt 2",
-      "pid": "21",
+      "pid": "23",
       "position": {
         "x": "900",
         "y": "525"
@@ -445,16 +479,16 @@
       "tags": ["GOOD"]
     },
     {
-      "text": "Good turned Neutral path ending, you are definitly up to something but maybe not over throwing the goverment.\n\n[[Loop to start? ->Terms and Serives]]",
+      "text": "You live out the rest of your days growing turnips enjoy.\n\n[[Loop to start? ->Terms and Serives]]",
       "links": [
         {
           "name": "Loop to start? ",
           "link": "Terms and Serives",
-          "pid": "29"
+          "pid": "31"
         }
       ],
       "name": "Good turned Neutral Ending",
-      "pid": "22",
+      "pid": "24",
       "position": {
         "x": "900",
         "y": "1150"
@@ -467,11 +501,11 @@
         {
           "name": "Loop to start? ",
           "link": "Terms and Serives",
-          "pid": "29"
+          "pid": "31"
         }
       ],
       "name": "Neutral End",
-      "pid": "23",
+      "pid": "25",
       "position": {
         "x": "700",
         "y": "1000"
@@ -479,31 +513,31 @@
       "tags": ["Neutral-Path", "Neutral-End"]
     },
     {
-      "text": "\"At least the other night I _____ at the bar.\"\n\n[[Straight up jorked it and by it lets just say, my gun. ->Bad end 3]] \n\n[[didn't cried loudly in the bathroom ->Neutral Prompt 3]] \n\n[[got shwasted ->Neutral Prompt 3]] \n\n[[got three baddies numbers ->Good Prompt 4 Final]]",
+      "text": "\"At least the other night I _____ at the bar.\"\n\n[[Straight up jorked it and by it lets just say, my gun. ->Bad End 9]] \n\n[[didn't cried loudly in the bathroom ->Neutral Prompt 3]] \n\n[[got shwasted ->Neutral Prompt 3]] \n\n[[got three baddies numbers ->Good Prompt 4 Final]]",
       "links": [
         {
           "name": "Straight up jorked it and by it lets just say, my gun. ",
-          "link": "Bad end 3",
-          "pid": "9"
+          "link": "Bad End 9",
+          "pid": "7"
         },
         {
           "name": "didn't cried loudly in the bathroom ",
           "link": "Neutral Prompt 3",
-          "pid": "25"
+          "pid": "27"
         },
         {
           "name": "got shwasted ",
           "link": "Neutral Prompt 3",
-          "pid": "25"
+          "pid": "27"
         },
         {
           "name": "got three baddies numbers ",
           "link": "Good Prompt 4 Final",
-          "pid": "19"
+          "pid": "21"
         }
       ],
       "name": "Neutral Prompt 2",
-      "pid": "24",
+      "pid": "26",
       "position": {
         "x": "700",
         "y": "525"
@@ -516,26 +550,26 @@
         {
           "name": "Six pounds of cocaine ",
           "link": "Bad end funny alt lvl4",
-          "pid": "10"
+          "pid": "12"
         },
         {
           "name": "arsnic ",
           "link": "Bad End 4",
-          "pid": "5"
+          "pid": "6"
         },
         {
           "name": "my old sticker collection ",
           "link": "Neutral prompt 4 Final",
-          "pid": "27"
+          "pid": "29"
         },
         {
           "name": "the rent check I lost ",
           "link": "Good Prompt 4 Final",
-          "pid": "19"
+          "pid": "21"
         }
       ],
       "name": "Neutral Prompt 3",
-      "pid": "25",
+      "pid": "27",
       "position": {
         "x": "700",
         "y": "650"
@@ -543,31 +577,31 @@
       "tags": ["Neutral-Path"]
     },
     {
-      "text": "\"It sucked that I was late for work because _____.\"\n\n[[bad life choices lead you here ->Bad end 3]] \n\n[[Learn to do better ->Neutral Prompt 2]] \n\n[[stummy ache ;-; ->Neutral Prompt 2]]\n\n[[Look a good choice for once in you life ->Good Prompt 3]]",
+      "text": "\"It sucked that I was late for work because _____.\"\n\n[[bad life choices lead you here ->Bad end 3]] \n\n[[the US postal service ->Neutral Prompt 2]] \n\n[[stummy ache ;-; ->Neutral Prompt 2]]\n\n[[the internet->Good Prompt 3]]",
       "links": [
         {
           "name": "bad life choices lead you here ",
           "link": "Bad end 3",
-          "pid": "9"
+          "pid": "11"
         },
         {
-          "name": "Learn to do better ",
+          "name": "the US postal service ",
           "link": "Neutral Prompt 2",
-          "pid": "24"
+          "pid": "26"
         },
         {
           "name": "stummy ache ;-; ",
           "link": "Neutral Prompt 2",
-          "pid": "24"
+          "pid": "26"
         },
         {
-          "name": "Look a good choice for once in you life ",
+          "name": "the internet",
           "link": "Good Prompt 3",
-          "pid": "18"
+          "pid": "20"
         }
       ],
       "name": "Neutral prompt 1",
-      "pid": "26",
+      "pid": "28",
       "position": {
         "x": "700",
         "y": "400"
@@ -575,36 +609,36 @@
       "tags": ["Neutral-Path"]
     },
     {
-      "text": "\"So anyway, I think if my landlord keeps raising rent I'm gonna _____\"\n\n[[kill all landlords ->Bad End Landlords]]\n\n[[overthrow the goverment ->BIG BAD END 4]] \n\n[[cry in the tub ->Neutral End]]\n\n[[have to move ->Neutral End]] \n\n[[go live with my friends in the woods ->Good ending 1]]",
+      "text": "\" I think if my landlord keeps raising rent I'm gonna _____\"\n\n[[kill all landlords ->Bad End Landlords]]\n\n[[overthrow the goverment ->BIG BAD END 4]] \n\n[[cry in the tub ->Neutral End]]\n\n[[have to move ->Neutral End]] \n\n[[go live with my friends in the woods ->Good ending 1]]",
       "links": [
         {
           "name": "kill all landlords ",
           "link": "Bad End Landlords",
-          "pid": "6"
+          "pid": "8"
         },
         {
           "name": "overthrow the goverment ",
           "link": "BIG BAD END 4",
-          "pid": "2"
+          "pid": "3"
         },
         {
           "name": "cry in the tub ",
           "link": "Neutral End",
-          "pid": "23"
+          "pid": "25"
         },
         {
           "name": "have to move ",
           "link": "Neutral End",
-          "pid": "23"
+          "pid": "25"
         },
         {
           "name": "go live with my friends in the woods ",
           "link": "Good ending 1",
-          "pid": "20"
+          "pid": "22"
         }
       ],
       "name": "Neutral prompt 4 Final",
-      "pid": "27",
+      "pid": "29",
       "position": {
         "x": "700",
         "y": "775"
@@ -617,26 +651,26 @@
         {
           "name": "bombed the skate park",
           "link": "Bad End 1",
-          "pid": "3"
+          "pid": "4"
         },
         {
           "name": "forgot my wallet",
           "link": "Neutral prompt 1",
-          "pid": "26"
+          "pid": "28"
         },
         {
           "name": "spilled my coffee",
           "link": "Neutral prompt 1",
-          "pid": "26"
+          "pid": "28"
         },
         {
           "name": "lost my lighter",
           "link": "Good Prompt 1",
-          "pid": "17"
+          "pid": "19"
         }
       ],
       "name": "Neutral start",
-      "pid": "28",
+      "pid": "30",
       "position": {
         "x": "625",
         "y": "250"
@@ -644,21 +678,21 @@
       "tags": ["Neutral-Path"]
     },
     {
-      "text": "User Licensed Agreement, by using our services you aknowledge that everything you do is spied on.\n\n\n\n[[START CALL ->Neutral start]]\n\n[[CLOSE APP ->Easter egg End 1 Declined Call]]",
+      "text": "User Licensed Agreement, by using our services you acknowledge that everything you do is spied on.\n\n\n\n[[START CALL ->Neutral start]]\n\n[[CLOSE APP ->Easter egg End 1 Declined Call]]",
       "links": [
         {
           "name": "START CALL ",
           "link": "Neutral start",
-          "pid": "28"
+          "pid": "30"
         },
         {
           "name": "CLOSE APP ",
           "link": "Easter egg End 1 Declined Call",
-          "pid": "13"
+          "pid": "15"
         }
       ],
       "name": "Terms and Serives",
-      "pid": "29",
+      "pid": "31",
       "position": {
         "x": "400",
         "y": "150"
@@ -667,9 +701,9 @@
     }
   ],
   "name": "Don't Get Swatted",
-  "startnode": "28",
-  "altstartnode": "28",
+  "startnode": "30",
+  "altstartnode": "30",
   "creator": "Twine",
-  "creator-version": "2.9.2",
+  "creator-version": "2.10.0",
   "ifid": "419EBCA5-F813-4D49-AFBA-68CCC88E587D"
 }
