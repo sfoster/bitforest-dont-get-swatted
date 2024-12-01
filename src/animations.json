@@ -1,4 +1,34 @@
 {
+  "mouth-happy": {
+    "url": "images/mouthHappyAnimation.png",
+    "frames": 4,
+    "styles": {
+      "top": "36%",
+      "left": "23%",
+      "height": "21%",
+      "aspect-ratio": "1.1/1"
+    }
+  },
+  "mouth-distressed": {
+    "url": "images/mouthDistressedAnimation.png",
+    "frames": 5,
+    "styles": {
+      "top": "36%",
+      "left": "23%",
+      "height": "19%",
+      "aspect-ratio": "1.1/1"
+    }
+  },
+  "mouth-flirty": {
+    "url": "images/mouthFlirtyAnimation.png",
+    "frames": 4,
+    "styles": {
+      "top": "36%",
+      "left": "23%",
+      "height": "19%",
+      "aspect-ratio": "1.1/1"
+    }
+  },
   "mouth-0": {
     "url": "images/mouthAnimation0.png",
     "frames": 3,
