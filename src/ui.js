@@ -430,12 +430,10 @@ const promptsUI = new (class extends(_SceneUI) {
     this.mouthAnimation.startAnimationFromData(animData);
   }
 
-  showSweat(show = true) {
-    if (show) {
+  showSweat(animData) {
+    if (animData) {
       this.sweatAnimation.style.display = 'block';
-      this.sweatAnimation.startAnimationFromData(
-        this.assets.get('animations').get('sweat')
-      );
+      this.sweatAnimation.startAnimationFromData(animData);
     } else {
       this.sweatAnimation.stop();
       this.sweatAnimation.style.display = 'none';
@@ -495,7 +493,11 @@ export class UI {
   }
 
   showSweat(show = true) {
-    return promptsUI.showSweat(show);
+    let animData = null;
+    if (show) {
+      animData = this.assets.get('animations').get('sweat');
+    }
+    promptsUI.showSweat(animData);
   }
 
   updateEnding(text) {
