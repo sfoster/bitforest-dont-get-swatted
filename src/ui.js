@@ -284,7 +284,8 @@ const splashUI = new (class extends(_SceneUI) {
         });
         break;
       case "audioToggle":
-        // TODO: enable audio
+        window.ui.isAutoplayUnblocked = true;
+        window.ui.toggleAudio(event.target.checked);
         break;
       default:
         event.preventDefault();
@@ -443,9 +444,38 @@ const promptsUI = new (class extends(_SceneUI) {
 export class UI {
   constructor(assetsMap) {
     this.assets = assetsMap;
+    this.isAutoplayUnblocked = false;
+    this.audioEnabled = false;
   }
   initialize() {
-    // Most initialization is done on scene enter
+    // disable audio by default
+    document.getElementById("audioToggle").checked = false;
+    // TODO: move to main.js and the assets loader
+    this.backgroundTrack = new Howl({
+      src: ['./audio/Background Blues.mp3'],
+      autoplay: false, // Set autoplay to false initially
+      loop: true,
+      volume: 0.5,
+    });
+  }
+  toggleAudio(enable) {
+    this.audioEnabled = enable;
+    let targetSound = this.backgroundTrack;
+    if (targetSound.playing()) {
+      targetSound.stop();
+    }
+    if (this.audioEnabled && this.isAutoplayUnblocked) {
+      targetSound.play()
+    }
+  }
+  updateBackgroundAudio() {
+    console.log("Not implemented");
+    // TODO: maybe lazily create new Howl instances
+    // and stop the current this.backgroundTrack, and switch in the new one
+  }
+  playSoundEffect() {
+    // TODO: See "Control multiple sounds" section in the howler.js README
+    // https://github.com/goldfire/howler.js/
   }
   updatePrompt(text) {
     return promptsUI.updatePrompt(text);
