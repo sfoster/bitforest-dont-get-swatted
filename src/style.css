@@ -163,16 +163,32 @@ image-animation > img {
 
 #splash header {
   margin-top: 1em;
-  height: 5%;
+  padding-top: 5%;
   background-image: url('images/window_controls.png');
   background-repeat: no-repeat;
   background-position: top 0px right 14px;
   background-size: contain;
   padding-inline: 14px;
-  display: flex;
-  justify-content: flex-end;
+  position: relative;
+  /* display: flex; */
+  /* justify-content: flex-end; */
   gap: 0;
   /* border-bottom: 1px solid rgb(0, 0, 0); */
+}
+
+#splash-maximize {
+  width: 4%;
+  right: 4%;
+  top: 10%;
+  aspect-ratio: 1/1;
+  position: absolute;
+}
+#splash-close {
+  position: absolute;
+  width: 4%;
+  right: 15.3%;
+  top: 10%;
+  aspect-ratio: 1/1;
 }
 
 #splash footer.buttons {
@@ -193,14 +209,7 @@ image-animation > img {
 #splash button:hover {
   opacity: 0.7;
 }
-#splash-maximize {
-  width: 6.5%;
-  aspect-ratio: 1/1;
-}
-#splash-close {
-  width: 6.5%;
-  aspect-ratio: 1/1;
-}
+
 #audioToggle {
   appearance: none;
   margin: 0;
