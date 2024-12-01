@@ -1,5 +1,5 @@
 {
   "default": "default",
-  "28": { "mouthAnimation": "mouth-1", "sweat": false },
-  "26": { "mouthAnimation": "mouth-2", "sweat": true }
+  "28": { "mouthAnimation": "mouth-happy", "sweat": false },
+  "26": { "mouthAnimation": "mouth-distressed", "sweat": true }
 }
