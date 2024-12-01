@@ -3,13 +3,14 @@ on:
   push:
     branches:
       - main
-  workflow_dispatch:    # Manual trigger via UI
+      - test-deploy
+  workflow_dispatch: # Manual trigger via UI
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      
+
       - uses: manleydev/butler-publish-itchio-action@master
         env:
           BUTLER_CREDENTIALS: ${{ secrets.BUTLER_API_KEY }}
