@@ -38,5 +38,15 @@
       "height": "41%",
       "aspect-ratio": "1.1/1"
     }
+  },
+  "default": {
+    "url": "images/mouthAnimation0.png",
+    "frames": 3,
+    "styles": {
+      "top": "25%",
+      "left": "18%",
+      "height": "35%",
+      "aspect-ratio": "1.1/1"
+    }
   }
 }

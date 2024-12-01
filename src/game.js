@@ -39,11 +39,11 @@ export class Game {
       this.ui.updateBackground(this.backgroundNames.get('default')).then(() => {
         // Play one of the mouth animations (0-4, see animations.json)
         // this.ui.animateMouth(`mouth-${Math.floor(Math.random() * 4)}`);
-        this.ui.animateMouth(`mouth-3`);
+        this.ui.animateMouth(`default`);
       });
     } else {
       this.ui.updateBackground(this.backgroundNames.get(outcome));
-      this.ui.animateMouth(`mouth-2`);
+      this.ui.animateMouth(`mouth-3`);
     }
     console.log('Outcome: ' + outcome);
 

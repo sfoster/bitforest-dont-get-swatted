@@ -52,8 +52,8 @@ class ImageAnimation extends HTMLElement {
   }
   async start(src, fps, frameCount, maxLoopCount = Infinity) {
     this.setImageSource(src);
-    this.fps ??= fps;
-    this.frameCount ??= frameCount;
+    this.fps = fps;
+    this.frameCount = frameCount;
     this.maxLoopCount = maxLoopCount;
 
     const img = this.imageElement;
