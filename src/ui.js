@@ -307,6 +307,9 @@ const gameoverUI = new (class extends(_SceneUI) {
         break;
     }
   }
+  updateEnding(text) {
+    document.getElementById("conclusion-container").textContent = text;
+  }
 })();
 
 const promptsUI = new (class extends(_SceneUI) {
@@ -323,10 +326,13 @@ const promptsUI = new (class extends(_SceneUI) {
       })
     );
   }
-  async stop() {
-    super.stop();
+  stopAnimations() {
     this.mouthAnimation?.stop();
     this.wordPicker?.stopSpin();
+  }
+  async stop() {
+    super.stop();
+    this.stopAnimations();
   }
 
   /**
@@ -423,6 +429,18 @@ const promptsUI = new (class extends(_SceneUI) {
     console.log("Animating with:", animData);
     this.mouthAnimation.startAnimationFromData(animData);
   }
+
+  showSweat(show = true) {
+    if (show) {
+      this.sweatAnimation.style.display = 'block';
+      this.sweatAnimation.startAnimationFromData(
+        this.assets.get('animations').get('sweat')
+      );
+    } else {
+      this.sweatAnimation.stop();
+      this.sweatAnimation.style.display = 'none';
+    }
+  }
 })();
 
 export class UI {
@@ -475,21 +493,18 @@ export class UI {
     return promptsUI.mouthAnimation?.stop();
   }
 
-  stopAnimations() {
-    this.mouthAnimation.stop();
+  showSweat(show = true) {
+    return promptsUI.showSweat(show);
   }
 
-  showSweat(show = true) {
-    if (show) {
-      this.sweatAnimation.style.display = 'block';
-      this.sweatAnimation.startAnimationFromData(
-        this.assets.get('animations').get('sweat')
-      );
-    } else {
-      this.sweatAnimation.stop();
-      this.sweatAnimation.style.display = 'none';
-    }
+  updateEnding(text) {
+    return gameoverUI.updateEnding(text);
   }
+
+  stopAnimations() {
+    promptsUI.stopAnimations();
+  }
+
   async exitScene(id) {
     const elem = document.getElementById(id);
     switch (id) {

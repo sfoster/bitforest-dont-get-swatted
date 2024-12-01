@@ -213,12 +213,15 @@ class GameOverScene extends(_Scene) {
     }
   }
 
-  async enter() {
+  async enter(params) {
     console.log(`entering ${this.id} scene`);
-    const backgrounds = this.assets.get('backgrounds');
-    this.ui.updateBackground('');
+    this.backgroundNames = this.assets.get('backgrounds');
 
-    await this.ui.enterScene(this.id);
+    const {outcome, ending} = params;
+    const promiseEntered = this.ui.enterScene(this.id);
+    this.ui.updateBackground(this.backgroundNames.get(outcome));
+    this.ui.updateEnding(ending);
+    await promiseEntered;
     document.addEventListener('user-choice', this);
   }
 

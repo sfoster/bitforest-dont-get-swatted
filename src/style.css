@@ -144,13 +144,26 @@ image-animation > img {
   width: 90%;
   justify-content: center;
 }
+
 #gameover-screen {
-  aspect-ratio: 1 / 1;
-  border-radius: 14px;
-  background: linear-gradient(#db207a, #9547af);
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  justify-content: space-between;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: unset;
+  height: 38%;
 }
+
+#gameover-screen > .prompt-outer {
+  border-radius: 14px;
+  position: unset;
+  height: auto;
+  background: linear-gradient(#db207a, #9547af);
+}
+
 #conclusion-container {
   padding: 1em;
   font-size: 3vw;
@@ -161,12 +174,14 @@ image-animation > img {
 }
 
 #gameover footer.buttons {
-  border-top: 1px solid white;
-  height: 16%;
+  align-self: flex-end;
+  /* height: 16%; */
   box-sizing: border-box;
   display: flex;
   padding-inline: 24px;
-  justify-content: space-evenly;
+}
+#gameover button.play {
+  background: linear-gradient(#db207a, #9547af);
 }
 
 .grid-layer-stack {
