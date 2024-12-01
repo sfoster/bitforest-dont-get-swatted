@@ -101,6 +101,24 @@ class ImageAnimation extends HTMLElement {
     this.animating = false;
     this.frameIndex = 0;
   }
+
+  startAnimationFromData(animData) {
+    // Get image source
+    let animationSrc = animData.get('url');
+    console.log('Animating with:', animationSrc);
+
+    // add styles to animation
+    this.style.top = animData.get('styles')['top'];
+    this.style.left = animData.get('styles')['left'];
+    this.style.height = animData.get('styles')['height'];
+    this.style.aspectRatio = animData.get('styles')['aspect-ratio'];
+
+    // get frames
+    let frames = animData.get('frames');
+
+    // start animation
+    this.start(animationSrc, 1000 / 8, frames);
+  }
 }
 customElements.define('image-animation', ImageAnimation);
 
@@ -276,6 +294,12 @@ export class UI {
     mouthAnim.id = 'mouth';
     promptContainer.parentElement.insertBefore(mouthAnim, promptContainer);
 
+    // Create sweat animation
+    let sweatAnim = (this.sweatAnimation =
+      document.createElement('image-animation'));
+    sweatAnim.id = 'sweat';
+    promptContainer.parentElement.insertBefore(sweatAnim, promptContainer);
+
     const selectionElement = document.getElementById('selection');
     const reticuleElement = document.getElementById('wordsLineReticule');
 
@@ -353,25 +377,19 @@ export class UI {
 
     // get animation data
     let animData = this.assets.get('animations').get(animationName);
-    // Get image source
-    let animationSrc = animData.get('url');
-    console.log('Animating with:', animationSrc);
 
-    // add styles to animation
-    this.mouthAnimation.style.top = animData.get('styles')['top'];
-    this.mouthAnimation.style.left = animData.get('styles')['left'];
-    this.mouthAnimation.style.height = animData.get('styles')['height'];
-    this.mouthAnimation.style.aspectRatio =
-      animData.get('styles')['aspect-ratio'];
-
-    // get frames
-    let frames = animData.get('frames');
-
-    // start animation
-    this.mouthAnimation.start(animationSrc, 1000 / 8, frames);
+    this.mouthAnimation.startAnimationFromData(animData);
   }
 
   stopAnimations() {
     this.mouthAnimation.stop();
+  }
+
+  showSweat(show = true) {
+    if (show) {
+      this.sweatAnimation.startAnimationFromData(
+        this.assets.get('animations').get('sweat')
+      );
+    }
   }
 }

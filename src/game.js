@@ -50,11 +50,17 @@ export class Game {
           this.assets
             .get('manifests')
             .get('animationDirectory')
-            .hasOwnProperty(pid + 1)
+            .hasOwnProperty(pid)
         ) {
           this.ui.animateMouth(
-            this.assets.get('manifests').get('animationDirectory')[pid + 1]
+            this.assets.get('manifests').get('animationDirectory')[pid][
+              'mouthAnimation'
+            ]
           );
+          this.sweat = this.assets.get('manifests').get('animationDirectory')[
+            pid
+          ]['sweat'];
+          this.ui.showSweat();
         } else {
           this.ui.animateMouth(`default`);
         }
