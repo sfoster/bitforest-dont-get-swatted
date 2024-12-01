@@ -44,8 +44,6 @@ class ChoicesScene {
 
   async enter({ startType }) {
     console.log(`entering ${this.id} scene`);
-    await this.ui.enterScene(this.id);
-    document.addEventListener('user-choice', this);
     this.outcomes = {};
     this.twineData = this.assets.get('stories');
     this.backgroundNames = this.assets.get('backgrounds');
@@ -56,6 +54,9 @@ class ChoicesScene {
       this.twineData.altstartnode :
       this.twineData.startnode;
      this.handleChoice(startPid);
+
+    await this.ui.enterScene(this.id);
+    document.addEventListener('user-choice', this);
   }
 
   async exit() {
