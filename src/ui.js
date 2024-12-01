@@ -239,7 +239,13 @@ class WordPicker extends HTMLElement {
     if (this.spinX >= this.endX) {
       this.spinX = this.spinX - this.endX;
     }
-    requestAnimationFrame(() => this.advanceSpin());
+    this._rafID = requestAnimationFrame(() => this.advanceSpin());
+  }
+  stopSpin() {
+    this.continueSpin = false;
+    if (this._rafID) {
+      cancelAnimationFrame(this._rafID);
+    }
   }
   getSelectedChild() {
     let offsetX = 0;
@@ -296,7 +302,7 @@ const gameoverUI = new (class extends(_SceneUI) {
       default:
         event.preventDefault();
         this.dispatchUserChoice({
-          startType: "default",
+          action: "restart",
         });
         break;
     }
@@ -317,10 +323,14 @@ const promptsUI = new (class extends(_SceneUI) {
       })
     );
   }
+  async stop() {
+    super.stop();
+    this.mouthAnimation?.stop();
+    this.wordPicker?.stopSpin();
+  }
 
   /**
-   * Initializes the UI
-   * @returns {Promise}
+   * Initializes the Prompts scene before entering
    */
   initialize() {
     this.currentPrompt = document.getElementById('currentPrompt');
@@ -420,7 +430,7 @@ export class UI {
     this.assets = assetsMap;
   }
   initialize() {
-
+    // Most initialization is done on scene enter
   }
   updatePrompt(text) {
     return promptsUI.updatePrompt(text);

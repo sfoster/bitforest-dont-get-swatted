@@ -11,10 +11,12 @@ export class Game {
 
     const splashScene = new SplashScene(this);
     const choicesScene = new ChoicesScene(this);
+    const gameoverScene = new GameOverScene(this);
 
     this.scenesMap = new Map();
     this.scenesMap.set(splashScene.id, splashScene);
     this.scenesMap.set(choicesScene.id, choicesScene);
+    this.scenesMap.set(gameoverScene.id, gameoverScene);
   }
 
   async start() {
@@ -76,9 +78,6 @@ class ChoicesScene extends(_Scene) {
   async exit() {
     console.log(`exiting ${this.id} scene`);
     document.removeEventListener('user-choice', this);
-    // TODO:
-    // stop all the loops and timers
-    this.ui.animateMouth();
     await this.ui.exitScene('prompts');
   }
 
@@ -202,8 +201,15 @@ class GameOverScene extends(_Scene) {
   handleEvent(event) {
     if (event.type == 'user-choice') {
       // Advance to next scene
-      console.log('Got user choice:');
-      this.game.switchScene('prompts', { ...event.detail });
+      console.log('Got user choice:', );
+      const nextAction = event.detail.action;
+      let startType;
+      if (nextAction == "restart") {
+        // TODO: do we want a new startType here? To ensure we randomize the entry point
+        // and don't repeat the same path through the passages
+        startType = "default";
+        this.game.switchScene("prompts", { startType });
+      }
     }
   }
 
@@ -219,6 +225,6 @@ class GameOverScene extends(_Scene) {
   async exit() {
     console.log(`exiting ${this.id} scene`);
     document.removeEventListener('user-choice', this);
-    await this.ui.exitScene('splash');
+    await this.ui.exitScene("gameover");
   }
 }
