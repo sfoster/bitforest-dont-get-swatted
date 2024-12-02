@@ -496,7 +496,7 @@
       "tags": ["Neutral-Path", "Neutral-End"]
     },
     {
-      "text": "Your life is fairly boring and safe, you just chat with you friend and vent about a few things. You never even notice when they eventually take bugs out of your apartment as they mark you down as not a threat.\n\n[[Loop to start? ->Terms and Serives]]",
+      "text": "Your life is fairly boring and safe, you just chat with your friend and vent about a few things. You never even notice when they eventually take bugs out of your apartment as they mark you down as not a threat.\n\n[[Loop to start? ->Terms and Serives]]",
       "links": [
         {
           "name": "Loop to start? ",

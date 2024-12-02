@@ -1,0 +1,92 @@
+{
+  "Easter egg End 1 Declined Call": {
+    "displayName": "Declined Call",
+    "type": "Easter Egg",
+    "got": false
+  },
+  "Bad End 1": {
+    "displayName": "Swatted for Bombing the Skate Park",
+    "type": "Bad",
+    "got": false
+  },
+  "Bad End 2": {
+    "displayName": "Death by Napalm",
+    "type": "Bad",
+    "got": false
+  },
+  "Bad end 3": {
+    "displayName": "Swatted in the Woods",
+    "type": "Bad",
+    "got": false
+  },
+  "Bad End 9": {
+    "displayName": "Swatted at the Club",
+    "type": "Bad",
+    "got": false
+  },
+  "Bad End 4": {
+    "displayName": "Death by Poison",
+    "type": "Bad",
+    "got": false
+  },
+  "Bad end funny alt lvl4": {
+    "displayName": "Swatted, Don't do Drugs",
+    "type": "Bad",
+    "got": false
+  },
+  "BIG BAD END 4": {
+    "displayName": "Swatted Trying to Overthrow the Government",
+    "type": "Bad",
+    "got": false
+  },
+  " BIG BAD END 4": {
+    "displayName": "Swatted Trying to Overthrow the Government Again",
+    "type": "Bad",
+    "got": false
+  },
+  "Bad End Landlords": {
+    "displayName": "Swatted When Your Landlord Ratted You Out",
+    "type": "Bad",
+    "got": false
+  },
+  "Neutral End": {
+    "displayName": "Lived a Normal Life",
+    "type": "Neutral",
+    "got": false
+  },
+  "Good ending 1": {
+    "displayName": "Lived in the Woods",
+    "type": "Good",
+    "got": false
+  },
+  "Bad Ending 6": {
+    "displayName": "Swatted Trying to Start a Revolution",
+    "type": "Bad",
+    "got": false
+  },
+  "Good turned Neutral Ending": {
+    "displayName": "Started a Community Garden",
+    "type": "Neutral",
+    "got": false
+  },
+  "Best Ending": {
+    "displayName": "Started a Homestead in the Woods",
+    "type": "Good",
+    "got": false
+  },
+  "Bad Ending 7": {
+    "displayName": "Cat Boy Ending",
+    "type": "Bad",
+    "got": false
+  },
+  "BAD ENDING 8 CATASTROPHIC": {
+    "displayName": "Build a Bomb Factory",
+    "type": "Bad",
+    "got": false
+  },
+  "Easter eggs end 2 Arsenic": {
+    "displayName": "Death by Water",
+    "type": "Easter Egg",
+    "got": false
+  }
+}
