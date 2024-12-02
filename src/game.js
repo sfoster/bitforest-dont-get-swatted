@@ -98,67 +98,23 @@ class ChoicesScene extends _Scene {
     // Get outcome tag
     let outcome = this.countOutcome(currentPassage.tags) || {};
 
-    // handle endings first and early-return
+    // handle endings switching to game over scene and early-return
     if (outcome.type == 'END') {
-      let passageText = currentPassage.text.split('[[')[0];
-      let passageName = this.twineData.passages[pid - 1].name;
-      // track ending in saveData
-      if (this.saveData.get('endings').hasOwnProperty(passageName)) {
-        this.saveData.get('endings')[passageName]['got'] = true;
-      } else {
-        console.log('Ending not being tracked for: ', passageName);
-      }
-      console.log('Endings: ', this.saveData.get('endings'));
-
-      // switch to gameover scene
-      return this.game.switchScene('gameover', {
-        outcome: outcome.tag,
-        ending: passageText,
-        passageName: passageName,
-      });
+      this.handleEnd(currentPassage, outcome);
+      return;
+    }
+    // handle Menu (right now does nothing)
+    if (outcome.type == 'MENU') {
+      return;
     }
 
-    // handle null outcome (which only happens if tag not captured correctly)
-    if (!outcome.type) {
-      this.ui
-        .updateBackground(this.backgroundNames.get('default'))
-        .then(() => {});
-    } else {
-      // set background
-      let passageName = this.twineData.passages[pid - 1].name;
+    let passageName = currentPassage.name;
 
-      if (this.backgroundNames.has(passageName)) {
-        this.ui.updateBackground(this.backgroundNames.get(passageName));
-      } else if (this.backgroundNames.has(outcome)) {
-        this.ui.updateBackground(this.backgroundNames.get(outcome));
-      } else {
-        this.ui.updateBackground(this.backgroundNames.get('default'));
-      }
-      // handle normal paths
-      if (outcome.type != 'END' && outcome.type != 'MENU') {
-        // find passage name at pid
-        // select correct mouth animation from manifest
-        if (
-          this.assets
-            .get('manifests')
-            .get('animationDirectory')
-            .hasOwnProperty(passageName)
-        ) {
-          this.ui.animateMouth(
-            this.assets.get('manifests').get('animationDirectory')[passageName][
-              'mouthAnimation'
-            ]
-          );
-          let sweat = this.assets.get('manifests').get('animationDirectory')[
-            passageName
-          ]['sweat'];
-          this.ui.showSweat(sweat);
-        } else {
-          this.ui.animateMouth(`default`);
-          this.ui.showSweat(false);
-        }
-      }
-    }
+    this.setBackground(passageName, outcome);
+
+    // handle normal paths
+    this.handleNormalPath(passageName);
+
     // update prompt and wording
     this.ui.updatePrompt(currentPassage.text.split('[[')[0]);
     this.ui.updateWordChoices(currentPassage.links);
@@ -193,6 +149,63 @@ class ChoicesScene extends _Scene {
     }
 
     return null;
+  }
+
+  setBackground(passageName, outcome) {
+    if (!outcome.type) {
+      this.ui
+        .updateBackground(this.backgroundNames.get('default'))
+        .then(() => {});
+      return;
+    }
+    if (this.backgroundNames.has(passageName)) {
+      this.ui.updateBackground(this.backgroundNames.get(passageName));
+    } else if (this.backgroundNames.has(outcome)) {
+      this.ui.updateBackground(this.backgroundNames.get(outcome));
+    } else {
+      this.ui.updateBackground(this.backgroundNames.get('default'));
+    }
+  }
+
+  handleEnd(currentPassage, outcome) {
+    let passageText = currentPassage.text.split('[[')[0];
+    let passageName = currentPassage.name;
+    // track ending in saveData
+    if (this.saveData.get('endings').hasOwnProperty(passageName)) {
+      this.saveData.get('endings')[passageName]['got'] = true;
+    } else {
+      console.log('Ending not being tracked for: ', passageName);
+    }
+    console.log('Endings: ', this.saveData.get('endings'));
+
+    // switch to gameover scene
+    this.game.switchScene('gameover', {
+      outcome: outcome.tag,
+      ending: passageText,
+      passageName: passageName,
+    });
+  }
+
+  handleNormalPath(passageName) {
+    if (
+      this.assets
+        .get('manifests')
+        .get('animationDirectory')
+        .hasOwnProperty(passageName)
+    ) {
+      this.ui.animateMouth(
+        this.assets.get('manifests').get('animationDirectory')[passageName][
+          'mouthAnimation'
+        ]
+      );
+      let sweat = this.assets.get('manifests').get('animationDirectory')[
+        passageName
+      ]['sweat'];
+      this.ui.showSweat(sweat);
+    } else {
+      this.ui.animateMouth(`default`);
+      this.ui.showSweat(false);
+    }
   }
 }
 
