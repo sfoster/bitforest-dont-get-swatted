@@ -36,9 +36,22 @@ export class Game {
     this.currentScene = scene;
     await this.currentScene.enter(params);
   }
+
+  /**
+   *
+   * @param {Object} saveData data to save
+   * @param {string} storageName item name in local storage to save to
+   */
+  saveToLocal(saveData, name) {
+    localStorage.setItem(name, JSON.stringify(saveData));
+  }
 }
 
 class _Scene {
+  /**
+   *
+   * @param {Game} game
+   */
   constructor(game) {
     this.game = game;
     this.ui = game.ui;
@@ -181,6 +194,7 @@ class ChoicesScene extends _Scene {
       console.log('Ending not being tracked for: ', passageName);
     }
     console.log('Endings: ', this.saveData.get('endings'));
+    this.game.saveToLocal(this.saveData.get('endings'), 'endings');
 
     // switch to gameover scene
     this.game.switchScene('gameover', {
@@ -190,6 +204,10 @@ class ChoicesScene extends _Scene {
     });
   }
 
+  /**
+   * Handles all normal path animations and other actions
+   * @param {string} passageName name of the passage
+   */
   handleNormalPath(passageName) {
     if (
       this.assets
