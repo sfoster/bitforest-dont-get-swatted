@@ -40,7 +40,7 @@ export class Game {
   }
 
   /**
-   *
+   * Saves data to local storage
    * @param {Object} saveData data to save
    * @param {string} storageName item name in local storage to save to
    */
@@ -93,6 +93,11 @@ class _Scene {
 class ChoicesScene extends _Scene {
   id = 'prompts';
 
+  /**
+   *
+   * @param {Object} params - the parameter object
+   * @param {string} params.startType - the start type that defines what node to start with
+   */
   async enter({ startType }) {
     super.enter();
     console.log(`entering ${this.id} scene`);
@@ -121,6 +126,10 @@ class ChoicesScene extends _Scene {
     await this.ui.exitScene('prompts');
   }
 
+  /**
+   *
+   * @param {Event} event Event from ui to handle
+   */
   handleEvent(event) {
     if (event.type == 'user-choice') {
       console.log('Got user choice:', event.detail);
@@ -128,6 +137,10 @@ class ChoicesScene extends _Scene {
     }
   }
 
+  /**
+   * Handle a passage choice event
+   * @param {number} pid
+   */
   handleChoice(pid) {
     // Process id starts at 1, convert to 0 indexing
     let currentPassage = this.twineData.passages[pid - 1];
@@ -186,6 +199,11 @@ class ChoicesScene extends _Scene {
     return null;
   }
 
+  /**
+   * Handles end passage and switching to a gameover scence
+   * @param {Object} currentPassage the current passage data
+   * @param {Object{tag: string, type: string} | null} outcome the outcome data
+   */
   handleEnd(currentPassage, outcome) {
     let passageText = currentPassage.text.split('[[')[0];
     let passageName = currentPassage.name;
@@ -198,7 +216,7 @@ class ChoicesScene extends _Scene {
     console.log('Endings: ', this.saveData.get('endings'));
     this.game.saveToLocal(this.saveData.get('endings'), STORAGE_KEYS.ENDINGS);
 
-    // switch to gameover scene
+    // switch to game over scene
     this.game.switchScene('gameover', {
       outcome: outcome,
       ending: passageText,
