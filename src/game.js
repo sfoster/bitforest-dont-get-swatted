@@ -3,6 +3,8 @@
     Owns the game scenes and switches between them
 */
 
+import { STORAGE_KEYS } from './constants.js';
+
 export class Game {
   constructor({ ui, assetsMap }) {
     this.assets = assetsMap;
@@ -194,7 +196,7 @@ class ChoicesScene extends _Scene {
       console.log('Ending not being tracked for: ', passageName);
     }
     console.log('Endings: ', this.saveData.get('endings'));
-    this.game.saveToLocal(this.saveData.get('endings'), 'endings');
+    this.game.saveToLocal(this.saveData.get('endings'), STORAGE_KEYS.ENDINGS);
 
     // switch to gameover scene
     this.game.switchScene('gameover', {
