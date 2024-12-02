@@ -32,11 +32,13 @@ const backgroundsMap = new Map();
 const animationsMap = new Map();
 const manifestsMap = new Map();
 const storiesMap = new Map();
+const endingsMap = new Map();
 const assetsMap = (window.assetsMap = new Map([
   ['manifests', manifestsMap],
   ['stories', storiesMap],
   ['backgrounds', backgroundsMap],
   ['animations', animationsMap],
+  ['endings', endingsMap],
 ]));
 
 function loadAsset(url, type, name, collection) {
@@ -71,6 +73,10 @@ const assetsLoaded = (async function loadAssets() {
   // Load the stories data
   console.log('Loading the twine data');
   await loadAsset('./stories.json', 'json', 'stories');
+
+  // Load achievement and endings save data
+  console.log('Loading the endings data');
+  await loadAsset('./endings.json', 'json', 'endings');
 
   // Load all the background images
   const loadedPromises = [];

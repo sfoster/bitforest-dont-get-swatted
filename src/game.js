@@ -58,9 +58,14 @@ class ChoicesScene extends _Scene {
   async enter({ startType }) {
     console.log(`entering ${this.id} scene`);
     this.outcomes = {};
+    // Twine/Story Data
     this.twineData = this.assets.get('stories');
-    this.backgroundNames = this.assets.get('backgrounds');
     console.log('Game start, with data:', this.twineData);
+    // Backgrounds
+    this.backgroundNames = this.assets.get('backgrounds');
+    // Save Data
+    this.saveData = new Map();
+    this.saveData.set('endings', this.assets.get('endings'));
 
     let startPid =
       startType == 'alt'
@@ -96,11 +101,20 @@ class ChoicesScene extends _Scene {
     // handle endings first and early-return
     if (outcome.type == 'END') {
       let passageText = currentPassage.text.split('[[')[0];
-      // game.switchScene("gameover", { outcome: "BAD-END", ending: "Oh no it ended badly!"})
+      let passageName = this.twineData.passages[pid - 1].name;
+      // track ending in saveData
+      if (this.saveData.get('endings').hasOwnProperty(passageName)) {
+        this.saveData.get('endings')[passageName]['got'] = true;
+      } else {
+        console.log('Ending not being tracked for: ', passageName);
+      }
+      console.log('Endings: ', this.saveData.get('endings'));
+
+      // switch to gameover scene
       return this.game.switchScene('gameover', {
         outcome: outcome.tag,
         ending: passageText,
-        passageName: this.twineData.passages[pid - 1].name,
+        passageName: passageName,
       });
     }
 
