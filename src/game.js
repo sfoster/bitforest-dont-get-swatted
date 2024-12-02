@@ -45,10 +45,33 @@ class _Scene {
     this.assets = game.assets;
   }
   async enter(param) {
-    console.assert(false, 'Not implemented');
+    //console.assert(false, 'Not implemented');
+    // Backgrounds
+    this.backgroundNames = this.assets.get('backgrounds');
   }
   async exit(param) {
     console.assert(false, 'Not implemented');
+  }
+
+  /**
+   * Sets the background for the scene
+   * @param {string} passageName the name of the passage
+   * @param {Object} outcome the outcome of the passage
+   */
+  setBackground(passageName, outcome) {
+    if (!outcome.type) {
+      this.ui
+        .updateBackground(this.backgroundNames.get('default'))
+        .then(() => {});
+      return;
+    }
+    if (this.backgroundNames.has(passageName)) {
+      this.ui.updateBackground(this.backgroundNames.get(passageName));
+    } else if (this.backgroundNames.has(outcome.tag)) {
+      this.ui.updateBackground(this.backgroundNames.get(outcome.tag));
+    } else {
+      this.ui.updateBackground(this.backgroundNames.get('default'));
+    }
   }
 }
 
@@ -56,13 +79,12 @@ class ChoicesScene extends _Scene {
   id = 'prompts';
 
   async enter({ startType }) {
+    super.enter();
     console.log(`entering ${this.id} scene`);
     this.outcomes = {};
     // Twine/Story Data
     this.twineData = this.assets.get('stories');
     console.log('Game start, with data:', this.twineData);
-    // Backgrounds
-    this.backgroundNames = this.assets.get('backgrounds');
     // Save Data
     this.saveData = new Map();
     this.saveData.set('endings', this.assets.get('endings'));
@@ -94,7 +116,7 @@ class ChoicesScene extends _Scene {
   handleChoice(pid) {
     // Process id starts at 1, convert to 0 indexing
     let currentPassage = this.twineData.passages[pid - 1];
-
+    let passageName = currentPassage.name;
     // Get outcome tag
     let outcome = this.countOutcome(currentPassage.tags) || {};
 
@@ -107,8 +129,6 @@ class ChoicesScene extends _Scene {
     if (outcome.type == 'MENU') {
       return;
     }
-
-    let passageName = currentPassage.name;
 
     this.setBackground(passageName, outcome);
 
@@ -151,22 +171,6 @@ class ChoicesScene extends _Scene {
     return null;
   }
 
-  setBackground(passageName, outcome) {
-    if (!outcome.type) {
-      this.ui
-        .updateBackground(this.backgroundNames.get('default'))
-        .then(() => {});
-      return;
-    }
-    if (this.backgroundNames.has(passageName)) {
-      this.ui.updateBackground(this.backgroundNames.get(passageName));
-    } else if (this.backgroundNames.has(outcome)) {
-      this.ui.updateBackground(this.backgroundNames.get(outcome));
-    } else {
-      this.ui.updateBackground(this.backgroundNames.get('default'));
-    }
-  }
-
   handleEnd(currentPassage, outcome) {
     let passageText = currentPassage.text.split('[[')[0];
     let passageName = currentPassage.name;
@@ -180,7 +184,7 @@ class ChoicesScene extends _Scene {
 
     // switch to gameover scene
     this.game.switchScene('gameover', {
-      outcome: outcome.tag,
+      outcome: outcome,
       ending: passageText,
       passageName: passageName,
     });
@@ -221,8 +225,8 @@ class SplashScene extends _Scene {
   }
 
   async enter() {
+    super.enter();
     console.log(`entering ${this.id} scene`);
-    const backgrounds = this.assets.get('backgrounds');
     this.ui.updateBackground('');
 
     await this.ui.enterScene(this.id);
@@ -255,19 +259,13 @@ class GameOverScene extends _Scene {
   }
 
   async enter(params) {
+    super.enter();
     console.log(`entering ${this.id} scene`);
-    this.backgroundNames = this.assets.get('backgrounds');
 
     const { outcome, ending, passageName } = params;
     const promiseEntered = this.ui.enterScene(this.id);
 
-    if (this.backgroundNames.has(passageName)) {
-      this.ui.updateBackground(this.backgroundNames.get(passageName));
-    } else if (this.backgroundNames.has(outcome)) {
-      this.ui.updateBackground(this.backgroundNames.get(outcome));
-    } else {
-      this.ui.updateBackground(this.backgroundNames.get('default'));
-    }
+    this.setBackground(passageName, outcome);
 
     this.ui.updateEnding(ending);
     await promiseEntered;
