@@ -471,10 +471,10 @@ export class UI {
       volume: 0.5,
     });
     this.backgroundTrack.badEnd = new Howl({
-      src: ['./audio/FBIGotcha.wav'],
+      src: ['./audio/FBIGotcha.mp3'],
       autoplay: false, // Set autoplay to false initially
       loop: true,
-      volume: 0.07,
+      volume: 0.1,
     });
     this.backgroundTrack.current = this.backgroundTrack.default;
   }
