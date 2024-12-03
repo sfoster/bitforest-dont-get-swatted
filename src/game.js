@@ -2,10 +2,16 @@
   The main game logic
     Owns the game scenes and switches between them
 */
-
+import { UI } from './ui.js';
 import { STORAGE_KEYS } from './constants.js';
 
 export class Game {
+  /**
+   *
+   * @param {Object} params
+   * @param {UI} params.ui UI instance
+   * @param {Map} params.assetsMap map of assets
+   */
   constructor({ ui, assetsMap }) {
     this.assets = assetsMap;
     this.ui = ui;
@@ -52,7 +58,7 @@ export class Game {
 class _Scene {
   /**
    *
-   * @param {Game} game
+   * @param {Game} game the game instance the scene belongs to
    */
   constructor(game) {
     this.game = game;
@@ -159,6 +165,7 @@ class ChoicesScene extends _Scene {
     }
 
     this.setBackground(passageName, outcome);
+    this.ui.updateBackgroundAudio();
 
     // handle normal paths
     this.handleNormalPath(passageName);
@@ -200,13 +207,14 @@ class ChoicesScene extends _Scene {
   }
 
   /**
-   * Handles end passage and switching to a gameover scence
+   * Handles end passage and switching to a gameover scene
    * @param {Object} currentPassage the current passage data
    * @param {Object{tag: string, type: string} | null} outcome the outcome data
    */
   handleEnd(currentPassage, outcome) {
     let passageText = currentPassage.text.split('[[')[0];
     let passageName = currentPassage.name;
+
     // track ending in saveData
     if (this.saveData.get('endings').hasOwnProperty(passageName)) {
       this.saveData.get('endings')[passageName]['got'] = true;
@@ -266,6 +274,7 @@ class SplashScene extends _Scene {
     super.enter();
     console.log(`entering ${this.id} scene`);
     this.ui.updateBackground('');
+    this.ui.updateBackgroundAudio();
 
     await this.ui.enterScene(this.id);
     document.addEventListener('user-choice', this);
@@ -304,6 +313,12 @@ class GameOverScene extends _Scene {
     const promiseEntered = this.ui.enterScene(this.id);
 
     this.setBackground(passageName, outcome);
+
+    if (outcome.tag == 'BAD-END') {
+      this.ui.updateBackgroundAudio('bad');
+    } else {
+      this.ui.updateBackgroundAudio();
+    }
 
     this.ui.updateEnding(ending);
     await promiseEntered;

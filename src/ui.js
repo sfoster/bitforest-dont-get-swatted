@@ -326,7 +326,7 @@ const gameoverUI = new (class extends _SceneUI {
   }
 })();
 
-const promptsUI = window.promptsUI = new (class extends _SceneUI {
+const promptsUI = (window.promptsUI = new (class extends _SceneUI {
   async start() {
     if (!(this.currentPrompt && this.wordPicker)) {
       this.initialize();
@@ -451,7 +451,7 @@ const promptsUI = window.promptsUI = new (class extends _SceneUI {
       this.sweatAnimation.style.display = 'none';
     }
   }
-})();
+})());
 
 export class UI {
   constructor(assetsMap) {
@@ -463,16 +463,30 @@ export class UI {
     // disable audio by default
     document.getElementById('audioToggle').checked = false;
     // TODO: move to main.js and the assets loader
-    this.backgroundTrack = new Howl({
-      src: ['./audio/Background Blues.mp3'],
-      autoplay: false, // Set autoplay to false initially
-      loop: true,
-      volume: 0.5,
-    });
+    this.backgroundTrack = {
+      default: new Howl({
+        src: ['./audio/Background Blues.mp3'],
+        autoplay: false, // Set autoplay to false initially
+        loop: true,
+        volume: 0.5,
+      }),
+      bad: new Howl({
+        src: ['./audio/FBIGotcha.mp3'],
+        autoplay: false, // Set autoplay to false initially
+        loop: true,
+        volume: 0.1,
+      }),
+      current: 'default',
+    };
   }
+
+  /**
+   * Enables or disables audio
+   * @param {boolean} enable
+   */
   toggleAudio(enable) {
     this.audioEnabled = enable;
-    let targetSound = this.backgroundTrack;
+    let targetSound = this.backgroundTrack[this.backgroundTrack.current];
     if (targetSound.playing()) {
       targetSound.stop();
     }
@@ -480,11 +494,25 @@ export class UI {
       targetSound.play();
     }
   }
-  updateBackgroundAudio() {
-    console.log('Not implemented');
-    // TODO: maybe lazily create new Howl instances
-    // and stop the current this.backgroundTrack, and switch in the new one
+  /**
+   * Change the background track to the one specified, if the same as current track do nothing
+   * @param {string} trackName name of the track key in the this.backgroundTrack object
+   * @returns
+   */
+  updateBackgroundAudio(trackName = 'default') {
+    console.log('updateBackgroundAudio with:', trackName);
+    if (this.backgroundTrack.current === trackName) {
+      return;
+    }
+
+    let oldSound = this.backgroundTrack[this.backgroundTrack.current];
+    this.backgroundTrack.current = trackName;
+    if (oldSound.playing()) {
+      oldSound.stop();
+      this.backgroundTrack[this.backgroundTrack.current].play();
+    }
   }
+
   playSoundEffect() {
     // TODO: See "Control multiple sounds" section in the howler.js README
     // https://github.com/goldfire/howler.js/
