@@ -326,7 +326,7 @@ const gameoverUI = new (class extends _SceneUI {
   }
 })();
 
-const promptsUI = window.promptsUI = new (class extends _SceneUI {
+const promptsUI = (window.promptsUI = new (class extends _SceneUI {
   async start() {
     if (!(this.currentPrompt && this.wordPicker)) {
       this.initialize();
@@ -451,7 +451,7 @@ const promptsUI = window.promptsUI = new (class extends _SceneUI {
       this.sweatAnimation.style.display = 'none';
     }
   }
-})();
+})());
 
 export class UI {
   constructor(assetsMap) {
@@ -463,16 +463,24 @@ export class UI {
     // disable audio by default
     document.getElementById('audioToggle').checked = false;
     // TODO: move to main.js and the assets loader
-    this.backgroundTrack = new Howl({
+    this.backgroundTrack = {};
+    this.backgroundTrack.default = new Howl({
       src: ['./audio/Background Blues.mp3'],
       autoplay: false, // Set autoplay to false initially
       loop: true,
       volume: 0.5,
     });
+    this.backgroundTrack.badEnd = new Howl({
+      src: ['./audio/FBIGotcha.wav'],
+      autoplay: false, // Set autoplay to false initially
+      loop: true,
+      volume: 0.07,
+    });
+    this.backgroundTrack.current = this.backgroundTrack.default;
   }
   toggleAudio(enable) {
     this.audioEnabled = enable;
-    let targetSound = this.backgroundTrack;
+    let targetSound = this.backgroundTrack.current;
     if (targetSound.playing()) {
       targetSound.stop();
     }
