@@ -500,15 +500,15 @@ export class UI {
    * @returns
    */
   updateBackgroundAudio(trackName = 'default') {
-    console.log('Not implemented');
+    console.log('updateBackgroundAudio with:', trackName);
     if (this.backgroundTrack.current === trackName) {
       return;
     }
-    this.backgroundTrack.current = trackName;
 
     let oldSound = this.backgroundTrack[this.backgroundTrack.current];
+    this.backgroundTrack.current = trackName;
     if (oldSound.playing()) {
-      oldSound.play();
+      oldSound.stop();
       this.backgroundTrack[this.backgroundTrack.current].play();
     }
   }
